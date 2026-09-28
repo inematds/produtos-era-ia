@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="produtos-era-ia-es" name="inema-course"/>
+<title>Pesimismo productivo | Productos en la era de la IA</title>
+<meta content="El pesimismo productivo consiste en imaginar con honestidad todo lo que puede salir mal, no para rendirte, sino para prepararte. Este módulo convierte esa actitud en un método: razones en contra, razones a favor, apuesta mínima y un pre mortem hecho con IA." name="description"/>
+<!-- ANTI-FOUC: bloqueante, antes de tudo -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (obrigatório em toda página) -->
+<script data-inema-manifest="" type="application/json">
+{
+ "course": "produtos-era-ia-es",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "La mentalidad",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "El juego cambió",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "El problema de lo mediocre",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pesimismo productivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "¿Vale la pena construirlo?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necesidad y vigencia",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, datos y dificultad",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recurrencia y hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lanzar y crecer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribución",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamiento y recorrido",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, diseño y usuarios simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+<link href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/en/curso/trilha1/modulo-1-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/es/curso/trilha1/modulo-1-3.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-3.html" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🧭</span>
+<span class="font-bold text-lg hidden md:inline">Productos en la era de la IA</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../../curso/trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Mentalidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../../curso/trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Oportunidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../../curso/trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Lanzar</span>
+</a>
+<span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-2" data-lang-switch=""><a class="text-neutral-400 hover:text-primary" href="../../../curso/trilha1/modulo-1-3.html" hreflang="pt-BR" lang="pt-BR">PT</a><span class="text-neutral-600">·</span><a class="text-neutral-400 hover:text-primary" href="../../../en/curso/trilha1/modulo-1-3.html" hreflang="en" lang="en">EN</a><span class="text-neutral-600">·</span><a class="text-primary font-bold" href="../../../es/curso/trilha1/modulo-1-3.html" hreflang="es" lang="es">ES</a></span>
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors" data-inema-journey-open="" type="button">
+<span>🧭</span><span>Mi recorrido</span>
+<span class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20" data-inema-journey-badge=""></span>
+</button>
+<button aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" data-inema-appearance-toggle="[data-inema-appearance]" title="Apariencia y lectura" type="button">
+<span aria-hidden="true">Aa</span>
+</button>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle" title="Tema claro/oscuro">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<div aria-label="Apariencia y lectura" class="inema-appearance-pop" data-inema-appearance="" role="region">
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tema</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button class="inema-chip" data-inema-set-theme="claro" type="button">Claro</button>
+<button class="inema-chip" data-inema-set-theme="sepia" type="button">Sepia</button>
+<button class="inema-chip" data-inema-set-theme="foco" type="button">Enfoque</button>
+<button class="inema-chip" data-inema-set-theme="contraste" type="button">Contraste</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tamaño del texto</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-fontscale="90" type="button">A-</button>
+<button class="inema-chip" data-inema-set-fontscale="100" type="button">A</button>
+<button class="inema-chip" data-inema-set-fontscale="115" type="button">A+</button>
+<button class="inema-chip" data-inema-set-fontscale="130" type="button">A++</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Fuente</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-font="inter" type="button">Inter</button>
+<button class="inema-chip" data-inema-set-font="system" type="button">Sistema</button>
+<button class="inema-chip" data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Interlineado</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-leading="1.5" type="button">Compacto</button>
+<button class="inema-chip" data-inema-set-leading="1.7" type="button">Normal</button>
+<button class="inema-chip" data-inema-set-leading="1.9" type="button">Amplio</button>
+</div>
+</div>
+</div>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧱 Pesimismo productivo</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">El pesimismo productivo consiste en imaginar con honestidad todo lo que puede salir mal, no para rendirte, sino para prepararte. Este módulo convierte esa actitud en un método: razones en contra, razones a favor, apuesta mínima y un pre mortem hecho con IA.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Temas</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo" aria-valuemax="100" aria-valuemin="0" class="inema-meter max-w-md mt-6" data-inema-meter="modulo:1-3" role="progressbar">
+<div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill="" style="width:0%"></div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="1-3" data-inema-track="1">
+<nav aria-label="Temas de este módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">En este módulo</p>
+<ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+<li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-1"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>El pesimismo productivo no es derrotismo</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-2"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>El diario de contingencia</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-3"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>Las cinco razones por las que NO funcionaría</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-4"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Las cinco razones por las que funcionaría</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-5"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>La apuesta mínima</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-6"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Premortem con IA</span></a></li>
+</ol>
+</nav>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🌧️ El pesimismo productivo no es derrotismo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p1">Quienes emprenden suelen ser optimistas, y eso es necesario para empezar. El problema es que el optimismo también oculta riesgos. <strong class="text-emerald-400">El pesimismo productivo</strong> es el antídoto: imaginas, de forma deliberada y detallada, todas las maneras en que el plan puede fracasar.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Derrotismo</dt><dd class="text-neutral-400" data-inema-block="m1-3-p2">Usar la lista de riesgos como excusa para no intentarlo. Es el pesimismo que paraliza.</dd></div><div><dt class="font-semibold text-neutral-100">Sesgo optimista</dt><dd class="text-neutral-400" data-inema-block="m1-3-p3">La tendencia humana a pensar que las cosas nos saldrán mejor a nosotros que a los demás.</dd></div><div><dt class="font-semibold text-neutral-100">Premortem</dt><dd class="text-neutral-400" data-inema-block="m1-3-p4">Técnica que consiste en imaginar que el proyecto ya fracasó y preguntarse: ¿por qué? Se hace antes de empezar.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Comparación entre pesimismo derrotista y pesimismo productivo" class="w-full h-auto" role="img" viewbox="0 0 800 266"><defs>
+<lineargradient id="s13-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s13-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s13-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s13-grid)" height="266" width="800"></rect>
+<rect fill="#064e3b" height="206" opacity="0.95" rx="16" stroke="#10b981" stroke-width="2" width="330" x="40" y="30"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="205" y="62">DERROTISTA</text>
+<g class="wf-a"><circle cx="66" cy="96" fill="#34d399" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="100">Enumera los riesgos</text></g><g class="wf-a"><circle cx="66" cy="130" fill="#34d399" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="134">Concluye: no va a funcionar</text></g><g class="wf-a"><circle cx="66" cy="164" fill="#34d399" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="168">Se queda ahí</text></g><g class="wf-a"><circle cx="66" cy="198" fill="#34d399" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="202">No aprende nada</text></g><rect fill="#0e1b26" height="206" opacity="0.95" rx="16" stroke="#38bdf8" stroke-width="2" width="330" x="430" y="30"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="595" y="62">PRODUCTIVO</text>
+<g class="wf-a"><circle cx="456" cy="96" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="100">Enumera los riesgos</text></g><g class="wf-a"><circle cx="456" cy="130" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="134">Pregunta: ¿cómo lo reduzco?</text></g><g class="wf-a"><circle cx="456" cy="164" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="168">Hace una apuesta pequeña</text></g><g class="wf-a"><circle cx="456" cy="198" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="202">Aprende rápido</text></g>
+<line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="121" y2="121"></line><line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="129" y2="129"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="400" y="149">la misma lista, otro uso</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Ambos empiezan igual: enumerando lo que puede salir mal. La diferencia está solo en la segunda línea. El enfoque productivo convierte cada riesgo en una pregunta orientada a la acción.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Actitud productiva</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Si nadie sabe que existe, ¿cómo hago para que lleguen los primeros 10 usuarios?"</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Si lo copian en una semana, ¿qué seguiría siendo mío?"</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Si me equivoco, ¿cuánto pierdo?"</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Actitud derrotista</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"No tengo audiencia, así que ni vale la pena."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"De todos modos lo van a copiar, ¿para qué intentarlo?"</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Ya existe algo parecido, me rindo."</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Prueba de una línea</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p5">Por cada riesgo que enumeres, escribe al lado una acción que cueste menos de un día. Si no hay ninguna, ese riesgo es grave y merece atención antes que todo lo demás.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📓 El diario de contingencia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p6">Algunos emprendedores mantienen durante años un cuaderno con una sola pregunta: <strong>"si mañana lo perdiera todo, ¿cómo alimentaría a mi familia legalmente?"</strong>. Las respuestas se vuelven cada vez más concretas y creativas: dormir cerca de universidades, comprar un traje en una tienda de segunda mano para entrar en eventos con comida gratis, afeitarse para parecer cualquier asistente.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🧗</span> Por qué ayuda un ejercicio tan extremo</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-3-p7">Pensar en el peor escenario elimina el miedo abstracto y lo convierte en una lista de acciones. Después de unos años, la persona descubre que casi siempre hay una salida, si observa con creatividad los recursos disponibles.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-3-p8">Esta misma actitud, aplicada a productos, genera preguntas muy útiles: "si tuviera cero presupuesto para anuncios, ¿cómo conseguiría los primeros usuarios?".</p>
+</div>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Cómo el ejercicio de contingencia se convierte en estrategia de producto" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s14-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s14-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s14-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s14-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="121" y="104">Escenario extremo</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="121" y="122">¿y si sale</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="121" y="134.5">todo mal?</text></g>
+<path class="wf-flow" d="M204 102 L224 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="220,97 220,107 226,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="226" y="60"></rect>
+<circle cx="244" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="244" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="307" y="104">Recursos reales</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="307" y="122">qué tengo</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="307" y="134.5">a mano todavía</text></g>
+<path class="wf-flow" d="M390 102 L410 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="406,97 406,107 412,102"></polygon><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="412" y="60"></rect>
+<circle cx="430" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="430" y="82">3</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="493" y="104">Salidas creativas</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="493" y="122">caminos</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="493" y="134.5">poco obvios</text></g>
+<path class="wf-flow" d="M576 102 L596 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="592,97 592,107 598,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="598" y="60"></rect>
+<circle cx="616" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="616" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="679" y="104">Plan de producto</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="122">la misma lógica,</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="134.5">otro objetivo</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">Cómo el ejercicio de contingencia se convierte en estrategia de producto</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> El ejercicio personal y el de producto usan los mismos cuatro pasos. Practicar el primero hace que el segundo sea más rápido y menos intimidante.</figcaption>
+</figure>
+<div class="codebox bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+<div><p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">Copia y ejecútalo</p><p class="text-sm text-neutral-300">Crea tu versión del diario de contingencia aplicado a un producto con ayuda de un asistente de IA (Claude, ChatGPT o Codex).</p></div>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-copy="" type="button">Copiar</button>
+</div>
+<pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Quiero practicar el pesimismo productivo con mi producto.
+
+Producto: &lt;descríbelo en una frase&gt;
+Público: &lt;quién lo usa&gt;
+Recursos que tengo hoy: &lt;tiempo por semana, dinero, contactos, habilidades&gt;
+
+Imagina los tres peores escenarios realistas para los próximos 90 días
+(por ejemplo: nadie se registra, un competidor grande lanza algo igual, me quedo sin tiempo).
+Para cada escenario, enumera 3 salidas creativas que usen SOLO los recursos que ya tengo.
+Nada que requiera una inversión nueva. Sé concreto: acción, plazo, costo.</code></pre>
+<div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Cómo verificarlo:</strong> Debes recibir 3 escenarios × 3 salidas. Si alguna salida requiere dinero que no tienes, pídele al asistente que la reemplace. Guarda el resultado en una nota y revísalo en 30 días.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Empieza poco a poco</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p9">No hace falta llevar un diario durante años. Abre una nota llamada "contingencia" y agrega una línea por semana. El valor está en la repetición.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">👎 Las cinco razones por las que NO funcionará</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p10">Toma tu idea y responde sin piedad: <strong class="text-emerald-400">¿cuáles son las cinco razones más sólidas por las que esto no va a funcionar?</strong> La lista de abajo muestra las más frecuentes. Úsala como punto de partida, no como respuesta.</p>
+<div class="space-y-5 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2">Las razones más comunes</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">No tengo distribución</h4>
+<p class="text-sm text-neutral-400 mb-2">El problema de la mayoría</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p11">Nadie sabrá que existe el producto. Sin audiencia, socios ni canales, hasta el mejor producto muere en silencio.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Se puede copiar grabando la pantalla</h4>
+<p class="text-sm text-neutral-400 mb-2">La prueba del clon</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p12">Alguien graba un video usando tu producto, se lo entrega a un asistente de código y le dice "hazlo igual". Si eso basta, no tienes un producto, tienes una demostración.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Puede que el problema solo me afecte a mí</h4>
+<p class="text-sm text-neutral-400 mb-2">Mercado desconocido</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p13">El problema existe en tu forma de trabajar, pero no sabes si cientos, miles o millones de personas sienten lo mismo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">No sé cuál es el tamaño del mercado</h4>
+<p class="text-sm text-neutral-400 mb-2">TAM incierto</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p14">Puede haber cinco clientes posibles en el mundo, o cinco millones. Sin una estimación, no sabes si vale la pena el esfuerzo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">5</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Puede ser solo local</h4>
+<p class="text-sm text-neutral-400 mb-2">Alcance geográfico</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p15">La necesidad puede existir en tu ciudad o región y no tener sentido en otros lugares.</p>
+</div>
+</div>
+</div>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">TAM</dt><dd class="text-neutral-400" data-inema-block="m1-3-p16">Total Addressable Market, mercado total direccionable. Cuántas personas o empresas podrían, en teoría, comprar tu producto.</dd></div><div><dt class="font-semibold text-neutral-100">Distribución</dt><dd class="text-neutral-400" data-inema-block="m1-3-p17">Todo lo que hace que el producto llegue a quienes lo necesitan: audiencia, socios, búsqueda, recomendaciones.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Peso relativo de las razones más comunes por las que fracasan los productos pequeños" class="w-full h-auto" role="img" viewbox="0 0 800 340"><defs>
+<lineargradient id="s15-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s15-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s15-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s15-grid)" height="340" width="800"></rect>
+<circle cx="220" cy="170" fill="none" r="110" stroke="#1f2937" stroke-width="34"></circle><circle cx="220" cy="170" fill="none" opacity="0.95" r="110" stroke="#10b981" stroke-dasharray="276.4601535159018 414.6902302738527" stroke-dashoffset="0" stroke-width="34" transform="rotate(-90 220 170)"></circle><circle cx="220" cy="170" fill="none" opacity="0.95" r="110" stroke="#38bdf8" stroke-dasharray="172.78759594743863 518.3627878423159" stroke-dashoffset="-276.4601535159018" stroke-width="34" transform="rotate(-90 220 170)"></circle><circle cx="220" cy="170" fill="none" opacity="0.5" r="110" stroke="#9ca3af" stroke-dasharray="241.90263432641407 449.2477494633405" stroke-dashoffset="-449.2477494633405" stroke-width="34" transform="rotate(-90 220 170)"></circle>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="30" font-weight="800" text-anchor="middle" x="220" y="166">5</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="220" y="192">razones</text><rect fill="#34d399" height="16" rx="4" width="16" x="420" y="86"></rect><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700" x="446" y="99">Sin distribución</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="446" y="117">la más frecuente</text><rect fill="#38bdf8" height="16" rx="4" width="16" x="420" y="146"></rect><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700" x="446" y="159">Fácil de copiar</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="446" y="177">la prueba del clon</text><rect fill="#9ca3af" height="16" rx="4" width="16" x="420" y="206"></rect><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700" x="446" y="219">Problema o mercado inciertos</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="446" y="237">¿solo me afecta a mí? ¿a cuántos?</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Las proporciones son ilustrativas. La idea es que la distribución aparece por sí sola como la porción más grande: quien resuelve solo el producto e ignora el canal ha resuelto la parte más pequeña del problema.</figcaption>
+</figure>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> No te saltes este ejercicio</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p18">Es incómodo escribir por qué tu idea va a fracasar. Precisamente por eso casi nadie lo hace y casi todos descubren estas razones demasiado tarde, después de meses de trabajo.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">👍 Las cinco razones por las que funcionará</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p19">Ahora haz el ejercicio inverso. <strong class="text-emerald-400">¿Cuáles son las cinco razones más sólidas por las que esto podría funcionar?</strong> La regla es la misma: nada de deseos, solo hechos y recursos que tienes hoy.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🤝</div>
+<h4 class="font-semibold text-emerald-400 mb-2">Socios que podrían promocionarlo</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p20">Conocidos con audiencia en redes que hablarían del producto a cambio de una comisión por cada venta.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">📺</div>
+<h4 class="font-semibold text-emerald-400 mb-2">Un canal propio</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p21">Aunque sea pequeño: una lista de correos, un perfil, un grupo de antiguos clientes.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">👥</div>
+<h4 class="font-semibold text-emerald-400 mb-2">Grupos de prueba</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p22">Foros y grupos donde tu público ya se reúne y acepta herramientas útiles.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🔁</div>
+<h4 class="font-semibold text-emerald-400 mb-2">Comentarios tempranos</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p23">Una forma de saber en días, no en meses, si el producto va por buen camino.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">💰</div>
+<h4 class="font-semibold text-emerald-400 mb-2">Bajo costo para probar</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-3-p24">La posibilidad de descubrir si vale la pena gastando casi nada.</p>
+</div>
+</div>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Balanza entre razones en contra y a favor de la idea" class="w-full h-auto" role="img" viewbox="0 0 800 320"><defs>
+<lineargradient id="s16-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s16-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s16-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s16-grid)" height="320" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="4" x1="400" x2="400" y1="70" y2="270"></line><rect fill="#9ca3af" height="12" rx="6" width="160" x="320" y="266"></rect>
+<line filter="url(#s16-glow)" stroke="#10b981" stroke-width="4" x1="180" x2="620" y1="-170" y2="310"></line>
+<g class="wf-a"><rect fill="#064e3b" height="110" rx="14" stroke="#10b981" stroke-width="2" width="200" x="80" y="-130"></rect>
+<line stroke="#10b981" stroke-width="2" x1="180" x2="180" y1="-170" y2="-130"></line>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="180" y="-98">En contra</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="-74">sin distribución</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="-60">fácil de copiar</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="-46">mercado incierto</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="110" rx="14" stroke="#38bdf8" stroke-width="2" width="200" x="520" y="350"></rect>
+<line stroke="#38bdf8" stroke-width="2" x1="620" x2="620" y1="310" y2="350"></line>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="620" y="382">A favor</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="406">socios</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="420">canal propio</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="434">prueba económica</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="306">Balanza entre razones en contra y a favor de la idea</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> La balanza solo es útil si ambos platillos se evalúan con la misma honestidad. Si los puntos "a favor" son deseos y los "en contra" son hechos, el resultado es engañoso.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Razón válida a favor</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Tengo tres amigos con 20 mil seguidores en el nicho que aceptan promocionarlo."</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Ya tengo 200 antiguos clientes con este problema."</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Puedo probarlo en un grupo de 5 mil personas esta semana."</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Razón débil a favor</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Todo el mundo va a querer esto."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Si se vuelve viral, la rompo."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"El producto es mucho mejor que los demás."</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Cruza las dos listas</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p25">Para cada razón en contra, fíjate si alguna razón a favor la contrarresta. "Sin distribución" queda contrarrestado por "socios que lo promocionan". Los riesgos sin un punto correspondiente en la otra lista son los que necesitan un plan.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🎲 La apuesta mínima</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p26">La última pieza del pesimismo productivo consiste en preguntarse: <strong class="text-emerald-400">¿cómo descubro si tengo razón gastando lo menos posible?</strong> No lo mínimo para construir el producto entero, sino lo mínimo para resolver la duda más peligrosa.</p>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Comparación del costo de distintas formas de probar una idea" class="w-full h-auto" role="img" viewbox="0 0 800 304"><defs>
+<lineargradient id="s17-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s17-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s17-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s17-grid)" height="304" width="800"></rect>
+<rect fill="#9ca3af" height="10" opacity="0.55" rx="3" width="14" x="220" y="22"></rect><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="240" y="31">días</text>
+<rect fill="#10b981" height="10" rx="3" width="14" x="350" y="22"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="370" y="31">reales</text><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="86">Producto completo</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="447.84688995215305" x="220" y="60"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="675.8468899521531" y="75">90 días</text>
+<g class="wf-a"><rect fill="url(#s17-g)" filter="url(#s17-glow)" height="20" rx="6" width="472.72727272727263" x="220" y="86"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="700.7272727272726" y="101">alto</text></g><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="164">Prototipo funcional</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="34.83253588516746" x="220" y="138"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="262.83253588516743" y="153">7 días</text>
+<g class="wf-a"><rect fill="url(#s17-g)" filter="url(#s17-glow)" height="20" rx="6" width="99.52153110047846" x="220" y="164"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="327.52153110047846" y="179">bajo</text></g><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="242">Página + lista de espera</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="4.976076555023923" x="220" y="216"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="232.97607655502392" y="231">1 día</text>
+<g class="wf-a"><rect fill="url(#s17-g)" filter="url(#s17-glow)" height="20" rx="6" width="24.880382775119614" x="220" y="242"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="252.8803827751196" y="257">mínimo</text></g></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Cada opción responde una pregunta distinta. La página con lista de espera responde "¿a alguien le interesa?". El prototipo responde "¿alguien lo usa?". El producto completo solo debería venir después de ambas.</figcaption>
+</figure>
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<caption class="text-left text-xs text-neutral-500 px-4 pt-3">Ejemplos de apuestas mínimas según el tipo de duda</caption>
+<thead class="bg-dark-800 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Duda más arriesgada</th><th class="px-4 py-3 font-semibold">Apuesta mínima</th><th class="px-4 py-3 font-semibold">Señal de éxito</th></tr></thead>
+<tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">¿Alguien quiere esto?</td><td class="px-4 py-3 text-neutral-300">Página sencilla con lista de espera, promocionada en 2 grupos</td><td class="px-4 py-3 text-neutral-300">30+ registros en una semana</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">¿Alguien pagará?</td><td class="px-4 py-3 text-neutral-300">Botón de preventa con descuento</td><td class="px-4 py-3 text-neutral-300">3+ pagos reales</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">¿La persona lo entiende sin ayuda?</td><td class="px-4 py-3 text-neutral-300">Prototipo usado por 5 personas sin ayuda</td><td class="px-4 py-3 text-neutral-300">4 de 5 llegan al resultado</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">¿Puedo llegar al público?</td><td class="px-4 py-3 text-neutral-300">Una publicación en un foro del nicho</td><td class="px-4 py-3 text-neutral-300">Respuestas y mensajes directos</td></tr></tbody>
+</table>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Cuidado con la apuesta que no responde nada</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p27">La encuesta de opinión («¿lo usarías?») es barata, pero casi no demuestra nada. La gente dice que sí por educación. Prefiere pruebas en las que tenga que actuar: registrarse, pagar, usarlo.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">⚰️ Premortem con IA</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p28">Puedes reunir todo lo de este módulo en un solo ejercicio con IA. La técnica se llama <strong class="text-emerald-400">premortem</strong>: en vez de preguntar «¿qué puede salir mal?», afirmas «ya salió mal» y pides reconstruir la historia del fracaso. El cambio de tiempo verbal permite críticas mucho más concretas.</p>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Etapas del premortem con IA" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s18-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s18-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s18-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s18-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="121" y="104">Describir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="121" y="122">producto, público,</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="121" y="134.5">recursos</text></g>
+<path class="wf-flow" d="M204 102 L224 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="220,97 220,107 226,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="226" y="60"></rect>
+<circle cx="244" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="244" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="307" y="104">Declarar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="307" y="122">«fracasó en</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="307" y="134.5">12 meses»</text></g>
+<path class="wf-flow" d="M390 102 L410 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="406,97 406,107 412,102"></polygon><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="412" y="60"></rect>
+<circle cx="430" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="430" y="82">3</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="493" y="104">Reconstruir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="493" y="122">las causas</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="493" y="134.5">probables</text></g>
+<path class="wf-flow" d="M576 102 L596 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="592,97 592,107 598,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="598" y="60"></rect>
+<circle cx="616" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="616" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="679" y="104">Mitigar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="122">apuesta mínima</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="134.5">por causa</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">Etapas del premortem con IA</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> El paso que marca la diferencia es el segundo: declarar el fracaso como un hecho. Cuando el modelo parte de «ya pasó», deja de intentar complacerte y empieza a explicar.</figcaption>
+</figure>
+<div class="codebox bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+<div><p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">Copia y ejecútalo</p><p class="text-sm text-neutral-300">Haz un premortem completo de tu idea en Claude, ChatGPT o Codex, cruzando razones en contra, razones a favor y apuestas mínimas.</p></div>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-copy="" type="button">Copiar</button>
+</div>
+<pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Actúa como un inversionista experimentado y escéptico. Haz un PREMORTEM de mi producto.
+
+Producto: &lt;qué hace, en una frase&gt;
+Para quién: &lt;público específico&gt;
+Cómo gana dinero: &lt;modelo de cobro y precio&gt;
+Recursos que tengo: &lt;tiempo, dinero, audiencia, contactos&gt;
+
+Parte del hecho de que estamos dentro de 12 meses y el producto FRACASÓ.
+
+1. Enumera las 5 causas más probables del fracaso, de la más a la menos probable.
+   Incluye obligatoriamente: distribución, facilidad para copiarlo (alguien graba la
+   pantalla y le pide a una IA que lo replique), tamaño real del mercado, si el problema
+   solo me afecta a mí y si un gigante podría lanzar algo parecido.
+2. Enumera las 5 razones más sólidas por las que habría tenido ÉXITO, usando solo los recursos que mencioné.
+3. Para cada causa de fracaso, propone una apuesta mínima (menos de 7 días y
+   menos de R$ 200) que permita comprobar si ese riesgo es real.
+4. Termina con un veredicto de una frase: seguir, ajustar o abandonar, y por qué.
+
+No suavices nada. Si la idea es débil, dilo.</code></pre>
+<div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> La respuesta debe tener las cuatro partes numeradas y un veredicto claro. Si el modelo elogia demasiado, responde: «estás siendo amable; vuelve a hacerlo como si tu dinero estuviera en juego». Guarda el resultado: se convierte en tu plan de pruebas de la Ruta 2.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Hazlo dos veces</h3>
+<p class="text-neutral-300" data-inema-block="m1-3-p29">Usa el mismo prompt en dos modelos distintos, o dos veces en el mismo modelo, en conversaciones nuevas. Las causas que aparezcan en ambas respuestas son las que debes probar primero.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Buen uso del premortem</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Hazlo antes de escribir código.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Convierte cada causa en una prueba barata.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repítelo cuando cambie la idea.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Mal uso del premortem</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Insistir hasta que el modelo esté de acuerdo contigo.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Leerlo, encontrarlo interesante y seguir igual.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usarlo como excusa para no empezar nunca.</span></li></ul>
+</div>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- QUIZ -->
+<div class="bg-dark-800 rounded-2xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Prueba rápida del módulo</h3>
+<p class="text-sm text-neutral-400 mb-5">Tres preguntas. Haz clic en una opción para ver la respuesta.</p>
+<div class="space-y-5">
+<div class="qz" data-q="1">
+<p class="font-semibold text-neutral-100 mb-3">1. ¿Qué diferencia al pesimismo productivo del derrotista?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">La cantidad de riesgos enumerados</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">El productivo convierte cada riesgo en una acción de prueba</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">El derrotista ignora los riesgos</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Ambos enumeran riesgos. El productivo pregunta «¿cómo reduzco esto?» y hace una apuesta pequeña para averiguarlo."></p>
+</div>
+<div class="qz" data-q="2">
+<p class="font-semibold text-neutral-100 mb-3">2. ¿Cuál es la «prueba del clon»?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">Comprobar si alguien puede recrear tu producto grabando la pantalla y pidiéndole a una IA que lo haga</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Registrar la marca en el INPI</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Comparar precios con la competencia</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Si basta con un video de uso y un prompt para copiarlo, el producto no tiene protección."></p>
+</div>
+<div class="qz" data-q="3">
+<p class="font-semibold text-neutral-100 mb-3">3. ¿Por qué el premortem declara que el producto «ya fracasó»?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Para desmotivar</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">Porque partir del hecho genera explicaciones más concretas que preguntar qué puede salir mal</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Porque es obligatorio en las inversiones</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Cambiar el tiempo verbal saca al modelo (y a ti) del modo de complacer y lo obliga a reconstruir causas específicas."></p>
+</div>
+</div>
+</div>
+<!-- RESUMO DO MÓDULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Pesimismo productivo</strong><span class="text-neutral-400"> - enumerar riesgos para actuar, no para desistir</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Diario de contingencia</strong><span class="text-neutral-400"> - practicar salidas creativas con los recursos que ya tienes</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Cinco razones en contra</strong><span class="text-neutral-400"> - distribución, copia, problema que solo te afecta a ti, mercado incierto, alcance local</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Cinco razones a favor</strong><span class="text-neutral-400"> - solo hechos y recursos actuales, con el mismo rigor</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Apuesta mínima</strong><span class="text-neutral-400"> - la prueba más barata para la duda más peligrosa</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Premortem con IA</strong><span class="text-neutral-400"> - declarar el fracaso y reconstruir las causas con un modelo escéptico</span></div></div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-2.html">← Módulo 1.2</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/index.html">Ruta 2 →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 mt-16 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Productos en la era de la IA · Ruta 1 — La mentalidad · 2026 ·
+        <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> -
+        <a class="text-amber-700 dark:text-slate-300" href="https://inema.pro" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS núcleo v1 -->
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Correcto. ' : '✗ No es esa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

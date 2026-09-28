@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="produtos-era-ia-es" name="inema-course"/>
+<title>Feedback, diseño y usuarios simulados | Productos en la era de la IA</title>
+<meta content="Los usuarios casi nunca dicen qué está mal; simplemente se van. Este módulo muestra cómo escuchar lo que no se dijo, cómo diseñar sin caer en el estilo promedio de la IA y cómo probar el producto con usuarios simulados antes del lanzamiento." name="description"/>
+<!-- ANTI-FOUC: bloqueante, antes de tudo -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (obrigatório em toda página) -->
+<script data-inema-manifest="" type="application/json">
+{
+ "course": "produtos-era-ia-es",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "La mentalidad",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "El juego cambió",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "El problema de lo mediocre",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pesimismo productivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "¿Vale la pena construirlo?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necesidad y vigencia",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, datos y dificultad",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recurrencia y hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lanzar y crecer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribución",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamiento y recorrido",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, diseño y usuarios simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+<link href="https://inematds.github.io/produtos-era-ia/curso/trilha3/modulo-3-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/en/curso/trilha3/modulo-3-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/es/curso/trilha3/modulo-3-3.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/curso/trilha3/modulo-3-3.html" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🧭</span>
+<span class="font-bold text-lg hidden md:inline">Productos en la era de la IA</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../../curso/trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Mentalidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../../curso/trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Oportunidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../../curso/trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Lanzar</span>
+</a>
+<span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-2" data-lang-switch=""><a class="text-neutral-400 hover:text-primary" href="../../../curso/trilha3/modulo-3-3.html" hreflang="pt-BR" lang="pt-BR">PT</a><span class="text-neutral-600">·</span><a class="text-neutral-400 hover:text-primary" href="../../../en/curso/trilha3/modulo-3-3.html" hreflang="en" lang="en">EN</a><span class="text-neutral-600">·</span><a class="text-primary font-bold" href="../../../es/curso/trilha3/modulo-3-3.html" hreflang="es" lang="es">ES</a></span>
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors" data-inema-journey-open="" type="button">
+<span>🧭</span><span>Mi recorrido</span>
+<span class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20" data-inema-journey-badge=""></span>
+</button>
+<button aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" data-inema-appearance-toggle="[data-inema-appearance]" title="Apariencia y lectura" type="button">
+<span aria-hidden="true">Aa</span>
+</button>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle" title="Tema claro/oscuro">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<div aria-label="Apariencia y lectura" class="inema-appearance-pop" data-inema-appearance="" role="region">
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tema</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button class="inema-chip" data-inema-set-theme="claro" type="button">Claro</button>
+<button class="inema-chip" data-inema-set-theme="sepia" type="button">Sepia</button>
+<button class="inema-chip" data-inema-set-theme="foco" type="button">Enfoque</button>
+<button class="inema-chip" data-inema-set-theme="contraste" type="button">Contraste</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tamaño del texto</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-fontscale="90" type="button">A-</button>
+<button class="inema-chip" data-inema-set-fontscale="100" type="button">A</button>
+<button class="inema-chip" data-inema-set-fontscale="115" type="button">A+</button>
+<button class="inema-chip" data-inema-set-fontscale="130" type="button">A++</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Fuente</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-font="inter" type="button">Inter</button>
+<button class="inema-chip" data-inema-set-font="system" type="button">Sistema</button>
+<button class="inema-chip" data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Interlineado</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-leading="1.5" type="button">Compacto</button>
+<button class="inema-chip" data-inema-set-leading="1.7" type="button">Normal</button>
+<button class="inema-chip" data-inema-set-leading="1.9" type="button">Amplio</button>
+</div>
+</div>
+</div>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎨 Feedback, diseño y usuarios simulados</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Los usuarios casi nunca dicen qué está mal; simplemente se van. Este módulo muestra cómo escuchar lo que no se dijo, cómo diseñar sin caer en el estilo promedio de la IA y cómo probar el producto con usuarios simulados antes del lanzamiento.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Temas</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo" aria-valuemax="100" aria-valuemin="0" class="inema-meter max-w-md mt-6" data-inema-meter="modulo:3-3" role="progressbar">
+<div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500 rounded-full transition-all" data-inema-meter-fill="" style="width:0%"></div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="3-3" data-inema-track="3">
+<nav aria-label="Temas de este módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">En este módulo</p>
+<ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+<li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-1"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>El feedback que nadie dio</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-2"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>El comando /product-feedback</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-3"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>Copia el onboarding de quienes ya facturan</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-4"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Diseño sin inflar la configuración</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-5"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Usuarios simulados con subagentes</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-6"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Multitudes sintéticas y el criterio</span></a></li>
+</ol>
+</nav>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎞️ El feedback que nadie dio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p1">Herramientas como <strong class="text-purple-400">PostHog</strong> y <strong class="text-purple-400">Hotjar</strong> ofrecen grabaciones de sesión (<em>session replays</em>): puedes ver, como si fuera un video, a un usuario navegando por tu producto. Dónde hizo clic, dónde se detuvo, dónde volvió, dónde abandonó.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Grabación de sesión</dt><dd class="text-neutral-400" data-inema-block="m3-3-p2">Reconstrucción en video de la navegación de un usuario a partir de los eventos de la página. No usa la cámara de la persona.</dd></div><div><dt class="font-semibold text-neutral-100">Abandono</dt><dd class="text-neutral-400" data-inema-block="m3-3-p3">Momento en que el usuario se va sin completar lo que vino a hacer.</dd></div><div><dt class="font-semibold text-neutral-100">Error en producción</dt><dd class="text-neutral-400" data-inema-block="m3-3-p4">Falla que solo aparece con usuarios reales, en el sistema publicado, y no en tus pruebas.</dd></div><div><dt class="font-semibold text-neutral-100">Enmascaramiento</dt><dd class="text-neutral-400" data-inema-block="m3-3-p5">Función que oculta automáticamente los campos sensibles (contraseñas, tarjetas) en las grabaciones.</dd></div>
+</dl>
+</aside>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💳</span> Un hábito de las grandes empresas</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p6">Durante los primeros meses, el equipo de Stripe observaba el uso que sus clientes hacían del producto, uno por uno, para encontrar cada punto de dolor. No es un hábito exclusivo de las grandes empresas; es lo que hicieron al principio las empresas que tuvieron éxito.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p7">Muchos errores solo aparecen así: un botón que falla con un doble clic, un formulario que desaparece en un celular específico, un usuario que intenta algo que nunca imaginaste.</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Lo que cuenta el usuario frente a lo que muestra la grabación de sesión" class="w-full h-auto" role="img" viewbox="0 0 800 266"><defs>
+<lineargradient id="s51-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s51-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s51-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s51-grid)" height="266" width="800"></rect>
+<rect fill="#3b0764" height="206" opacity="0.95" rx="16" stroke="#a855f7" stroke-width="2" width="330" x="40" y="30"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="205" y="62">LO QUE DICE</text>
+<g class="wf-a"><circle cx="66" cy="96" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="100">Nada (en la mayoría de los casos)</text></g><g class="wf-a"><circle cx="66" cy="130" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="134">«Me pareció bueno»</text></g><g class="wf-a"><circle cx="66" cy="164" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="168">«Después lo veo»</text></g><g class="wf-a"><circle cx="66" cy="198" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="202">Se va sin explicar</text></g><rect fill="#0e1b26" height="206" opacity="0.95" rx="16" stroke="#38bdf8" stroke-width="2" width="330" x="430" y="30"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="595" y="62">LO QUE MUESTRA LA GRABACIÓN</text>
+<g class="wf-a"><circle cx="456" cy="96" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="100">Hizo clic 4 veces en el mismo botón</text></g><g class="wf-a"><circle cx="456" cy="130" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="134">No encontró dónde pegar el enlace</text></g><g class="wf-a"><circle cx="456" cy="164" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="168">Desplazó la página buscando el precio</text></g><g class="wf-a"><circle cx="456" cy="198" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="202">Salió en el paso 3 del registro</text></g>
+<line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="121" y2="121"></line><line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="129" y2="129"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="400" y="149">lo que dijo × lo que hizo</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> La columna de la derecha es el feedback real. Nadie escribió nada, pero ahí está todo.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Qué buscar en las grabaciones</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Clics repetidos en el mismo punto (algo no respondió).</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Desplazamiento hacia arriba y hacia abajo (la persona está perdida).</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Salida justo después de un paso específico.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Cuidados</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Registrar campos sensibles sin enmascararlos.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No informar sobre la recopilación en la política de privacidad.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ver una grabación y generalizar para todas.</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p8">Es posible crear tu propia herramienta de grabación con IA, pero las herramientas consolidadas siguen siendo más confiables y tienen un plan gratuito. Reserva tu energía para tu producto.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⚙️ El comando /product-feedback</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p9">Hoy, en vez de ver cada grabación, un <strong class="text-purple-400">modelo multimodal rápido</strong> (como las versiones Flash de Gemini) puede verlas todas y decirte dónde la experiencia es confusa y en qué puntos las personas no llegan al clic deseado en menos de diez segundos. Después, un agente de código como Claude Code convierte ese diagnóstico en un plan de corrección.</p>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="El flujo del comando /product-feedback, desde la recopilación hasta el plan de corrección" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s52-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s52-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s52-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s52-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="102.4" y="104">Recopilar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="122">grabaciones de</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="134.5">PostHog</text></g>
+<path class="wf-flow" d="M166.8 102 L186.8 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="182.8,97 182.8,107 188.8,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="188.8" y="60"></rect>
+<circle cx="206.8" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="206.8" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="251.20000000000002" y="104">Ver</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="122">modelo de</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="134.5">video rápido</text></g>
+<path class="wf-flow" d="M315.6 102 L335.6 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="331.6,97 331.6,107 337.6,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="337.6" y="60"></rect>
+<circle cx="355.6" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="355.6" y="82">3</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="400" y="104">Resumir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="122">dónde se traban</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="134.5">y por qué</text></g>
+<path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="486.40000000000003" y="60"></rect>
+<circle cx="504.40000000000003" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="504.40000000000003" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="548.8000000000001" y="104">Planificar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="122">Claude Code</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="134.5">prepara el plan</text></g>
+<path class="wf-flow" d="M613.2 102 L633.2 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="629.2,97 629.2,107 635.2,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="635.2" y="60"></rect>
+<circle cx="653.2" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="653.2" y="82">5</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="697.6" y="104">Corregir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="122">tú apruebas</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="134.5">y aplicas</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">El flujo del comando /product-feedback, desde la recopilación hasta el plan de corrección</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Una sola acción activa los cinco pasos. El último sigue estando en tus manos: la IA propone y tú decides qué cambia.</figcaption>
+</figure>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Skill</dt><dd class="text-neutral-400" data-inema-block="m3-3-p10">Un conjunto de instrucciones guardado que Claude Code ejecuta cuando lo llamas por su nombre, como /product-feedback.</dd></div><div><dt class="font-semibold text-neutral-100">Modelo multimodal</dt><dd class="text-neutral-400" data-inema-block="m3-3-p11">Modelo de IA que entiende imágenes y videos, además de texto.</dd></div>
+</dl>
+</aside>
+<div class="codebox bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+<div><p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-1">Copia y ejecútalo</p><p class="text-sm text-neutral-300">Crear la skill /product-feedback en Claude Code. Guárdala como .claude/skills/product-feedback/SKILL.md en la carpeta del proyecto.</p></div>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors" data-copy="" type="button">Copiar</button>
+</div>
+<pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">---
+name: product-feedback
+description: Analiza grabaciones de sesiones recientes y genera un plan para corregir la experiencia del usuario.
+---
+
+# /product-feedback
+
+Objetivo: descubrir dónde se traban los usuarios, aunque nadie se haya quejado.
+
+1. Descarga las &lt;N, por ejemplo: 30&gt; grabaciones de sesión más recientes de &lt;PostHog | Hotjar&gt;
+   usando &lt;la API/CLI de la herramienta, con la clave en .env&gt;. Omite las sesiones de menos de 10 s.
+2. Para cada grabación, pídele al modelo de video &lt;por ejemplo: Gemini Flash&gt; un resumen con:
+   - objetivo aparente del usuario;
+   - dónde dudó (clics repetidos, búsquedas al desplazarse, pausas largas);
+   - si llegó al resultado principal en menos de 10 segundos;
+   - dónde salió.
+3. Agrupa los problemas por pantalla y ordénalos según la cantidad de sesiones afectadas.
+4. Lee el código de las pantallas más problemáticas en &lt;carpeta del front-end&gt; y escribe
+   PLANO-FEEDBACK.md con: problema, evidencia (cuántas sesiones), causa probable,
+   cambio propuesto, archivo que se modificará, cómo medir si mejoró.
+5. NO modifiques el código. Detente y muéstrame el plan para que lo apruebe.</code></pre>
+<div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Ejecuta /product-feedback en Claude Code. Debe aparecer un PLANO-FEEDBACK.md con los problemas ordenados por número de sesiones y sin que se haya modificado ningún archivo de código.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Déjaselo a la IA</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Ver y resumir decenas de grabaciones.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Agrupar problemas por pantalla.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Proponer cambios e indicar archivos.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Déjalo en tus manos</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aprobar los cambios en el producto.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Decidir qué es prioritario para el negocio.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Verificar que las grabaciones respeten la privacidad.</span></li></ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Costo y privacidad</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p12">Enviar videos a un modelo externo tiene un costo por uso e implica enviar datos de navegación fuera de tu entorno. Usa grabaciones con campos enmascarados, limita el número de sesiones por ronda y confirma que tus términos de uso permitan este procesamiento.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧭 Copia el onboarding de quienes ya facturan</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p13">El <strong class="text-purple-400">onboarding</strong> es la incorporación del usuario al producto: desde el primer acceso hasta el momento en que entiende cómo funciona y empieza a usarlo. Los productos que generan ingresos ya han perfeccionado esa incorporación con muchas pruebas. En vez de empezar de cero, estudia lo que hacen.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Onboarding</dt><dd class="text-neutral-400" data-inema-block="m3-3-p14">El proceso de recibir y orientar al usuario nuevo hasta que logra usar el producto por primera vez.</dd></div><div><dt class="font-semibold text-neutral-100">Prueba A/B</dt><dd class="text-neutral-400" data-inema-block="m3-3-p15">Mostrar dos versiones a distintos grupos y ver cuál convierte más.</dd></div><div><dt class="font-semibold text-neutral-100">Ingeniería inversa</dt><dd class="text-neutral-400" data-inema-block="m3-3-p16">Estudiar un producto terminado para entender cómo fue diseñado.</dd></div><div><dt class="font-semibold text-neutral-100">Uso de computadora</dt><dd class="text-neutral-400" data-inema-block="m3-3-p17">Capacidad de un agente de IA para abrir un navegador, hacer clic, desplazarse y leer la pantalla como una persona.</dd></div>
+</dl>
+</aside>
+<div class="space-y-5 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">Cómo estudiar un onboarding</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Encuentra quién genera ingresos de verdad</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p18">Hay sitios que muestran productos con ingresos verificados mediante la integración con el medio de pago. Los ingresos indican que la experiencia de incorporación funciona.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Recorre todo el proceso de incorporación</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p19">Crea una cuenta y úsala por primera vez. O pídele a un agente con uso de computadora (Codex tiene un navegador integrado) que lo haga y registre cada pantalla.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Anota qué es diferente</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p20">El orden de las preguntas, qué se pide y cuándo, los textos de los botones y lo que aparece justo después del registro.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Adapta, no clones</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p21">Adopta el principio, no el diseño. Lo que funciona para su público puede necesitar ajustes para el tuyo.</p>
+</div>
+</div>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Empezar de cero frente a aprovechar lo que ya aprendieron quienes hicieron pruebas" class="w-full h-auto" role="img" viewbox="0 0 800 320"><defs>
+<lineargradient id="s53-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s53-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s53-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s53-grid)" height="320" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="4" x1="400" x2="400" y1="70" y2="270"></line><rect fill="#9ca3af" height="12" rx="6" width="160" x="320" y="266"></rect>
+<line filter="url(#s53-glow)" stroke="#a855f7" stroke-width="4" x1="180" x2="620" y1="52" y2="88"></line>
+<g class="wf-a"><rect fill="#3b0764" height="110" rx="14" stroke="#a855f7" stroke-width="2" width="200" x="80" y="92"></rect>
+<line stroke="#a855f7" stroke-width="2" x1="180" x2="180" y1="52" y2="92"></line>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="180" y="124">DESDE CERO</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="148">Tú pruebas por tu cuenta</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="162">Meses de intentos</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="176">Promedio de la IA como base</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="110" rx="14" stroke="#38bdf8" stroke-width="2" width="200" x="520" y="128"></rect>
+<line stroke="#38bdf8" stroke-width="2" x1="620" x2="620" y1="88" y2="128"></line>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="620" y="160">HEREDADO</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="184">Cientos de pruebas A/B</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="198">Ya validado con dinero</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="212">Tú lo adaptas a tu nicho</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="306">Empezar de cero frente a aprovechar lo que ya aprendieron quienes hicieron pruebas</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> La balanza se inclina hacia quienes ya hicieron pruebas. Los ingresos demuestran que el flujo convence a alguien de pagar.</figcaption>
+</figure>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Por qué no pedir simplemente «haz un buen onboarding»</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p22">Si le pides al modelo un onboarding sin darle referencias, te entrega el promedio de lo que vio durante el entrenamiento. El promedio no es lo que mejor convierte; es solo lo más común. Las referencias reales llevan el resultado por encima del promedio.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p23">Ten cuidado con las plataformas públicas de métricas: mostrar tus ingresos en un sitio abierto también avisa a quienes podrían copiarte. Estudia a los demás, pero piensa bien antes de hacer públicos tus números.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🖌️ Diseño sin inflar la configuración</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p24">Una recomendación común es «instala estas siete skills de diseño para que tu app no parezca hecha por IA». El resultado suele parecer... hecho por IA. Peor aún: cada skill tiene un estilo y, cuando el agente usa tres a la vez, <strong class="text-purple-400">los paradigmas de diseño chocan</strong>. La configuración queda recargada y el aspecto, confuso.</p>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Configuración recargada de skills de diseño frente a un agente que consulta referencias y elige con criterio" class="w-full h-auto" role="img" viewbox="0 0 800 266"><defs>
+<lineargradient id="s54-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s54-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s54-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s54-grid)" height="266" width="800"></rect>
+<rect fill="#3b0764" height="206" opacity="0.95" rx="16" stroke="#a855f7" stroke-width="2" width="330" x="40" y="30"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="205" y="62">CONFIGURACIÓN RECARGADA</text>
+<g class="wf-a"><circle cx="66" cy="96" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="100">7 skills de diseño instaladas</text></g><g class="wf-a"><circle cx="66" cy="130" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="134">Estilos que se contradicen</text></g><g class="wf-a"><circle cx="66" cy="164" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="168">Contexto lleno de reglas</text></g><g class="wf-a"><circle cx="66" cy="198" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="202">Resultado: un promedio genérico</text></g><rect fill="#0e1b26" height="206" opacity="0.95" rx="16" stroke="#38bdf8" stroke-width="2" width="330" x="430" y="30"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="595" y="62">BÚSQUEDA DIRIGIDA</text>
+<g class="wf-a"><circle cx="456" cy="96" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="100">El agente navega por galerías</text></g><g class="wf-a"><circle cx="456" cy="130" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="134">Anota lo que sirve para el nicho</text></g><g class="wf-a"><circle cx="456" cy="164" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="168">Elige con criterio</text></g><g class="wf-a"><circle cx="456" cy="198" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="202">Resultado: identidad propia</text></g>
+<line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="121" y2="121"></line><line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="129" y2="129"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="400" y="149">instalar × observar</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Instalar es incorporar la opinión de otra persona. Observar es tomar solo lo que sirve para tu producto.</figcaption>
+</figure>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🧩</div>
+<h4 class="font-semibold text-purple-400 mb-2">21st.dev</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p25">Galería de componentes de interfaz: fondos, bordes, tarjetas y botones. Útil para ver patrones visuales.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🎬</div>
+<h4 class="font-semibold text-purple-400 mb-2">whatships</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p26">Videos de lanzamiento de productos. Referencia para el video de marketing de tu sitio.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🏆</div>
+<h4 class="font-semibold text-purple-400 mb-2">Awwwards</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-p27">Sitios premiados del mes y del año. Tipografía, diseño e interacción por encima del promedio.</p>
+</div>
+</div>
+<div class="codebox bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+<div><p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-1">Copia y ejecútalo</p><p class="text-sm text-neutral-300">Pídele a un agente con navegador (Codex con uso de computadora o Claude con navegador) que estudie referencias y proponga una guía visual para tu producto.</p></div>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors" data-copy="" type="button">Copiar</button>
+</div>
+<pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Usa el navegador para estudiar referencias de diseño. NO instales skills, plugins ni paquetes.
+
+Mi producto: &lt;frase de posicionamiento de una línea&gt;
+Público: &lt;quién lo usa&gt;
+Sensación deseada: &lt;por ejemplo: confiable y tranquilo | rápido y audaz&gt;
+
+1. Abre https://21st.dev y recorre los componentes (fondos, bordes, tarjetas, botones).
+   Anota 5 que encajen con el producto y explica por qué.
+2. Abre https://whatships.com, mira 3 videos de lanzamiento de productos similares
+   y describe cuadro por cuadro qué hace que cada uno sea claro en menos de 2 minutos.
+3. Abre https://www.awwwards.com (sitios del mes/año), recorre 3 sitios hasta el final y anota:
+   tipografía, posición de los botones, ritmo del desplazamiento y qué es inusual.
+4. Escribe GUIA-VISUAL.md con: paleta, 2 fuentes, 5 componentes elegidos,
+   estructura de la página de inicio y guion de un video de 60 s.
+5. Justifica cada elección según el público y la sensación deseada.</code></pre>
+<div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> El agente debe abrir los tres sitios (verás cómo navega) y entregar un GUIA-VISUAL.md con las elecciones justificadas, sin haber instalado nada en el proyecto.</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Valor por desplazamiento</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p28">Al revisar tu página, pregúntate en cada pantalla de desplazamiento: «¿qué aprendió la persona aquí?». Minimalista no significa vacío; cada desplazamiento debe aportar valor.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">👥 Usuarios simulados con subagentes</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p29">Un <strong class="text-purple-400">subagente</strong> es un agente de IA que el agente principal crea para encargarse de una tarea aparte, con instrucciones propias. Puedes crear varios, cada uno con una <strong class="text-purple-400">persona</strong>: un perfil de usuario con distinta edad, rutina, paciencia y experiencia.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Subagente</dt><dd class="text-neutral-400" data-inema-block="m3-3-p30">Agente auxiliar creado para una tarea específica, con contexto e instrucciones propios.</dd></div><div><dt class="font-semibold text-neutral-100">Persona</dt><dd class="text-neutral-400" data-inema-block="m3-3-p31">Descripción de un usuario típico: quién es, qué quiere, qué le irrita.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Un agente principal distribuye el análisis del producto entre subagentes con distintas personas" class="w-full h-auto" role="img" viewbox="0 0 800 328"><defs>
+<lineargradient id="s55-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s55-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s55-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s55-grid)" height="328" width="800"></rect>
+<g filter="url(#s55-glow)"><circle cx="130" cy="164" fill="#3b0764" r="88" stroke="url(#s55-g)" stroke-width="2.5"></circle></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="130" y="156">Tu</text><text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="130" y="174">producto</text><path d="M220 164 C 255 164, 255 56, 380 56" fill="none" opacity="0.6" stroke="#a855f7" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#3b0764" height="48" rx="10" stroke="#a855f7" stroke-width="1.6" width="400" x="380" y="32"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="62">+55</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="53">Años, poca familiaridad digital</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="69">necesita claridad, letra legible, confianza</text></g><path d="M220 164 C 255 164, 255 128, 380 128" fill="none" opacity="0.6" stroke="#38bdf8" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="1.6" width="400" x="380" y="104"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="134">+20</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="125">Años, TDAH, probó 100 productos en la semana</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="141">decide en segundos, odia esperar</text></g><path d="M220 164 C 255 164, 255 200, 380 200" fill="none" opacity="0.6" stroke="#a855f7" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#3b0764" height="48" rx="10" stroke="#a855f7" stroke-width="1.6" width="400" x="380" y="176"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="206">+1</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="197">Gerente que va a pagar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="213">quiere ver costos, seguridad y retorno</text></g><path d="M220 164 C 255 164, 255 272, 380 272" fill="none" opacity="0.6" stroke="#38bdf8" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="1.6" width="400" x="380" y="248"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="278">+1</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="269">Especialista técnico escéptico</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="285">busca fallas y promesas exageradas</text></g></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Cada rama analiza el mismo producto y ve problemas distintos. El valor está en las diferencias: lo que una persona ama, otra puede abandonarlo.</figcaption>
+</figure>
+<div class="codebox bg-dark-800 rounded-xl border border-purple-500/30 overflow-hidden mb-6">
+<div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+<div><p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-1">Copia y ejecútalo</p><p class="text-sm text-neutral-300">Ejecutar un panel de 4 usuarios simulados en Claude Code sobre tu página o app.</p></div>
+<button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors" data-copy="" type="button">Copiar</button>
+</div>
+<pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Crea 4 subagentes, uno para cada persona a continuación. Cada uno debe analizar
+&lt;URL de la página | carpeta del proyecto&gt; desde su propio punto de vista, de forma independiente.
+
+Personas:
+1. &lt;Nombre&gt;, 55 años, &lt;profesión&gt;, usa el celular para casi todo, desconfía de pagar en línea.
+2. &lt;Nombre&gt;, 20 años, TDAH, probó 100 productos en la última semana, decide en 10 segundos.
+3. &lt;Nombre&gt;, gerente que aprueba la compra: quiere costos, seguridad y retorno claros.
+4. &lt;Nombre&gt;, especialista técnico escéptico: busca fallas y promesas exageradas.
+
+Cada subagente responde:
+- En 10 segundos, ¿entendí de qué se trata? (sí/no + qué creí que era)
+- Qué me haría salir de la página.
+- Qué me haría pagar.
+- La frase exacta que cambiaría.
+
+Después, consolida todo en PAINEL-PERSONAS.md: puntos en los que 3 o más coinciden,
+diferencias importantes y los 5 cambios de mayor impacto, en orden.</code></pre>
+<div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Debe aparecer PAINEL-PERSONAS.md con cuatro opiniones distintas y una lista priorizada. Si las cuatro suenan iguales, haz que las personas sean más específicas y vuelve a ejecutarlo.</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Una simulación no es validación</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p32">Las personas simuladas ayudan a encontrar problemas obvios antes del lanzamiento. No sustituyen a personas reales que pagan. Úsalas para mejorar el producto, no para concluir que va a funcionar.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🌐 Multitudes sintéticas y criterio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-p33">Hay herramientas, como <strong class="text-purple-400">Mirofish</strong>, que crean cientos o miles de agentes, cada uno con un pequeño prompt de sistema que describe quién es. Juntos, simulan compradores de un mercado y dicen qué pensarían de tu producto, tu página o tu anuncio.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Multitud sintética</dt><dd class="text-neutral-400" data-inema-block="m3-3-p34">Un gran número de agentes con perfiles variados que simulan la reacción de un público.</dd></div><div><dt class="font-semibold text-neutral-100">Backtest</dt><dd class="text-neutral-400" data-inema-block="m3-3-p35">Probar un método con datos del pasado para ver si habría acertado lo que realmente ocurrió.</dd></div><div><dt class="font-semibold text-neutral-100">Prompt de sistema</dt><dd class="text-neutral-400" data-inema-block="m3-3-p36">Instrucción inicial que define quién es el agente y cómo debe comportarse.</dd></div>
+</dl>
+</aside>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📊</span> La prueba que genera confianza: el backtest</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p37">La gente ha usado estas herramientas para una prueba sencilla: tomar las últimas 10 publicaciones de un perfil y pedirle a la multitud sintética, con el público de ese perfil, que diga cuál tendría más éxito. En muchos casos, señala la publicación que realmente se volvió viral.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p38">Si la simulación acierta sobre el pasado, ganas algo de confianza para usarla en decisiones futuras: qué título probar, qué página publicar, qué oferta hacer.</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="De lo más barato y rápido a lo más confiable: las capas de prueba antes y después del lanzamiento" class="w-full h-auto" role="img" viewbox="0 0 800 340"><defs>
+<lineargradient id="s56-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s56-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s56-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s56-grid)" height="340" width="800"></rect><g><rect fill="#0e1b26" height="52" opacity="0.95" rx="12" stroke="#a855f7" stroke-width="1.6" width="600" x="100" y="40"></rect>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="63">Multitud sintética</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="81">miles de opiniones simuladas</text></g><g><rect fill="#0e1b26" height="52" opacity="0.95" rx="12" stroke="#38bdf8" stroke-width="1.6" width="520" x="140" y="110"></rect>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="133">Panel de personas</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="151">4 a 6 subagentes detallados</text></g><g><rect fill="#0e1b26" height="52" opacity="0.95" rx="12" stroke="#a855f7" stroke-width="1.6" width="440" x="180" y="180"></rect>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="203">Grabaciones de sesiones</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="221">uso real, sin palabras</text></g><g filter="url(#s56-glow)"><rect fill="#3b0764" height="52" opacity="0.95" rx="12" stroke="url(#s56-g)" stroke-width="2.5" width="360" x="220" y="250"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="273">Clientes que pagan</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="291">la única validación definitiva</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" transform="rotate(-90 60 170)" x="60" y="170">de afuera hacia adentro</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Cuanto más hacia el centro, más confiable y más caro. Las capas externas sirven para llegar al centro con menos errores, no para sustituirlo.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Usa la simulación para</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Elegir entre versiones de un título o una página.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Encontrar objeciones antes de gastar en anuncios.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Ver cómo reaccionan distintos públicos.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No uses la simulación para</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Concluir que el producto se va a vender.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Prescindir de hablar con clientes reales.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Justificar una decisión que ya habías tomado.</span></li></ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🧭</span> Cierre: el criterio es el juego</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p39">Todo lo que este curso mostró está al alcance de cualquiera hoy: construir, diseñar, simular, analizar. Precisamente por eso, nada de eso te diferencia por sí solo.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-3-p40">Lo que te diferencia es el criterio: saber si vale la pena construir algo, para quién, durante cuánto tiempo y cómo llegar a esas personas. En un mundo donde se puede construir cualquier cosa, ese criterio es todo el juego.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Próximo paso práctico</h3>
+<p class="text-neutral-300" data-inema-block="m3-3-p41">Toma el producto o la idea en la que estás trabajando y sigue este orden: la frase de una línea (3-2), el panel de personas (3-3) y el plan de distribución para las primeras 100 personas (3-1). En una tarde tendrás las tres respuestas por escrito.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- QUIZ -->
+<div class="bg-dark-800 rounded-2xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Prueba rápida del módulo</h3>
+<p class="text-sm text-neutral-400 mb-5">Tres preguntas. Haz clic en una opción para ver la respuesta.</p>
+<div class="space-y-5">
+<div class="qz" data-q="1">
+<p class="font-semibold text-neutral-100 mb-3">1. ¿Por qué son valiosas las grabaciones de sesiones?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Porque muestran la cara del usuario</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Porque revelan dónde se atasca la gente, aunque nadie se queje</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Porque sustituyen las pruebas de código</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="La mayoría de los usuarios se va en silencio. La grabación muestra clics repetidos, dudas y el punto exacto en que abandonan."></p>
+</div>
+<div class="qz" data-q="2">
+<p class="font-semibold text-neutral-100 mb-3">2. ¿Cuál es el problema de instalar varias skills de diseño al mismo tiempo?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Ninguno, cuantas más, mejor</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Los estilos compiten entre sí, saturan el contexto y llevan a un aspecto genérico</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Hacen que el sitio sea más lento para el usuario</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Cada skill aporta un paradigma visual. Juntas, se contradicen. Pedirle al agente que lea referencias y elija con cuidado genera una identidad propia."></p>
+</div>
+<div class="qz" data-q="3">
+<p class="font-semibold text-neutral-100 mb-3">3. ¿Cuál es la única validación definitiva de un producto?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Que lo apruebe una multitud sintética</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Que le guste a un panel de personas</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Que paguen clientes reales</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Las simulaciones y las grabaciones ayudan a cometer menos errores, pero solo un pago real demuestra que el producto vale la pena para el mercado."></p>
+</div>
+</div>
+</div>
+<!-- RESUMO DO MÓDULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Grabaciones de sesiones</strong><span class="text-neutral-400"> - La verdadera retroalimentación está en lo que hizo el usuario, no en lo que dijo.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">/product-feedback</strong><span class="text-neutral-400"> - Un modelo de video resume las sesiones; un agente de código arma el plan; tú lo apruebas.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Onboarding heredado</strong><span class="text-neutral-400"> - Estudia a quienes ya generan ingresos; adapta el principio, no copies el diseño.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Diseño a partir de referencias</strong><span class="text-neutral-400"> - Revisa galerías y elige con cuidado, en lugar de acumular skills.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Personas y multitudes</strong><span class="text-neutral-400"> - La simulación encuentra problemas pronto, pero no sustituye a un cliente que paga.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Criterio</strong><span class="text-neutral-400"> - Cuando se puede construir cualquier cosa, saber qué vale la pena construir es el juego.</span></div></div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-2.html">← Módulo 3.2</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="../../index.html">Inicio del curso →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 mt-16 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Productos en la era de la IA · Ruta 3 — Lanzar y crecer · 2026 ·
+        <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> -
+        <a class="text-amber-700 dark:text-slate-300" href="https://inema.pro" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS núcleo v1 -->
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Correcto. ' : '✗ No es esa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

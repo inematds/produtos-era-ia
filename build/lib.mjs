@@ -83,7 +83,7 @@ export function head({ rel, title, desc, manifestJson, extraCss = '' }) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="inema-course" content="${COURSE_ID}">
   <title>${title} | ${COURSE_TITLE}</title>
-  <meta name="description" content="${desc}">
+  <meta name="description" content="${String(desc).replace(/<[^>]+>/g, '').replace(/&/g, '&amp;').replace(/"/g, '&quot;')}">
 
   <!-- ANTI-FOUC: bloqueante, antes de tudo -->
   ${antiFouc()}
@@ -165,6 +165,8 @@ ${manifestJson}
     .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
     html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
     html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
     /* Code box */
     .codebox pre { white-space: pre-wrap; word-break: break-word; }
     ${extraCss}

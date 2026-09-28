@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="produtos-era-ia-es" name="inema-course"/>
+<title>Distribución | Productos en la era de la IA</title>
+<meta content="Construir se volvió fácil. Lograr que alguien sepa que tu producto existe sigue siendo difícil. Este módulo aborda el problema que hace fracasar a la mayoría de los proyectos: cómo generar las primeras señales de vida sin presupuesto de publicidad." name="description"/>
+<!-- ANTI-FOUC: bloqueante, antes de tudo -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (obrigatório em toda página) -->
+<script data-inema-manifest="" type="application/json">
+{
+ "course": "produtos-era-ia-es",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "La mentalidad",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "El juego cambió",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "El problema de lo mediocre",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pesimismo productivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "¿Vale la pena construirlo?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necesidad y vigencia",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, datos y dificultad",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recurrencia y hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lanzar y crecer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribución",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamiento y recorrido",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, diseño y usuarios simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+<link href="https://inematds.github.io/produtos-era-ia/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/curso/trilha3/modulo-3-1.html" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🧭</span>
+<span class="font-bold text-lg hidden md:inline">Productos en la era de la IA</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../../curso/trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Mentalidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../../curso/trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Oportunidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../../curso/trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Lanzar</span>
+</a>
+<span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-2" data-lang-switch=""><a class="text-neutral-400 hover:text-primary" href="../../../curso/trilha3/modulo-3-1.html" hreflang="pt-BR" lang="pt-BR">PT</a><span class="text-neutral-600">·</span><a class="text-neutral-400 hover:text-primary" href="../../../en/curso/trilha3/modulo-3-1.html" hreflang="en" lang="en">EN</a><span class="text-neutral-600">·</span><a class="text-primary font-bold" href="../../../es/curso/trilha3/modulo-3-1.html" hreflang="es" lang="es">ES</a></span>
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors" data-inema-journey-open="" type="button">
+<span>🧭</span><span>Mi recorrido</span>
+<span class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20" data-inema-journey-badge=""></span>
+</button>
+<button aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" data-inema-appearance-toggle="[data-inema-appearance]" title="Apariencia y lectura" type="button">
+<span aria-hidden="true">Aa</span>
+</button>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle" title="Tema claro/oscuro">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<div aria-label="Apariencia y lectura" class="inema-appearance-pop" data-inema-appearance="" role="region">
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tema</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button class="inema-chip" data-inema-set-theme="claro" type="button">Claro</button>
+<button class="inema-chip" data-inema-set-theme="sepia" type="button">Sepia</button>
+<button class="inema-chip" data-inema-set-theme="foco" type="button">Enfoque</button>
+<button class="inema-chip" data-inema-set-theme="contraste" type="button">Contraste</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tamaño del texto</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-fontscale="90" type="button">A-</button>
+<button class="inema-chip" data-inema-set-fontscale="100" type="button">A</button>
+<button class="inema-chip" data-inema-set-fontscale="115" type="button">A+</button>
+<button class="inema-chip" data-inema-set-fontscale="130" type="button">A++</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Fuente</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-font="inter" type="button">Inter</button>
+<button class="inema-chip" data-inema-set-font="system" type="button">Sistema</button>
+<button class="inema-chip" data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Interlineado</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-leading="1.5" type="button">Compacto</button>
+<button class="inema-chip" data-inema-set-leading="1.7" type="button">Normal</button>
+<button class="inema-chip" data-inema-set-leading="1.9" type="button">Amplio</button>
+</div>
+</div>
+</div>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📣 Distribución</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Construir se volvió fácil. Lograr que alguien sepa que tu producto existe sigue siendo difícil. Este módulo aborda el problema que hace fracasar a la mayoría de los proyectos: cómo generar las primeras señales de vida sin presupuesto de publicidad.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Temas</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Estrategia</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo" aria-valuemax="100" aria-valuemin="0" class="inema-meter max-w-md mt-6" data-inema-meter="modulo:3-1" role="progressbar">
+<div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500 rounded-full transition-all" data-inema-meter-fill="" style="width:0%"></div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="3-1" data-inema-track="3">
+<nav aria-label="Temas de este módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">En este módulo</p>
+<ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+<li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-1"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>La distribución alcanza a todos</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-2"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>Reddit y las comunidades</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-3"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>Guerrilla y apuestas pequeñas</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-4"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Afiliados de ambos lados</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-5"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Momentos de «sangre en las calles»</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-purple-400" href="#topico-6"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Aceleradoras y creadores de contenido</span></a></li>
+</ol>
+</nav>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">💓 La distribución afecta a todos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p1">Hay un patrón que se repite en casi todos los proyectos nuevos: alguien pasa semanas trabajando en el producto, lo publica y el silencio es total. Ningún registro, ningún comentario, ninguna queja. No porque el producto sea malo, sino porque <strong class="text-purple-400">nadie sabe que existe</strong>. El primer trabajo después de construir es generar un pulso: cualquier señal de que a alguien, fuera de tu círculo, le importa.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📈</span> Por qué esto empeoró en lugar de mejorar</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p2">Cuando construir requería un equipo y meses de trabajo, había pocos competidores llegando al mismo tiempo. Hoy, con agentes de código, aparecen decenas de productos parecidos en la misma semana. El resultado es una inflación de lanzamientos: el público ve «novedades» todo el día y empieza a ignorar casi todo.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p3">En este escenario, la distribución no es la etapa final del plan. Hay que pensarla junto con la idea. La pregunta «¿cómo van a descubrir esto las primeras cien personas?» debe tener respuesta antes de escribir la primera línea de código.</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Comparación entre lo que escaseaba antes y lo que escasea ahora al crear productos" class="w-full h-auto" role="img" viewbox="0 0 800 266"><defs>
+<lineargradient id="s39-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s39-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s39-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s39-grid)" height="266" width="800"></rect>
+<rect fill="#3b0764" height="206" opacity="0.95" rx="16" stroke="#a855f7" stroke-width="2" width="330" x="40" y="30"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="205" y="62">ANTES</text>
+<g class="wf-a"><circle cx="66" cy="96" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="100">Construir era caro</text></g><g class="wf-a"><circle cx="66" cy="130" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="134">Pocos competidores</text></g><g class="wf-a"><circle cx="66" cy="164" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="168">Los lanzamientos llamaban la atención</text></g><g class="wf-a"><circle cx="66" cy="198" fill="#c084fc" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="80" y="202">La distribución venía después</text></g><rect fill="#0e1b26" height="206" opacity="0.95" rx="16" stroke="#38bdf8" stroke-width="2" width="330" x="430" y="30"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="595" y="62">AHORA</text>
+<g class="wf-a"><circle cx="456" cy="96" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="100">Construir es barato</text></g><g class="wf-a"><circle cx="456" cy="130" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="134">Decenas de clones por semana</text></g><g class="wf-a"><circle cx="456" cy="164" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="168">«Novedad» se volvió ruido</text></g><g class="wf-a"><circle cx="456" cy="198" fill="#38bdf8" r="4"></circle><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" x="470" y="202">La distribución va junto con la idea</text></g>
+<line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="121" y2="121"></line><line stroke="#9ca3af" stroke-width="1.5" x1="385" x2="415" y1="129" y2="129"></line>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="400" y="149">el cuello de botella cambió</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> El costo de construir bajó; el costo de hacerse notar subió. Quien solo planifica el producto está invirtiendo en la parte que se volvió barata.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Señales de que hay pulso</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Personas desconocidas se registran sin que se lo pidas.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Alguien vuelve al día siguiente.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Llegan preguntas y quejas (es buena señal).</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Una persona se lo recomienda a otra.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Señales de que todavía no existe</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Solo lo probaron amigos y familiares.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Todo el tráfico viene de tu propia publicación.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nadie se queja de nada.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Las cifras solo suben el día del lanzamiento.</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Pregunta para tener a mano</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p4">Antes de empezar cualquier producto, escribe en una frase: «Las primeras 100 personas me encontrarán por medio de ____». Si el espacio queda en blanco, todavía no tienes un plan: solo tienes una idea.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🧵 Reddit y comunidades</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p5">Comunidades como Reddit tienen una métrica llamada <strong class="text-purple-400">karma</strong>: puntos que acumulas cuando otras personas aprueban tus respuestas. Las cuentas con mucho karma aparecen más destacadas y se filtran menos como spam. Es decir, la reputación es literalmente lo que abre el canal.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Karma</dt><dd class="text-neutral-400" data-inema-block="m3-1-p6">Puntuación acumulada por los votos positivos en tus contribuciones. Funciona como crédito de confianza.</dd></div><div><dt class="font-semibold text-neutral-100">Autopromoción</dt><dd class="text-neutral-400" data-inema-block="m3-1-p7">Publicar solo para promocionar tu propio producto. Casi todas las comunidades lo penalizan o lo eliminan.</dd></div><div><dt class="font-semibold text-neutral-100">Mención natural</dt><dd class="text-neutral-400" data-inema-block="m3-1-p8">Mencionar la herramienta que usas de pasada, dentro de una respuesta que ya resuelve el problema de la persona.</dd></div><div><dt class="font-semibold text-neutral-100">Subcomunidad</dt><dd class="text-neutral-400" data-inema-block="m3-1-p9">Foro temático (en Reddit, un «subreddit») donde se concentra un público específico.</dd></div>
+</dl>
+</aside>
+<div class="space-y-5 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">El camino en cuatro pasos</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Identifica dónde pregunta tu público</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p10">Haz una lista de 5 a 10 foros, grupos o subcomunidades donde aparezcan los problemas que resuelve tu producto. Lee antes de escribir.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Responde sin vender</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p11">Durante semanas, resuelve problemas reales. Da respuestas completas, paso a paso. Eso es lo que genera karma y memoria.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Menciónalo de pasada</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p12">Cuando la pregunta sea exactamente sobre lo que resuelve el producto, termina la respuesta con algo como «yo uso X para eso». Una frase, no un anuncio.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Mide y repite</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p13">Usa un enlace con un parámetro de origen para saber qué respuestas atrajeron a la gente. Apuesta más por los foros que funcionan.</p>
+</div>
+</div>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Ciclo de reputación en comunidades: ayudar genera karma, el karma genera visibilidad y la visibilidad genera tráfico" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s40-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s40-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s40-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s40-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="102.4" y="104">Ayudar</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="122">respuestas</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="134.5">completas</text></g>
+<path class="wf-flow" d="M166.8 102 L186.8 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="182.8,97 182.8,107 188.8,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="188.8" y="60"></rect>
+<circle cx="206.8" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="206.8" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="251.20000000000002" y="104">Karma</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="122">votos y</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="134.5">reputación</text></g>
+<path class="wf-flow" d="M315.6 102 L335.6 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="331.6,97 331.6,107 337.6,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="337.6" y="60"></rect>
+<circle cx="355.6" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="355.6" y="82">3</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="400" y="104">Visibilidad</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="122">más gente</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="134.5">te lee</text></g>
+<path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="486.40000000000003" y="60"></rect>
+<circle cx="504.40000000000003" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="504.40000000000003" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="548.8000000000001" y="104">Mención</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="122">de pasada</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="134.5">en contexto</text></g>
+<path class="wf-flow" d="M613.2 102 L633.2 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="629.2,97 629.2,107 635.2,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="635.2" y="60"></rect>
+<circle cx="653.2" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="653.2" y="82">5</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="697.6" y="104">Tráfico</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="122">visitas</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="134.5">calificadas</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">Ciclo de reputación en comunidades: ayudar genera karma, el karma genera visibilidad y la visibilidad genera tráfico</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Mencionar el producto es el cuarto paso, no el primero. A quien se salta los pasos y empieza por ahí lo tratan como spam y pierde el canal.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Funciona</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Responder la pregunta completa, incluso sin mencionar el producto.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mostrar un resultado concreto («lo hice así y pasó esto»).</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Volver para responder las preguntas en los comentarios.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Quema el canal</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pegar el mismo enlace en diez temas.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Crear una cuenta nueva solo para promocionar.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Responder con «échale un vistazo a mi app».</span></li></ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Horizonte de tiempo</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p14">Este canal es de mediano a largo plazo. Se necesitan semanas para ganar reputación y meses para convertirse en una fuente constante. No esperes resultados en la primera semana ni te rindas en la segunda.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎯 Guerrilla y apuestas pequeñas</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p15">Marketing de guerrilla es el nombre que se da a las acciones fuera del guion tradicional: en vez de pagar por atención, te posicionas donde la atención ya está. El principio es la <strong class="text-purple-400">apuesta asimétrica</strong>: cuesta poco si sale mal y puede dar mucho si sale bien.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🐴</span> Ejemplo: el dominio de 22 dólares</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p16">Un emprendedor predijo el nombre de un producto que una gran empresa lanzaría al día siguiente. Compró un dominio con ese nombre por unos US$ 22, creó en tres horas, con un agente de código, un pequeño catálogo de asistentes para esa plataforma y dedicó doce horas más a pulirlo.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p17">Si la predicción era acertada, el sitio recibiría parte del tráfico de curiosos que buscaban el nuevo producto. Y dentro, discretamente, había una promoción del SaaS principal del emprendedor. Es un «caballo de Troya» de tráfico: aprovechar la ola de otro para atraer gente hacia ti.</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Apuesta asimétrica: poco costo de un lado, gran potencial del otro" class="w-full h-auto" role="img" viewbox="0 0 800 320"><defs>
+<lineargradient id="s41-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s41-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s41-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s41-grid)" height="320" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="4" x1="400" x2="400" y1="70" y2="270"></line><rect fill="#9ca3af" height="12" rx="6" width="160" x="320" y="266"></rect>
+<line filter="url(#s41-glow)" stroke="#a855f7" stroke-width="4" x1="180" x2="620" y1="88" y2="52"></line>
+<g class="wf-a"><rect fill="#3b0764" height="110" rx="14" stroke="#a855f7" stroke-width="2" width="200" x="80" y="128"></rect>
+<line stroke="#a855f7" stroke-width="2" x1="180" x2="180" y1="88" y2="128"></line>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="180" y="160">COSTO</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="184">US$ 22 de dominio</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="198">3 h de creación</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="212">12 h de pulido</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="110" rx="14" stroke="#38bdf8" stroke-width="2" width="200" x="520" y="92"></rect>
+<line stroke="#38bdf8" stroke-width="2" x1="620" x2="620" y1="52" y2="92"></line>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="620" y="124">POTENCIAL</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="148">Tráfico de un lanzamiento</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="162">Visibilidad gratis</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="176">Usuarios para el SaaS</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="306">Apuesta asimétrica: poco costo de un lado, gran potencial del otro</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> En una buena apuesta de guerrilla, el plato del costo es liviano y el del potencial es pesado. Si el costo es pesado, dejó de ser guerrilla.</figcaption>
+</figure>
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<caption class="text-left text-xs text-neutral-500 px-4 pt-3">Tácticas de guerrilla más comunes, de la más barata a la más laboriosa</caption>
+<thead class="bg-dark-800 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Táctica</th><th class="px-4 py-3 font-semibold">Costo</th><th class="px-4 py-3 font-semibold">Cuándo usarla</th></tr></thead>
+<tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Aprovechar un lanzamiento previsto</td><td class="px-4 py-3 text-neutral-300">Bajo</td><td class="px-4 py-3 text-neutral-300">Conoces bien el mercado y te anticipas a lo que va a pasar.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Responder a un hilo popular</td><td class="px-4 py-3 text-neutral-300">Cero</td><td class="px-4 py-3 text-neutral-300">Una discusión viral toca exactamente el problema que resuelves.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Herramienta gratuita como gancho</td><td class="px-4 py-3 text-neutral-300">Bajo</td><td class="px-4 py-3 text-neutral-300">Una utilidad pequeña, relacionada con el producto, que la gente comparte.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Llamadas y correos en frío</td><td class="px-4 py-3 text-neutral-300">Tiempo</td><td class="px-4 py-3 text-neutral-300">Venta de ticket alto; funciona, pero requiere mucha repetición.</td></tr></tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Buenas apuestas</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Un costo que puedas aceptar perder sin que te duela.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Relacionadas con tu público real.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Rápidas de crear y medir.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Malas apuestas</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Engañar al usuario sobre lo que está visitando.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar la marca de otra persona de una forma que genere confusión legal.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dedicar semanas a una acción que depende solo de la suerte.</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Piensa fuera de lo común, pero mide</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p18">Las llamadas y los correos en frío funcionan; hay agencias enteras que viven de eso. Pero, en un mundo donde todo gira en torno a ser el primero en captar la atención, las ventanas breves de atención suelen rendir más por cada real invertido. Haz varias apuestas pequeñas y registra cuál atrajo gente.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🤝 Afiliado de dos lados</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p19">Un programa de afiliados común paga una comisión a quien atrae a un cliente. El modelo de <strong class="text-purple-400">dos lados</strong> va más allá: quien recomienda recibe una comisión y también créditos, un descuento o meses gratis en el producto. El incentivo deja de ser solo dinero y pasa a ser «usarlo gratis».</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Afiliado</dt><dd class="text-neutral-400" data-inema-block="m3-1-p20">Persona que promociona el producto con un enlace propio y recibe un pago por cada cliente que atrae.</dd></div><div><dt class="font-semibold text-neutral-100">Comisión recurrente</dt><dd class="text-neutral-400" data-inema-block="m3-1-p21">Porcentaje que se paga cada mes mientras el cliente recomendado siga pagando, no solo en la primera venta.</dd></div><div><dt class="font-semibold text-neutral-100">MRR</dt><dd class="text-neutral-400" data-inema-block="m3-1-p22">Sigla en inglés de ingresos recurrentes mensuales: cuánto factura el producto al mes en suscripciones.</dd></div><div><dt class="font-semibold text-neutral-100">Crédito de uso</dt><dd class="text-neutral-400" data-inema-block="m3-1-p23">Saldo dentro del producto (minutos, generaciones, consultas) que el usuario consume en lugar de pagar.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Un usuario que recomienda genera dos tipos de retorno para sí y un nuevo cliente para el producto" class="w-full h-auto" role="img" viewbox="0 0 800 300"><defs>
+<lineargradient id="s42-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s42-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s42-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s42-grid)" height="300" width="800"></rect>
+<g filter="url(#s42-glow)"><circle cx="130" cy="150" fill="#3b0764" r="88" stroke="url(#s42-g)" stroke-width="2.5"></circle></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="130" y="142">Quien</text><text fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="130" y="160">recomienda</text><path d="M220 150 C 255 150, 255 63.333333333333336, 380 63.333333333333336" fill="none" opacity="0.6" stroke="#a855f7" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#3b0764" height="48" rx="10" stroke="#a855f7" stroke-width="1.6" width="400" x="380" y="39.333333333333336"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="69.33333333333334">+30</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="60.333333333333336">Comisión recurrente (%)</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="76.33333333333334">20% a 50% de la mensualidad mientras la persona recomendada pague</text></g><path d="M220 150 C 255 150, 255 150, 380 150" fill="none" opacity="0.6" stroke="#38bdf8" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#0e1b26" height="48" rx="10" stroke="#38bdf8" stroke-width="1.6" width="400" x="380" y="126"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="156">+1</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="147">Créditos de uso</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="163">minutos, generaciones o meses gratis en el propio producto</text></g><path d="M220 150 C 255 150, 255 236.66666666666669, 380 236.66666666666669" fill="none" opacity="0.6" stroke="#a855f7" stroke-dasharray="5 5" stroke-width="1.6"></path>
+<g class="wf-a"><rect fill="#3b0764" height="48" rx="10" stroke="#a855f7" stroke-width="1.6" width="400" x="380" y="212.66666666666669"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800" text-anchor="middle" x="420" y="242.66666666666669">+1</text>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600" x="454" y="233.66666666666669">Nuevo cliente para el producto</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" x="454" y="249.66666666666669">que también recibe un bono al registrarse</text></g></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> Las tres ramas salen de la misma acción: compartir un enlace. Cuantas más ramas alimente un incentivo, más gente seguirá compartiéndolo.</figcaption>
+</figure>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🎧</span> Ejemplo de cómo se sostiene</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p24">Un usuario de una herramienta de dictado por voz recomendó el producto a su público. Con las recomendaciones acumuladas, ganó suficientes créditos para no pagar la suscripción hasta 2027. Ya casi no usa la herramienta, pero sigue recomendándola porque cada nueva recomendación mantiene su cuenta gratis.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p25">Para la empresa, el costo de esos créditos es pequeño frente al valor de los clientes que llegan. Para quien recomienda, hay un motivo concreto para seguir hablando del producto.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Haz las cuentas antes de definir el porcentaje</h3>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Si la mensualidad es de R$ 50 y pagas un 40% recurrente, cada cliente recomendado te cuesta R$ 20 al mes mientras siga pagando.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Si atender a ese cliente cuesta R$ 10, te quedan R$ 20 de margen. Sigue siendo rentable.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Los créditos de uso cuestan lo que cuesta prestar el servicio, no el precio de lista. Por eso son un incentivo barato.</span></li></ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Programa que funciona</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Enlace fácil de encontrar dentro del producto.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Panel que muestra cuánto ha ganado la persona.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Bono también para quien llega por el enlace.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Programa que nadie usa</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Registro aparte y burocrático.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pago solo a partir de un monto alto.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comisión solo en la primera venta.</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p26">Muestra la invitación justo cuando el usuario acaba de obtener un buen resultado («tu informe está listo»). En ese momento es cuando tiene más ganas de mostrárselo a alguien.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🩸 Momentos de «sangre en las calles»</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p27">Hay una frase clásica del mercado financiero: <em>«compra cuando haya sangre en las calles»</em>. Quiere decir que las mejores oportunidades aparecen en medio del pánico. En productos, la versión es: <strong class="text-purple-400">aparece con fuerza cuando el problema que resuelves se convierte en noticia</strong>.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🛡️</span> Ejemplo: ola de ataques a apps</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p28">Imagina un producto de seguridad para aplicaciones creadas con IA. Un día, hackean varias apps, un servicio de IA famoso deja de funcionar y el caso se convierte en noticia. Durante unas semanas, todo el mundo se preocupa por la seguridad.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p29">En ese momento, el producto anuncia: «ampliamos el plan gratuito 10 veces; cualquiera puede revisar su app ahora, sin pagar nada». Resultado: buena voluntad, nuevos usuarios, más datos (si los datos son valiosos para el producto) y un recuerdo positivo de la marca.</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Crecimiento típico de un SaaS pequeño: meses de avance lento y un salto en un pico de atención" class="w-full h-auto" role="img" viewbox="0 0 800 360"><defs>
+<lineargradient id="s43-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s43-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s43-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s43-grid)" height="360" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="1.5" x1="90" x2="760" y1="300" y2="300"></line><line stroke="#9ca3af" stroke-width="1.5" x1="90" x2="90" y1="300" y2="50"></line>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="90" y="322">nov</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="224" y="322">dic</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="358" y="322">ene</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="492" y="322">feb</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="626" y="322">mar</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="760" y="322">abr</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" transform="rotate(-90 78 175)" x="78" y="175">ingresos mensuales (relativos)</text>
+<path d="M90 290 L224 285 L358 282.5 L492 277.5 L626 162.5 L760 62.5" fill="none" filter="url(#s43-glow)" stroke="#c084fc" stroke-width="3"></path>
+<circle cx="90" cy="290" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="90" y="278">600</text><circle cx="224" cy="285" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="224" y="273">900</text><circle cx="358" cy="282.5" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="358" y="270.5">1 mil</text><circle cx="492" cy="277.5" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="492" y="265.5">1,3 mil</text><circle cx="626" cy="162.5" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="626" y="150.5">8 mil</text><circle cx="760" cy="62.5" fill="#c084fc" r="5"></circle><text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="760" y="50.5">15 mil</text>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="766" y="66.5">MRR</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="350">Crecimiento típico de un SaaS pequeño: meses de avance lento y un salto en un pico de atención</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">En qué fijarte:</strong> La curva se mantiene casi plana durante meses y se dispara en un breve momento. Ese momento casi siempre coincide con un instante en que al público le importa el problema.</figcaption>
+</figure>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Qué pasa en esos picos</h3>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Pequeños SaaS que facturaban cerca de 600 al mes llegaron a 7, 15 o 20 mil de ingresos mensuales en pocos meses.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>El salto rara vez viene de una campaña paga. Viene de estar listo cuando llega la atención.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Una puerta de entrada gratuita es lo que transforma la curiosidad en uso.</span></li></ul>
+</div>
+<div class="space-y-5 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">Cómo prepararte antes del pico</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Enumera los eventos que hacen que tu problema sea urgente</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p30">Filtraciones, cambios en la ley, caída de un servicio grande, lanzamiento de un competidor. Escríbelo antes de que suceda.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Deja lista la oferta</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p31">Ten preparado un texto, una página y una configuración de plan ampliado que puedas activar en minutos.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Haz ruido ese día</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p32">Publica, responde hilos, envíalo a tu lista. El pico dura días, no meses.</p>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> El oportunismo tiene límites</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p33">Ayudar en un momento de miedo es distinto de aprovecharse del miedo. Ofrece algo que realmente resuelva el problema, con generosidad. Un anuncio alarmista en medio de una tragedia destruye la confianza que querías ganar.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎬 Aceleradoras y creadores de contenido</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p34">Si no llega la tracción orgánica, hay una pregunta de control: <strong class="text-purple-400">¿el producto es lo bastante bueno para entrar en una aceleradora?</strong> Programas como Y Combinator o aceleradoras de tu región aceptan ideas con mérito y algo de tracción inicial, aunque solo tengan un puñado de usuarios.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📱</span> Los creadores de contenido son un canal</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p35">En las redes de videos cortos, las publicaciones que mejor funcionan muestran una herramienta, un repositorio o una función que pocas personas conocen. Los creadores siempre buscan estas novedades para compartirlas con su público.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p36">El producto que eligen tiene una característica: se puede mostrar en segundos. «Pega tu enlace aquí, haz clic aquí, mira lo que pasa. Lo hice gratis en 15 segundos. Comenta BANANA y te envío el acceso».</p>
+</div>
+<figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Guion de un video corto que muestra un producto" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s44-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="s44-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s44-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s44-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="102.4" y="104">Gancho</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="122">«mira esto»</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="102.4" y="134.5">0–3 s</text></g>
+<path class="wf-flow" d="M166.8 102 L186.8 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="182.8,97 182.8,107 188.8,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="188.8" y="60"></rect>
+<circle cx="206.8" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="206.8" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="251.20000000000002" y="104">Entrada</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="122">pega el enlace</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="251.20000000000002" y="134.5">3–7 s</text></g>
+<path class="wf-flow" d="M315.6 102 L335.6 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="331.6,97 331.6,107 337.6,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="337.6" y="60"></rect>
+<circle cx="355.6" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="355.6" y="82">3</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="400" y="104">Clic</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="122">un botón</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="400" y="134.5">7–10 s</text></g>
+<path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="124.8" x="486.40000000000003" y="60"></rect>
+<circle cx="504.40000000000003" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="504.40000000000003" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="548.8000000000001" y="104">Resultado</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="122">el «wow»</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="548.8000000000001" y="134.5">10–15 s</text></g>
+<path class="wf-flow" d="M613.2 102 L633.2 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="629.2,97 629.2,107 635.2,102"></polygon><g class="wf-a"><rect fill="#3b0764" height="84" rx="12" stroke="#a855f7" stroke-width="1.8" width="124.8" x="635.2" y="60"></rect>
+<circle cx="653.2" cy="78" fill="#a855f7" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="653.2" y="82">5</text>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" x="697.6" y="104">Llamado</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="122">comenta X</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="697.6" y="134.5">15–20 s</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">Guion de un video corto que muestra un producto</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Qué observar:</strong> Si tu producto cabe en estos cinco cuadros, un creador puede mostrarlo sin que tengas que pagar nada. Si no cabe, es demasiado complejo para este canal.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Producto fácil de mostrar</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Un solo campo de entrada.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Resultado visual en segundos.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Cualquier persona lo entiende sin explicación.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Producto difícil de mostrar</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Exige registro, configuración e integración antes del primer resultado.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El valor solo aparece después de semanas.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Necesitas un párrafo para explicar qué hace.</span></li></ul>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🚀</div>
+<h4 class="font-semibold text-purple-400 mb-2">Aceleradora</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p37">Lleva la idea, la tracción que tengas y una explicación clara del problema. El mérito de la idea cuenta incluso con pocos usuarios.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🎥</div>
+<h4 class="font-semibold text-purple-400 mb-2">Creador de contenido</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p38">Dale acceso gratuito y un guion listo de 15 segundos. Hazle el trabajo más fácil.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<div class="text-2xl mb-2">🔁</div>
+<h4 class="font-semibold text-purple-400 mb-2">Tus propios videos</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-1-p39">Las redes de videos cortos no exigen seguidores. Incluso una cuenta nueva puede tener un video con decenas de miles de visualizaciones.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Prueba rápida</h3>
+<p class="text-neutral-300" data-inema-block="m3-1-p40">Graba con tu celular un video de 20 segundos usando el producto. Muéstraselo a alguien que no conozca el proyecto. Si entiende qué hace, el producto está listo para este canal.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- QUIZ -->
+<div class="bg-dark-800 rounded-2xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Prueba rápida del módulo</h3>
+<p class="text-sm text-neutral-400 mb-5">Tres preguntas. Haz clic en una opción para ver la respuesta.</p>
+<div class="space-y-5">
+<div class="qz" data-q="1">
+<p class="font-semibold text-neutral-100 mb-3">1. ¿Cuál es el primer objetivo de distribución justo después de construir?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Lanzar anuncios pagos a gran escala</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Generar un pulso: señales de que a personas desconocidas les importa</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Esperar a que el producto sea perfecto</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Antes de escalar, necesitas pruebas de que a alguien fuera de tu círculo le importa. Sin ese pulso, los anuncios solo aceleran el desperdicio."></p>
+</div>
+<div class="qz" data-q="2">
+<p class="font-semibold text-neutral-100 mb-3">2. En un foro como Reddit, ¿cuándo mencionar el producto?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">En la primera publicación, con el enlace destacado</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Después de construir una reputación, de paso, en una respuesta que ya resuelve el problema</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Nunca</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="El karma y la confianza vienen primero. La mención natural, dentro de una respuesta útil, es lo que no suena a spam."></p>
+</div>
+<div class="qz" data-q="3">
+<p class="font-semibold text-neutral-100 mb-3">3. ¿Qué caracteriza a un afiliado de dos lados?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">Dos afiliados comparten la misma comisión</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1" type="button">Quien recomienda gana una comisión recurrente y créditos de uso</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0" type="button">El cliente paga dos veces</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="El doble incentivo (dinero + uso gratis) mantiene a la persona recomendando, y los créditos le cuestan poco a la empresa."></p>
+</div>
+</div>
+</div>
+<!-- RESUMO DO MÓDULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">La distribución viene junto con la idea</strong><span class="text-neutral-400"> - Construir se volvió barato; hacerse notar, caro.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Comunidades</strong><span class="text-neutral-400"> - Ayudar primero, ganar reputación, mencionar de paso.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Guerrilla</strong><span class="text-neutral-400"> - Apuestas pequeñas y asimétricas que aprovechan la atención existente.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Afiliado de dos lados</strong><span class="text-neutral-400"> - La comisión recurrente + los créditos convierten a los usuarios en un canal.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Sangre en las calles</strong><span class="text-neutral-400"> - Ofertas generosas listas para los picos de atención.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Se puede mostrar en 15 segundos</strong><span class="text-neutral-400"> - Lo que cabe en un video corto se convierte en un canal para creadores y aceleradoras.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8"><h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3><p class="text-neutral-300">3.2 - Posicionamiento y recorrido</p></div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-2.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 mt-16 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Productos en la era de la IA · Ruta 3 — Lanzar y crecer · 2026 ·
+        <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> -
+        <a class="text-amber-700 dark:text-slate-300" href="https://inema.pro" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS núcleo v1 -->
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Correcto. ' : '✗ No es esa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

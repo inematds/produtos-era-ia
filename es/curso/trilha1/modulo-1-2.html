@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="produtos-era-ia-es" name="inema-course"/>
+<title>El problema de la media | Productos en la era de la IA</title>
+<meta content="Los modelos de lenguaje aprenden de lo que ya existe y tienden a devolver lo más común. Eso es excelente para la velocidad y pésimo para diferenciarse. Este módulo explica por qué lo «promedio» no llama la atención y qué hacer al respecto." name="description"/>
+<!-- ANTI-FOUC: bloqueante, antes de tudo -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso (obrigatório em toda página) -->
+<script data-inema-manifest="" type="application/json">
+{
+ "course": "produtos-era-ia-es",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "La mentalidad",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "El juego cambió",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "El problema de lo mediocre",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pesimismo productivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "¿Vale la pena construirlo?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necesidad y vigencia",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, datos y dificultad",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recurrencia y hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lanzar y crecer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribución",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamiento y recorrido",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, diseño y usuarios simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+<link href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-2.html" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-3">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🧭</span>
+<span class="font-bold text-lg hidden md:inline">Productos en la era de la IA</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../../curso/trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Mentalidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../../curso/trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Oportunidad</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../../curso/trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Lanzar</span>
+</a>
+<span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-2" data-lang-switch=""><a class="text-neutral-400 hover:text-primary" href="../../../curso/trilha1/modulo-1-2.html" hreflang="pt-BR" lang="pt-BR">PT</a><span class="text-neutral-600">·</span><a class="text-neutral-400 hover:text-primary" href="../../../en/curso/trilha1/modulo-1-2.html" hreflang="en" lang="en">EN</a><span class="text-neutral-600">·</span><a class="text-primary font-bold" href="../../../es/curso/trilha1/modulo-1-2.html" hreflang="es" lang="es">ES</a></span>
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors" data-inema-journey-open="" type="button">
+<span>🧭</span><span>Mi recorrido</span>
+<span class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20" data-inema-journey-badge=""></span>
+</button>
+<button aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" data-inema-appearance-toggle="[data-inema-appearance]" title="Apariencia y lectura" type="button">
+<span aria-hidden="true">Aa</span>
+</button>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle" title="Tema claro/oscuro">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<div aria-label="Apariencia y lectura" class="inema-appearance-pop" data-inema-appearance="" role="region">
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tema</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button class="inema-chip" data-inema-set-theme="claro" type="button">Claro</button>
+<button class="inema-chip" data-inema-set-theme="sepia" type="button">Sepia</button>
+<button class="inema-chip" data-inema-set-theme="foco" type="button">Enfoque</button>
+<button class="inema-chip" data-inema-set-theme="contraste" type="button">Contraste</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Tamaño del texto</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-fontscale="90" type="button">A-</button>
+<button class="inema-chip" data-inema-set-fontscale="100" type="button">A</button>
+<button class="inema-chip" data-inema-set-fontscale="115" type="button">A+</button>
+<button class="inema-chip" data-inema-set-fontscale="130" type="button">A++</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Fuente</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-font="inter" type="button">Inter</button>
+<button class="inema-chip" data-inema-set-font="system" type="button">Sistema</button>
+<button class="inema-chip" data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-appearance-sec">
+<p class="inema-appearance-label">Interlineado</p>
+<div class="inema-appearance-row">
+<button class="inema-chip" data-inema-set-leading="1.5" type="button">Compacto</button>
+<button class="inema-chip" data-inema-set-leading="1.7" type="button">Normal</button>
+<button class="inema-chip" data-inema-set-leading="1.9" type="button">Amplio</button>
+</div>
+</div>
+</div>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 El problema de la media</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Los modelos de lenguaje aprenden de lo que ya existe y tienden a devolver lo más común. Eso es excelente para la velocidad y pésimo para diferenciarse. Este módulo explica por qué lo «promedio» no llama la atención y qué hacer al respecto.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Temas</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">40</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div aria-label="Progreso del módulo" aria-valuemax="100" aria-valuemin="0" class="inema-meter max-w-md mt-6" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac="">0 de 6</span><span data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill="" style="width:0%"></div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="1-2" data-inema-track="1">
+<nav aria-label="Temas de este módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">En este módulo</p>
+<ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+<li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-1"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>Construir con LLM es construir la media</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-2"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>Pattern interrupt</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-3"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>La erosión del juicio</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-4"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>La palabra "lanzamiento" perdió su sentido</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-5"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Un mercado saturado no es un mercado cerrado</span></a></li><li><a class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400" href="#topico-6"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Los tres criterios</span></a></li>
+</ol>
+</nav>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📊 Construir con LLM es construir lo promedio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p1">Un modelo de lenguaje funciona, de forma simplificada, prediciendo cuál es la continuación más probable de un texto. Aprendió a hacerlo leyendo una cantidad gigantesca de contenido que ya existe. El resultado natural es que, sin una orientación clara, devuelve <strong class="text-emerald-400">lo más común</strong>: el diseño más común, la frase de marketing más común, el recorrido más común.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">LLM</dt><dd class="text-neutral-400" data-inema-block="m1-2-p2">Large Language Model, modelo de lenguaje grande. El tipo de IA que está detrás de ChatGPT, Claude y Gemini.</dd></div><div><dt class="font-semibold text-neutral-100">Media (aquí)</dt><dd class="text-neutral-400" data-inema-block="m1-2-p3">El resultado más típico, el que aparece con más frecuencia en los datos de entrenamiento. No es malo; simplemente es igual a los demás.</dd></div><div><dt class="font-semibold text-neutral-100">Slop</dt><dd class="text-neutral-400" data-inema-block="m1-2-p4">Término coloquial para el contenido generado por IA sin cuidado: correcto, genérico y sin alma. Se reconoce a la distancia.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Distribución de las salidas de un modelo: la mayor parte se concentra en el medio y hay pocas en los extremos" class="w-full h-auto" role="img" viewbox="0 0 800 360"><defs>
+<lineargradient id="s7-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s7-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s7-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s7-grid)" height="360" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="1.5" x1="90" x2="760" y1="300" y2="300"></line><line stroke="#9ca3af" stroke-width="1.5" x1="90" x2="90" y1="300" y2="50"></line>
+<text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="90" y="322">Obvio</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="257.5" y="322">Común</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="425" y="322">Medio</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="592.5" y="322">Inusual</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="760" y="322">Original</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" transform="rotate(-90 78 175)" x="78" y="175">frecuencia</text>
+<path d="M90 250 L257.5 150 L425 62.5 L592.5 200 L760 280" fill="none" filter="url(#s7-glow)" stroke="#34d399" stroke-width="3"></path>
+<circle cx="90" cy="250" fill="#34d399" r="5"></circle><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="90" y="238">20</text><circle cx="257.5" cy="150" fill="#34d399" r="5"></circle><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="257.5" y="138">60</text><circle cx="425" cy="62.5" fill="#34d399" r="5"></circle><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="425" y="50.5">95</text><circle cx="592.5" cy="200" fill="#34d399" r="5"></circle><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="592.5" y="188">40</text><circle cx="760" cy="280" fill="#34d399" r="5"></circle><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="760" y="268">8</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="766" y="284">Salidas del modelo</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="350">Distribución de las salidas de un modelo: la mayor parte se concentra en el medio y hay pocas en los extremos</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> La mayor parte de lo que produce el modelo cae en el medio de la curva. La parte de la derecha, donde está la diferenciación, solo aparece cuando impulsas el modelo con referencias y criterios propios.</figcaption>
+</figure>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">⚖️</span> La media no es un defecto, es la naturaleza de la herramienta</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-2-p5">Para las tareas en las que lo común es lo correcto (un formulario de inicio de sesión, un correo de confirmación), la media es exactamente lo que quieres. El problema aparece cuando usas la misma herramienta, de la misma manera, para la parte del producto que debería ser única.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dónde aceptar la media</h3>
+<p class="text-neutral-300" data-inema-block="m1-2-p6">Deja que el modelo decida sobre la infraestructura (autenticación, tablas, pantallas de configuración). Reserva tu criterio para tres cosas: la promesa principal, la primera experiencia del usuario y la identidad visual.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🚨 Pattern interrupt</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p7">Piensa en tu feed. Pasas por decenas de publicaciones por minuto sin leer. Lo que hace que te detengas es algo que <strong>rompe el patrón</strong>: una imagen extraña, una frase inesperada, un producto que hace algo que no sabías que era posible. En marketing, esto se llama <strong class="text-emerald-400">pattern interrupt</strong>.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Pattern interrupt</dt><dd class="text-neutral-400" data-inema-block="m1-2-p8">Pattern interrupt. El momento en que algo se sale de lo esperado y capta tu atención por reflejo.</dd></div><div><dt class="font-semibold text-neutral-100">Desplazamiento infinito</dt><dd class="text-neutral-400" data-inema-block="m1-2-p9">Feeds interminables (Instagram, TikTok, X) en los que el contenido nunca se acaba y la atención dura fracciones de segundo.</dd></div>
+</dl>
+</aside>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p10">El problema de la media se relaciona con esto: <strong>cuando todo el mundo ya vio la versión media, esta deja de interrumpir</strong>. El primer sitio con cierto degradado morado llamó la atención. El milésimo, no. Lo mismo ocurre con las funcionalidades: la primera app que resumía reuniones impresionó; hoy es algo esperado.</p>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Ciclo de desgaste de una novedad hasta convertirse en ruido" class="w-full h-auto" role="img" viewbox="0 0 800 200"><defs>
+<lineargradient id="s8-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s8-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s8-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s8-grid)" height="200" width="800"></rect><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="40" y="60"></rect>
+<circle cx="58" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="58" y="82">1</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="121" y="104">Novedad</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="121" y="122">interrumpe</text></g>
+<path class="wf-flow" d="M204 102 L224 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="220,97 220,107 226,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="226" y="60"></rect>
+<circle cx="244" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="244" y="82">2</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="307" y="104">Imitada</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="307" y="122">se vuelve tendencia</text></g>
+<path class="wf-flow" d="M390 102 L410 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="406,97 406,107 412,102"></polygon><g class="wf-a"><rect fill="#064e3b" height="84" rx="12" stroke="#10b981" stroke-width="1.8" width="162" x="412" y="60"></rect>
+<circle cx="430" cy="78" fill="#10b981" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="430" y="82">3</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="493" y="104">Común</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="493" y="122">se vuelve estándar</text></g>
+<path class="wf-flow" d="M576 102 L596 102" fill="none" stroke="#38bdf8" stroke-width="2"></path><polygon fill="#38bdf8" points="592,97 592,107 598,102"></polygon><g class="wf-a"><rect fill="#0e1b26" height="84" rx="12" stroke="#38bdf8" stroke-width="1.8" width="162" x="598" y="60"></rect>
+<circle cx="616" cy="78" fill="#38bdf8" r="10"></circle><text fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="616" y="82">4</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle" x="679" y="104">Invisible</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="122">nadie</text><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400" text-anchor="middle" x="679" y="134.5">se detiene</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="178">Ciclo de desgaste de una novedad hasta convertirse en ruido</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Toda novedad recorre esta ruta. Con IA, el trayecto del primer al último cuadro se redujo de años a semanas, porque copiar lo que funcionó se convirtió en un prompt.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Interrumpe</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Una demostración que resuelve algo en segundos, frente a la persona.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Un posicionamiento inesperado para un problema conocido.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Un diseño que claramente no salió de un modelo estándar.</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Ya no interrumpe</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>«Con el poder de la IA» en el título.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Una landing page con el mismo degradado, íconos y frases que todas las demás.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Otro asistente de chat genérico.</span></li></ul>
+</div>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧠 La erosión del criterio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p11">Estamos entrando en un mundo en el que pocas personas van a ejercitar su propio criterio. Todo se puede delegar: el texto, el diseño, la estrategia e incluso el <strong>recorrido del usuario</strong>, es decir, la secuencia de pasos que alguien sigue desde que llega a tu producto hasta conseguir lo que buscaba.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Juicio</dt><dd class="text-neutral-400" data-inema-block="m1-2-p12">La capacidad de decidir bien sin tener toda la información: saber qué importa, qué descartar y cuándo parar.</dd></div><div><dt class="font-semibold text-neutral-100">Recorrido del usuario</dt><dd class="text-neutral-400" data-inema-block="m1-2-p13">El recorrido completo de una persona en el producto: descubrirlo, entrar, entenderlo, usarlo por primera vez y volver.</dd></div><div><dt class="font-semibold text-neutral-100">Delegación cognitiva</dt><dd class="text-neutral-400" data-inema-block="m1-2-p14">Delegar en otra persona o en una IA no solo la ejecución, sino también el propio análisis del problema.</dd></div>
+</dl>
+</aside>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🛡️</span> Por qué esto se convierte en una ventaja para quienes se resisten</h3>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-2-p15">Si la mayoría delega su criterio, quienes conservan el suyo se vuelven escasos. Y la escasez, en un mercado inflado, tiene valor. Ser cuidadoso, pensar en la experiencia de quien usa el producto, cuestionar la sugerencia del modelo: todo esto se convierte en una ventaja competitiva.</p>
+</div>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Equilibrio entre delegar la ejecución y delegar el criterio" class="w-full h-auto" role="img" viewbox="0 0 800 320"><defs>
+<lineargradient id="s9-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s9-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s9-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s9-grid)" height="320" width="800"></rect>
+<line stroke="#9ca3af" stroke-width="4" x1="400" x2="400" y1="70" y2="270"></line><rect fill="#9ca3af" height="12" rx="6" width="160" x="320" y="266"></rect>
+<line filter="url(#s9-glow)" stroke="#10b981" stroke-width="4" x1="180" x2="620" y1="370" y2="-230"></line>
+<g class="wf-a"><rect fill="#064e3b" height="110" rx="14" stroke="#10b981" stroke-width="2" width="200" x="80" y="410"></rect>
+<line stroke="#10b981" stroke-width="2" x1="180" x2="180" y1="370" y2="410"></line>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="180" y="442">Delega</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="466">código repetitivo</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="480">borradores</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="494">investigación</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="180" y="508">pruebas</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="110" rx="14" stroke="#38bdf8" stroke-width="2" width="200" x="520" y="-190"></rect>
+<line stroke="#38bdf8" stroke-width="2" x1="620" x2="620" y1="-230" y2="-190"></line>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle" x="620" y="-158">Reserva para ti</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="-134">qué construir</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="-120">para quién</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="-106">qué eliminar</text><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400" text-anchor="middle" x="620" y="-92">la primera impresión</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic" text-anchor="middle" x="400" y="306">Equilibrio entre delegar la ejecución y delegar el criterio</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> El lado izquierdo puede y debe delegarse a la IA. El lado derecho es tu verdadero producto; si también lo delegas, lo que queda es la media.</figcaption>
+</figure>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Ejercicio para una semana</h3>
+<p class="text-neutral-300" data-inema-block="m1-2-p16">Antes de pedirle a la IA cualquier decisión sobre el producto, escribe tu propia respuesta en tres líneas. Solo después compárala con la del modelo. Notarás en qué estás de acuerdo por pereza y dónde tenías una idea mejor.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📣 La palabra «lanzamiento» perdió su sentido</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p17">Abre cualquier red de tecnología y cuenta cuántas veces aparece la palabra «presentando» o «introducing» en un día. Un nuevo ingeniero de QA con IA. Un nuevo modelo de voz más rápido. Un nuevo agente que lo hace todo. Hay tantos que <strong class="text-emerald-400">la palabra perdió su peso</strong>.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> El comportamiento típico frente al exceso</h3>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>La persona pasa 40 minutos desplazándose por la pantalla y guarda seis cosas «para ver después».</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Al día siguiente, aparecen otras seis. Las de ayer nunca se vuelven a abrir.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>La lista de favoritos se convierte en un cementerio de buenas intenciones.</span></li></ul>
+</div>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Comparación entre elementos guardados y elementos realmente revisados por semana" class="w-full h-auto" role="img" viewbox="0 0 800 304"><defs>
+<lineargradient id="s10-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s10-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s10-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s10-grid)" height="304" width="800"></rect>
+<rect fill="#9ca3af" height="10" opacity="0.55" rx="3" width="14" x="220" y="22"></rect><text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" x="240" y="31">guardados</text>
+<rect fill="#10b981" height="10" rx="3" width="14" x="350" y="22"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="370" y="31">revisados</text><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="86">Semana 1</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="337.6623376623377" x="220" y="60"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="565.6623376623377" y="75">30</text>
+<g class="wf-a"><rect fill="url(#s10-g)" filter="url(#s10-glow)" height="20" rx="6" width="67.53246753246752" x="220" y="86"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="295.53246753246754" y="101">6</text></g><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="164">Semana 2</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="405.19480519480516" x="220" y="138"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="633.1948051948052" y="153">36</text>
+<g class="wf-a"><rect fill="url(#s10-g)" filter="url(#s10-glow)" height="20" rx="6" width="33.76623376623376" x="220" y="164"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="261.76623376623377" y="179">3</text></g><g><text fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="end" x="206" y="242">Semana 3</text>
+<rect fill="#9ca3af" height="20" opacity="0.55" rx="6" width="472.7272727272727" x="220" y="216"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="12" x="700.7272727272727" y="231">42</text>
+<g class="wf-a"><rect fill="url(#s10-g)" filter="url(#s10-glow)" height="20" rx="6" width="11.255411255411255" x="220" y="242"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="239.25541125541125" y="257">1</text></g></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Los números son ilustrativos, pero el patrón es real: guardar aumenta, revisar cae en picada. Tu producto debe ofrecer valor antes de pasar a la pila de cosas guardadas, o nunca saldrá de ahí.</figcaption>
+</figure>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">⏱️</span> Lo que esto exige de tu producto</h3>
+<ul class="space-y-2 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Ofrecer la primera dosis de valor muy rápido, de preferencia en la primera visita.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Resolver un problema tan bien que la persona sienta alivio inmediato, no curiosidad.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span>Que te recuerden por un motivo concreto, no por haber sido «otro lanzamiento más».</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Lo mismo aplica a los «consejos» de diseño</h3>
+<p class="text-neutral-300" data-inema-block="m1-2-p18">Muchos videos prometen «las siete habilidades para un diseño que no parece hecho por IA», y el resultado sigue pareciendo hecho por IA. Seguir la receta de moda es, por definición, producir el promedio de lo que está de moda.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🗺️ Un mercado saturado no está cerrado</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p19">Si todo se puede copiar y nadie tiene un foso, ¿entonces ningún producto merece existir? No. Cuando observas un problema con <strong>suficiente precisión</strong>, casi siempre encuentras partes que nadie ha resuelto, que se han resuelto mal o que se han resuelto, pero nunca llegaron a quienes las necesitan.</p>
+<aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">¿Eres nuevo por aquí? Términos de este tema</p>
+<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+<div><dt class="font-semibold text-neutral-100">Foso (moat)</dt><dd class="text-neutral-400" data-inema-block="m1-2-p20">Lo que protege un negocio de la competencia: marca, datos exclusivos, costo de cambio, red de usuarios. La imagen es el foso con agua alrededor de un castillo.</dd></div><div><dt class="font-semibold text-neutral-100">Canal de distribución</dt><dd class="text-neutral-400" data-inema-block="m1-2-p21">El camino por el que el producto llega al cliente: redes sociales, socios, búsquedas en Google, recomendaciones, ventas directas.</dd></div>
+</dl>
+</aside>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Tipos de brechas que siguen abiertas incluso en mercados saturados" class="w-full h-auto" role="img" viewbox="0 0 800 158"><defs>
+<lineargradient id="s11-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s11-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s11-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s11-grid)" height="158" width="800"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="800" x="30" y="34">Dónde buscar brechas</text><g class="wf-a"><rect fill="#064e3b" height="32" rx="8" stroke="#10b981" stroke-width="1.4" width="238.66666666666666" x="30" y="54"></rect><text fill="#a7f3d0" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="149.33333333333331" y="75">Sin resolver</text></g><g class="wf-a"><rect fill="#0e1b26" height="32" rx="8" stroke="#38bdf8" stroke-width="1.4" width="238.66666666666666" x="280.66666666666663" y="54"></rect><text fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="399.99999999999994" y="75">Mal resuelto</text></g><g class="wf-a"><rect fill="#064e3b" height="32" rx="8" stroke="#10b981" stroke-width="1.4" width="238.66666666666666" x="531.3333333333333" y="54"></rect><text fill="#a7f3d0" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="650.6666666666666" y="75">Demasiado caro</text></g><g class="wf-a"><rect fill="#0e1b26" height="32" rx="8" stroke="#38bdf8" stroke-width="1.4" width="238.66666666666666" x="30" y="98"></rect><text fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="149.33333333333331" y="119">Resuelto solo en inglés</text></g><g class="wf-a"><rect fill="#064e3b" height="32" rx="8" stroke="#10b981" stroke-width="1.4" width="238.66666666666666" x="280.66666666666663" y="98"></rect><text fill="#a7f3d0" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="399.99999999999994" y="119">Sin canal para llegar al cliente</text></g><g class="wf-a"><rect fill="#0e1b26" height="32" rx="8" stroke="#38bdf8" stroke-width="1.4" width="238.66666666666666" x="531.3333333333333" y="98"></rect><text fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5" text-anchor="middle" x="650.6666666666666" y="119">Demasiado complejo para principiantes</text></g></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Cada etiqueta representa un tipo de brecha. Observa que solo la primera exige inventar algo nuevo; las otras cinco son oportunidades para hacerlo mejor, más barato o más cerca del cliente.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Preguntas que revelan brechas</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>¿Quién resuelve esto hoy con una hoja de cálculo o en papel?</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>¿De qué solución existente se quejan los clientes al usarla?</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>¿Qué grupo queda fuera porque la herramienta es difícil o cara?</span></li></ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Preguntas que ocultan brechas</h4>
+<ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>«¿Ya existe algo parecido?» (casi siempre existe).</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>«¿Es innovador?» (la innovación no es un requisito).</span></li><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>«¿Se puede hacer con IA?» (casi todo se puede).</span></li></ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> La distribución también es una brecha</h3>
+<p class="text-neutral-300" data-inema-block="m1-2-p22">Muchas veces la solución existe, pero nunca llegó al público adecuado. Llevar una solución conocida a un nicho que nadie atiende, en su idioma y a su manera, es una oportunidad legítima.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔭 Los tres criterios</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-p23">Construir en una época en la que se puede construir casi cualquier cosa exige discernimiento en tres niveles. El primero es <strong>saber construir</strong>. El segundo es <strong>saber qué construir</strong>. El tercero, y más raro, es <strong class="text-emerald-400">saber si vale la pena construirlo</strong>.</p>
+<figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Los tres niveles de discernimiento, del más común al más raro" class="w-full h-auto" role="img" viewbox="0 0 800 270"><defs>
+<lineargradient id="s12-g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="s12-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="30" id="s12-grid" patternunits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.14" r="1.3"></circle></pattern>
+</defs><rect fill="url(#s12-grid)" height="270" width="800"></rect><g><rect fill="#0e1b26" height="52" opacity="0.95" rx="12" stroke="#10b981" stroke-width="1.6" width="600" x="100" y="40"></rect>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="63">Saber construir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="81">técnica: la IA ya ayuda mucho</text></g><g><rect fill="#0e1b26" height="52" opacity="0.95" rx="12" stroke="#38bdf8" stroke-width="1.6" width="520" x="140" y="110"></rect>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="133">Saber qué construir</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="151">elegir el problema adecuado</text></g><g filter="url(#s12-glow)"><rect fill="#064e3b" height="52" opacity="0.95" rx="12" stroke="url(#s12-g)" stroke-width="2.5" width="440" x="180" y="180"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="400" y="203">Saber si vale la pena construirlo</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400" text-anchor="middle" x="400" y="221">evaluar el valor, el plazo y el riesgo</text></g>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" transform="rotate(-90 60 135)" x="60" y="135">de afuera hacia adentro</text></svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">En qué fijarte:</strong> Cuanto más hacia adentro, más raro y valioso. La IA aplanó la primera capa; todo el curso existe para entrenar las dos de adentro.</figcaption>
+</figure>
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<caption class="text-left text-xs text-neutral-500 px-4 pt-3">Los tres tipos de discernimiento, lado a lado</caption>
+<thead class="bg-dark-800 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Nivel</th><th class="px-4 py-3 font-semibold">Pregunta</th><th class="px-4 py-3 font-semibold">Quién ya lo hace bien</th></tr></thead>
+<tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Construir</td><td class="px-4 py-3 text-neutral-300">¿Cómo hago que esto funcione?</td><td class="px-4 py-3 text-neutral-300">Cualquier persona con un asistente de código</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Qué construir</td><td class="px-4 py-3 text-neutral-300">¿Qué problema debo resolver?</td><td class="px-4 py-3 text-neutral-300">Quien conoce bien un nicho</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Si vale la pena construirlo</td><td class="px-4 py-3 text-neutral-300">¿Esto merece existir dentro de un año?</td><td class="px-4 py-3 text-neutral-300">Pocos. Esto es lo que entrena este curso.</td></tr></tbody>
+</table>
+</div>
+<div class="space-y-5 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2">Cómo usar los tres en la práctica</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Empieza por el tercero</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-2-p24">Antes de cualquier prototipo, responde: ¿vale la pena? Toda la Ruta 2 gira en torno a esta pregunta.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Después, el segundo</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-2-p25">Si vale la pena, ¿qué parte exacta del problema vas a abordar primero?</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Solo entonces, el primero</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-2-p26">Ahora sí, construye rápido, con toda la ayuda que ofrece la IA.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Frase para pegar en el monitor</h3>
+<p class="text-neutral-300" data-inema-block="m1-2-p27">En un mundo donde se puede construir cualquier cosa, el juicio sobre qué vale la pena construir es el juego completo.</p>
+</div>
+<button class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</section>
+<!-- QUIZ -->
+<div class="bg-dark-800 rounded-2xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Prueba rápida del módulo</h3>
+<p class="text-sm text-neutral-400 mb-5">Tres preguntas. Haz clic en una opción para ver la respuesta.</p>
+<div class="space-y-5">
+<div class="qz" data-q="1">
+<p class="font-semibold text-neutral-100 mb-3">1. ¿Por qué un producto hecho solo con las sugerencias predeterminadas de un LLM tiende a parecer genérico?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Porque el modelo tiene poca información</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">Porque el modelo devuelve el resultado más probable, es decir, el más común</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Porque el modelo copia un solo sitio web</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Los LLM predicen la continuación más probable; sin una dirección clara, el resultado es el promedio de lo que ya existe."></p>
+</div>
+<div class="qz" data-q="2">
+<p class="font-semibold text-neutral-100 mb-3">2. ¿Qué ocurre con un patrón de interrupción cuando todo el mundo lo copia?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Se vuelve más fuerte</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">Deja de interrumpir y se convierte en ruido</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Pasa a estar protegido por ley</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="La interrupción depende de la sorpresa. Cuando se vuelve común, nadie se detiene a mirar."></p>
+</div>
+<div class="qz" data-q="3">
+<p class="font-semibold text-neutral-100 mb-3">3. ¿Cuál de los tres tipos de discernimiento se volvió casi gratuito con la IA?</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Saber si vale la pena construirlo</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0" type="button">Saber qué construir</button><button class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1" type="button">Saber construir</button>
+</div>
+<p class="qz-fb mt-3 text-sm text-neutral-300" data-text="La parte técnica se volvió accesible; la ventaja pasó a elegir el problema y evaluar el valor."></p>
+</div>
+</div>
+</div>
+<!-- RESUMO DO MÓDULO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">El promedio</strong><span class="text-neutral-400"> - un LLM sin dirección ofrece el resultado más común</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Patrón de interrupción</strong><span class="text-neutral-400"> - lo que todos ya vieron no hace que nadie se detenga</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Criterio</strong><span class="text-neutral-400"> - delega la ejecución y conserva las decisiones sobre el producto</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Fatiga de lanzamientos</strong><span class="text-neutral-400"> - el valor debe llegar antes de que el producto se convierta en un favorito olvidado</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Brechas</strong><span class="text-neutral-400"> - incluso en un mercado saturado hay problemas mal resueltos o mal distribuidos</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Tres tipos de discernimiento</strong><span class="text-neutral-400"> - construir, qué construir, si vale la pena construirlo; el último es el más raro</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8"><h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3><p class="text-neutral-300">1.3 - Pesimismo productivo</p></div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-1.html">← Módulo 1.1</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-3.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 mt-16 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Productos en la era de la IA · Ruta 1 — La mentalidad · 2026 ·
+        <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> -
+        <a class="text-amber-700 dark:text-slate-300" href="https://inema.pro" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS núcleo v1 -->
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Correcto. ' : '✗ No es esa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="inema-course" content="produtos-era-ia">
   <title>O jogo mudou | Produtos na era da IA</title>
-  <meta name="description" content="Hoje dá para construir quase qualquer coisa em poucas horas. Isso muda a pergunta central de quem cria produtos: não é mais "consigo fazer?", é "vale a pena fazer?". Este módulo mostra o que mudou no terreno antes de falarmos de estratégia.">
+  <meta name="description" content="Hoje dá para construir quase qualquer coisa em poucas horas. Isso muda a pergunta central de quem cria produtos: não é mais &quot;consigo fazer?&quot;, é &quot;vale a pena fazer?&quot;. Este módulo mostra o que mudou no terreno antes de falarmos de estratégia.">
 
   <!-- ANTI-FOUC: bloqueante, antes de tudo -->
   <script>
@@ -241,10 +241,14 @@
     .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
     html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
     html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Coluna do módulo: largura fixa do layout, independente da ordem em que o Tailwind CDN injeta o CSS */
+    main.max-w-6xl.inema-prose { max-width: 72rem; }
     /* Code box */
     .codebox pre { white-space: pre-wrap; word-break: break-word; }
     
   </style>
+
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-1.html"><link rel="alternate" hreflang="en" href="https://inematds.github.io/produtos-era-ia/en/curso/trilha1/modulo-1-1.html"><link rel="alternate" hreflang="es" href="https://inematds.github.io/produtos-era-ia/es/curso/trilha1/modulo-1-1.html"><link rel="alternate" hreflang="x-default" href="https://inematds.github.io/produtos-era-ia/curso/trilha1/modulo-1-1.html">
 </head>
 <body class="bg-dark-900 text-neutral-100 min-h-screen">
 
@@ -275,6 +279,8 @@
             <span class="sm:hidden">T3</span>
             <span class="hidden sm:inline">Lançar</span>
           </a>
+          
+          <span data-lang-switch class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-2"><a href="../../curso/trilha1/modulo-1-1.html" hreflang="pt-BR" lang="pt-BR" class="text-primary font-bold">PT</a><span class="text-neutral-600">·</span><a href="../../en/curso/trilha1/modulo-1-1.html" hreflang="en" lang="en" class="text-neutral-400 hover:text-primary">EN</a><span class="text-neutral-600">·</span><a href="../../es/curso/trilha1/modulo-1-1.html" hreflang="es" lang="es" class="text-neutral-400 hover:text-primary">ES</a></span>
           <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
             <span>🧭</span><span>Minha jornada</span>
             <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
