@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="produtos-era-ia">
+  <title>Pessimismo produtivo | Produtos na era da IA</title>
+  <meta name="description" content="Pessimismo produtivo é imaginar com honestidade tudo que pode dar errado, não para desistir, mas para se preparar. Este módulo transforma essa atitude num método: razões contra, razões a favor, aposta mínima e um pré-mortem feito com IA.">
+
+  <!-- ANTI-FOUC: bloqueante, antes de tudo -->
+  <script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (obrigatório em toda página) -->
+  <script type="application/json" data-inema-manifest>
+{
+ "course": "produtos-era-ia",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "A mentalidade",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "O jogo mudou",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "O problema da média",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pessimismo produtivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "Vale a pena construir?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necessidade e prazo de validade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, dados e dificuldade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recorrência e hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lançar e crescer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribuição",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamento e jornada",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, design e usuários simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-3">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧭</span>
+            <span class="font-bold text-lg hidden md:inline">Produtos na era da IA</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600 hidden sm:inline">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline">PRO</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../../curso/trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Mentalidade</span>
+          </a>
+          <a href="../../curso/trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Oportunidade</span>
+          </a>
+          <a href="../../curso/trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Lançar</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
+            <span>🧭</span><span>Minha jornada</span>
+            <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
+          </button>
+          <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Aparência e leitura">
+            <span aria-hidden="true">Aa</span>
+          </button>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div data-inema-appearance class="inema-appearance-pop" role="region" aria-label="Aparência e leitura">
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tema</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-theme="inema-dark" class="inema-chip">Escuro</button>
+        <button type="button" data-inema-set-theme="claro" class="inema-chip">Claro</button>
+        <button type="button" data-inema-set-theme="sepia" class="inema-chip">Sépia</button>
+        <button type="button" data-inema-set-theme="foco" class="inema-chip">Foco</button>
+        <button type="button" data-inema-set-theme="contraste" class="inema-chip">Contraste</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tamanho do texto</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-fontscale="90" class="inema-chip">A-</button>
+        <button type="button" data-inema-set-fontscale="100" class="inema-chip">A</button>
+        <button type="button" data-inema-set-fontscale="115" class="inema-chip">A+</button>
+        <button type="button" data-inema-set-fontscale="130" class="inema-chip">A++</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Fonte</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-font="inter" class="inema-chip">Inter</button>
+        <button type="button" data-inema-set-font="system" class="inema-chip">Sistema</button>
+        <button type="button" data-inema-set-font="leitura" class="inema-chip">Leitura</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Entrelinha</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-leading="1.5" class="inema-chip">Compacta</button>
+        <button type="button" data-inema-set-leading="1.7" class="inema-chip">Normal</button>
+        <button type="button" data-inema-set-leading="1.9" class="inema-chip">Ampla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a><span>/</span>
+      <span class="text-emerald-400">Módulo 1.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧱 Pessimismo produtivo</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Pessimismo produtivo é imaginar com honestidade tudo que pode dar errado, não para desistir, mas para se preparar. Este módulo transforma essa atitude num método: razões contra, razões a favor, aposta mínima e um pré-mortem feito com IA.</p>
+      
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:1-3" class="inema-meter max-w-md mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo">
+        <div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="1-3" data-inema-track="1">
+    <nav aria-label="Tópicos deste módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc>
+      <p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">Neste módulo</p>
+      <ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <li><a href="#topico-1" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>Pessimismo produtivo não é derrotismo</span></a></li><li><a href="#topico-2" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>O diário de contingência</span></a></li><li><a href="#topico-3" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>As cinco razões para NÃO funcionar</span></a></li><li><a href="#topico-4" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>As cinco razões para funcionar</span></a></li><li><a href="#topico-5" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>A aposta mínima</span></a></li><li><a href="#topico-6" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Pré-mortem com IA</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-1-3#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌧️ Pessimismo produtivo não é derrotismo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p1">Quem empreende costuma ser otimista, e isso é necessário para começar. O problema é que o otimismo também esconde riscos. <strong class="text-emerald-400">Pessimismo produtivo</strong> é o antídoto: você imagina, de forma deliberada e detalhada, todas as maneiras pelas quais o plano pode falhar.</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Derrotismo</dt><dd class="text-neutral-400" data-inema-block="m1-3-p2">Usar a lista de riscos como desculpa para não tentar. É o pessimismo que paralisa.</dd></div><div><dt class="font-semibold text-neutral-100">Viés otimista</dt><dd class="text-neutral-400" data-inema-block="m1-3-p3">A tendência humana de achar que as coisas darão mais certo para nós do que para os outros.</dd></div><div><dt class="font-semibold text-neutral-100">Pré-mortem</dt><dd class="text-neutral-400" data-inema-block="m1-3-p4">Técnica de imaginar que o projeto já fracassou e perguntar: por quê? Feita antes de começar.</dd></div>
+        </dl>
+      </aside>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 266" class="w-full h-auto" role="img" aria-label="Comparação entre pessimismo derrotista e pessimismo produtivo"><defs>
+    <linearGradient id="s13-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s13-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s13-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="266" fill="url(#s13-grid)"/>
+      <rect x="40" y="30" width="330" height="206" rx="16" fill="#064e3b" stroke="#10b981" stroke-width="2" opacity="0.95"/>
+      <text x="205" y="62" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800">DERROTISTA</text>
+      <g class="wf-a"><circle cx="66" cy="96" r="4" fill="#34d399"/><text x="80" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Lista os riscos</text></g><g class="wf-a"><circle cx="66" cy="130" r="4" fill="#34d399"/><text x="80" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Conclui: não vai dar</text></g><g class="wf-a"><circle cx="66" cy="164" r="4" fill="#34d399"/><text x="80" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Para por aí</text></g><g class="wf-a"><circle cx="66" cy="198" r="4" fill="#34d399"/><text x="80" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Nada aprende</text></g><rect x="430" y="30" width="330" height="206" rx="16" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.95"/>
+      <text x="595" y="62" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">PRODUTIVO</text>
+      <g class="wf-a"><circle cx="456" cy="96" r="4" fill="#38bdf8"/><text x="470" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Lista os riscos</text></g><g class="wf-a"><circle cx="456" cy="130" r="4" fill="#38bdf8"/><text x="470" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Pergunta: como reduzo?</text></g><g class="wf-a"><circle cx="456" cy="164" r="4" fill="#38bdf8"/><text x="470" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Faz uma aposta pequena</text></g><g class="wf-a"><circle cx="456" cy="198" r="4" fill="#38bdf8"/><text x="470" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Aprende rápido</text></g>
+      <line x1="385" y1="121" x2="415" y2="121" stroke="#9ca3af" stroke-width="1.5"/><line x1="385" y1="129" x2="415" y2="129" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="400" y="149" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">mesma lista, outro uso</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Os dois começam igual: listando o que pode dar errado. A diferença está só na segunda linha. O produtivo transforma cada risco numa pergunta de ação.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; Postura produtiva</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Se ninguém souber que existe, como faço os primeiros 10 usuários chegarem?"</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Se copiarem em uma semana, o que ainda seria meu?"</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Se eu estiver errado, quanto perco?"</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Postura derrotista</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"Não tenho audiência, então nem adianta."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"Vão copiar mesmo, para que tentar?"</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"Já existe algo parecido, desisto."</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Teste de uma linha</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p5">Para cada risco que você listar, escreva ao lado uma ação que custa menos de um dia. Se não houver nenhuma, aquele risco é grave e merece atenção antes de tudo.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-1-3#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📓 O diário de contingência</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p6">Alguns empreendedores mantêm, por anos, um caderno com uma pergunta só: <strong>"se eu perdesse tudo amanhã, como alimentaria minha família, legalmente?"</strong>. As respostas vão ficando cada vez mais concretas e criativas: dormir perto de universidades, comprar um terno num brechó para entrar em eventos com comida de graça, fazer a barba para parecer um participante qualquer.</p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🧗</span> Por que um exercício tão extremo ajuda</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m1-3-p7">Pensar no pior cenário tira o medo abstrato e o transforma em lista de ações. Depois de alguns anos, a pessoa descobre que quase sempre existe uma saída, desde que olhe para os recursos disponíveis com criatividade.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-3-p8">Essa mesma atitude, aplicada a produtos, gera perguntas muito úteis: "se eu tivesse zero de orçamento para anúncio, como conseguiria os primeiros usuários?".</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Como o exercício de contingência se transforma em estratégia de produto"><defs>
+    <linearGradient id="s14-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s14-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s14-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s14-grid)"/><g class="wf-a"><rect x="40" y="60" width="162" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#10b981"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="121" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700">Cenário extremo</text>
+        <text x="121" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">e se der</text><text x="121" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">tudo errado?</text></g>
+        <path class="wf-flow" d="M204 102 L224 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="220,97 220,107 226,102" fill="#38bdf8"/><g class="wf-a"><rect x="226" y="60" width="162" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="244" cy="78" r="10" fill="#38bdf8"/><text x="244" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="307" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700">Recursos reais</text>
+        <text x="307" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">o que ainda</text><text x="307" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">tenho à mão</text></g>
+        <path class="wf-flow" d="M390 102 L410 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="406,97 406,107 412,102" fill="#38bdf8"/><g class="wf-a"><rect x="412" y="60" width="162" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="430" cy="78" r="10" fill="#10b981"/><text x="430" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="493" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700">Saídas criativas</text>
+        <text x="493" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">caminhos</text><text x="493" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">não óbvios</text></g>
+        <path class="wf-flow" d="M576 102 L596 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="592,97 592,107 598,102" fill="#38bdf8"/><g class="wf-a"><rect x="598" y="60" width="162" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="616" cy="78" r="10" fill="#38bdf8"/><text x="616" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="679" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700">Plano de produto</text>
+        <text x="679" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">mesma lógica,</text><text x="679" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">outro alvo</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Como o exercício de contingência se transforma em estratégia de produto</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> O exercício pessoal e o de produto usam os mesmos quatro passos. Treinar o primeiro deixa o segundo mais rápido e menos assustador.</figcaption>
+      </figure>
+
+      <div class="codebox bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+          <div><p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">Copie e rode</p><p class="text-sm text-neutral-300">Criar sua versão de produto do diário de contingência com ajuda de um assistente de IA (Claude, ChatGPT ou Codex).</p></div>
+          <button type="button" data-copy class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors">Copiar</button>
+        </div>
+        <pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Quero praticar pessimismo produtivo sobre meu produto.
+
+Produto: &lt;descreva em uma frase&gt;
+Público: &lt;quem usa&gt;
+Recursos que tenho hoje: &lt;tempo por semana, dinheiro, contatos, habilidades&gt;
+
+Imagine os três piores cenários realistas para os próximos 90 dias
+(ex.: ninguém se cadastra, um concorrente grande lança algo igual, eu fico sem tempo).
+Para cada cenário, liste 3 saídas criativas que usem SÓ os recursos que eu já tenho.
+Nada que exija investimento novo. Seja concreto: ação, prazo, custo.</code></pre>
+        <div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> Você deve receber 3 cenários × 3 saídas. Se alguma saída exigir dinheiro que você não tem, peça ao assistente para substituí-la. Guarde o resultado numa nota e revise em 30 dias.</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Comece pequeno</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p9">Não precisa ser um diário de anos. Abra uma nota chamada "contingência" e adicione uma linha por semana. O valor vem da repetição.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-1-3#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">👎 As cinco razões para NÃO funcionar</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p10">Pegue sua ideia e responda, sem piedade: <strong class="text-emerald-400">quais são as cinco razões mais fortes pelas quais isso não vai dar certo?</strong> A lista abaixo mostra as que aparecem com mais frequência. Use como ponto de partida, não como resposta.</p>
+
+      <div class="space-y-5 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-2">As razões mais comuns</h3>
+        
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Não tenho distribuição</h4>
+            <p class="text-sm text-neutral-400 mb-2">O problema da maioria</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p11">Ninguém vai saber que o produto existe. Sem audiência, sem parceiros, sem canal, até o melhor produto morre em silêncio.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Dá para copiar gravando a tela</h4>
+            <p class="text-sm text-neutral-400 mb-2">O teste do clone</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p12">Alguém grava um vídeo usando seu produto, entrega para um assistente de código e diz "faça igual". Se isso bastar, você não tem produto, tem uma demonstração.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">A dor pode ser só minha</h4>
+            <p class="text-sm text-neutral-400 mb-2">Mercado desconhecido</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p13">O problema existe no seu jeito de trabalhar, mas você não sabe se centenas, milhares ou milhões de pessoas sentem o mesmo.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Não sei o tamanho do mercado</h4>
+            <p class="text-sm text-neutral-400 mb-2">TAM incerto</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p14">Pode haver cinco clientes possíveis no mundo, ou cinco milhões. Sem uma estimativa, você não sabe se vale o esforço.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Pode ser só local</h4>
+            <p class="text-sm text-neutral-400 mb-2">Escopo geográfico</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p15">A necessidade pode existir na sua cidade ou região e não fazer sentido em outros lugares.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">TAM</dt><dd class="text-neutral-400" data-inema-block="m1-3-p16">Total Addressable Market, mercado total endereçável. Quantas pessoas ou empresas poderiam, em teoria, comprar o seu produto.</dd></div><div><dt class="font-semibold text-neutral-100">Distribuição</dt><dd class="text-neutral-400" data-inema-block="m1-3-p17">Tudo que faz o produto chegar a quem precisa dele: audiência, parceiros, busca, indicação.</dd></div>
+        </dl>
+      </aside>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 340" class="w-full h-auto" role="img" aria-label="Peso relativo das razões mais comuns de fracasso em produtos pequenos"><defs>
+    <linearGradient id="s15-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s15-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s15-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="340" fill="url(#s15-grid)"/>
+      <circle cx="220" cy="170" r="110" fill="none" stroke="#1f2937" stroke-width="34"/><circle cx="220" cy="170" r="110" fill="none" stroke="#10b981" stroke-width="34" stroke-dasharray="276.4601535159018 414.6902302738527" stroke-dashoffset="0" transform="rotate(-90 220 170)" opacity="0.95"/><circle cx="220" cy="170" r="110" fill="none" stroke="#38bdf8" stroke-width="34" stroke-dasharray="172.78759594743863 518.3627878423159" stroke-dashoffset="-276.4601535159018" transform="rotate(-90 220 170)" opacity="0.95"/><circle cx="220" cy="170" r="110" fill="none" stroke="#9ca3af" stroke-width="34" stroke-dasharray="241.90263432641407 449.2477494633405" stroke-dashoffset="-449.2477494633405" transform="rotate(-90 220 170)" opacity="0.5"/>
+      <text x="220" y="166" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="30" font-weight="800">5</text><text x="220" y="192" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-weight="400">razões</text><rect x="420" y="86" width="16" height="16" rx="4" fill="#34d399"/><text x="446" y="99" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700">Sem distribuição</text><text x="446" y="117" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">a mais frequente</text><rect x="420" y="146" width="16" height="16" rx="4" fill="#38bdf8"/><text x="446" y="159" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700">Fácil de copiar</text><text x="446" y="177" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">o teste do clone</text><rect x="420" y="206" width="16" height="16" rx="4" fill="#9ca3af"/><text x="446" y="219" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="14" font-weight="700">Dor ou mercado incertos</text><text x="446" y="237" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">só minha? quantos?</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> As proporções são ilustrativas. O ponto é que distribuição aparece sozinha como a maior fatia: quem resolve só o produto e ignora o canal resolveu a menor parte do problema.</figcaption>
+      </figure>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Não pule este exercício</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p18">É desconfortável escrever por que sua ideia vai falhar. Justamente por isso quase ninguém faz, e quase todo mundo descobre essas razões tarde demais, depois de meses de trabalho.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-1-3#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">👍 As cinco razões para funcionar</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p19">Agora faça o exercício inverso. <strong class="text-emerald-400">Quais são as cinco razões mais fortes pelas quais isso pode funcionar?</strong> A regra é a mesma: nada de desejo, só fatos e recursos que você tem hoje.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🤝</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Parceiros que divulgariam</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p20">Conhecidos com audiência nas redes que falariam do produto em troca de uma comissão por venda.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">📺</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Um canal próprio</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p21">Mesmo pequeno: uma lista de e-mails, um perfil, um grupo de clientes antigos.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">👥</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Grupos de teste</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p22">Fóruns e grupos onde o seu público já se reúne e aceita ferramentas úteis.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🔁</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Feedback cedo</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p23">Um jeito de saber em dias, não meses, se o produto está no caminho certo.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">💰</div>
+          <h4 class="font-semibold text-emerald-400 mb-2">Custo baixo para testar</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-p24">A possibilidade de descobrir se vale gastando quase nada.</p>
+        </div>
+      </div>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 320" class="w-full h-auto" role="img" aria-label="Balança entre razões contra e razões a favor da ideia"><defs>
+    <linearGradient id="s16-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s16-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s16-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="320" fill="url(#s16-grid)"/>
+      <line x1="400" y1="70" x2="400" y2="270" stroke="#9ca3af" stroke-width="4"/><rect x="320" y="266" width="160" height="12" rx="6" fill="#9ca3af"/>
+      <line x1="180" y1="-170" x2="620" y2="310" stroke="#10b981" stroke-width="4" filter="url(#s16-glow)"/>
+      <g class="wf-a"><rect x="80" y="-130" width="200" height="110" rx="14" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+      <line x1="180" y1="-170" x2="180" y2="-130" stroke="#10b981" stroke-width="2"/>
+      <text x="180" y="-98" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800">Contra</text><text x="180" y="-74" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">sem distribuição</text><text x="180" y="-60" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">copiável</text><text x="180" y="-46" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">mercado incerto</text></g>
+      <g class="wf-a"><rect x="520" y="350" width="200" height="110" rx="14" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="620" y1="310" x2="620" y2="350" stroke="#38bdf8" stroke-width="2"/>
+      <text x="620" y="382" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">A favor</text><text x="620" y="406" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">parceiros</text><text x="620" y="420" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">canal próprio</text><text x="620" y="434" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">teste barato</text></g>
+      <text x="400" y="306" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Balança entre razões contra e razões a favor da ideia</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> A balança só é útil se os dois pratos forem pesados com a mesma honestidade. Se os itens "a favor" forem desejos e os "contra" forem fatos, o resultado é enganoso.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; Razão a favor válida</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Tenho três amigos com 20 mil seguidores no nicho que topam divulgar."</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Já tenho 200 ex-clientes com esse problema."</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>"Consigo testar num grupo de 5 mil pessoas nesta semana."</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Razão a favor fraca</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"Todo mundo vai querer isso."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"Se viralizar, estouro."</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>"O produto é muito melhor que os outros."</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Cruze as duas listas</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p25">Para cada razão contra, veja se alguma razão a favor a neutraliza. "Sem distribuição" é neutralizado por "parceiros que divulgam". Riscos sem par na outra lista são os que precisam de plano.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-1-3#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🎲 A aposta mínima</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p26">A última peça do pessimismo produtivo é perguntar: <strong class="text-emerald-400">como descubro se estou certo gastando o mínimo possível?</strong> Não o mínimo para construir o produto inteiro, mas o mínimo para responder à dúvida mais perigosa.</p>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 304" class="w-full h-auto" role="img" aria-label="Comparação do custo de diferentes formas de testar uma ideia"><defs>
+    <linearGradient id="s17-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s17-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s17-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="304" fill="url(#s17-grid)"/>
+      <rect x="220" y="22" width="14" height="10" rx="3" fill="#9ca3af" opacity="0.55"/><text x="240" y="31" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">dias</text>
+      <rect x="350" y="22" width="14" height="10" rx="3" fill="#10b981"/><text x="370" y="31" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600">reais</text><g><text x="206" y="86" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Produto completo</text>
+        <rect x="220" y="60" width="447.84688995215305" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="675.8468899521531" y="75" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">90 dias</text>
+        <g class="wf-a"><rect x="220" y="86" width="472.72727272727263" height="20" rx="6" fill="url(#s17-g)" filter="url(#s17-glow)"/></g>
+        <text x="700.7272727272726" y="101" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">alto</text></g><g><text x="206" y="164" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Protótipo funcional</text>
+        <rect x="220" y="138" width="34.83253588516746" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="262.83253588516743" y="153" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">7 dias</text>
+        <g class="wf-a"><rect x="220" y="164" width="99.52153110047846" height="20" rx="6" fill="url(#s17-g)" filter="url(#s17-glow)"/></g>
+        <text x="327.52153110047846" y="179" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">baixo</text></g><g><text x="206" y="242" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Página + lista de espera</text>
+        <rect x="220" y="216" width="4.976076555023923" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="232.97607655502392" y="231" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">1 dia</text>
+        <g class="wf-a"><rect x="220" y="242" width="24.880382775119614" height="20" rx="6" fill="url(#s17-g)" filter="url(#s17-glow)"/></g>
+        <text x="252.8803827751196" y="257" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">mínimo</text></g></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Cada linha responde a uma pergunta diferente. A página com lista de espera responde "alguém se interessa?". O protótipo responde "alguém usa?". O produto completo só deveria vir depois das duas.</figcaption>
+      </figure>
+
+      <div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+        <table class="w-full text-sm text-left">
+          <caption class="text-left text-xs text-neutral-500 px-4 pt-3">Exemplos de apostas mínimas por tipo de dúvida</caption>
+          <thead class="bg-dark-800 text-emerald-400"><tr><th class="px-4 py-3 font-semibold">Dúvida mais arriscada</th><th class="px-4 py-3 font-semibold">Aposta mínima</th><th class="px-4 py-3 font-semibold">Sinal de sucesso</th></tr></thead>
+          <tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Alguém quer isso?</td><td class="px-4 py-3 text-neutral-300">Página simples com lista de espera, divulgada em 2 grupos</td><td class="px-4 py-3 text-neutral-300">30+ inscrições em uma semana</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Alguém paga?</td><td class="px-4 py-3 text-neutral-300">Botão de pré-venda com desconto</td><td class="px-4 py-3 text-neutral-300">3+ pagamentos reais</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">A pessoa entende sozinha?</td><td class="px-4 py-3 text-neutral-300">Protótipo usado por 5 pessoas sem ajuda</td><td class="px-4 py-3 text-neutral-300">4 de 5 chegam ao resultado</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Consigo alcançar o público?</td><td class="px-4 py-3 text-neutral-300">Um post num fórum do nicho</td><td class="px-4 py-3 text-neutral-300">Respostas e mensagens diretas</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Cuidado com a aposta que não responde nada</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p27">Pesquisa de opinião ("você usaria?") é barata, mas quase não prova nada. As pessoas dizem sim por educação. Prefira testes em que elas precisem agir: se inscrever, pagar, usar.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-1-3#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚰️ Pré-mortem com IA</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-p28">Você pode juntar tudo deste módulo num único exercício com IA. A técnica se chama <strong class="text-emerald-400">pré-mortem</strong>: em vez de perguntar "o que pode dar errado?", você afirma "já deu errado" e pede para reconstruir a história do fracasso. A mudança de tempo verbal libera críticas muito mais concretas.</p>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Etapas do pré-mortem com IA"><defs>
+    <linearGradient id="s18-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s18-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s18-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s18-grid)"/><g class="wf-a"><rect x="40" y="60" width="162" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#10b981"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="121" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700">Descrever</text>
+        <text x="121" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">produto, público,</text><text x="121" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">recursos</text></g>
+        <path class="wf-flow" d="M204 102 L224 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="220,97 220,107 226,102" fill="#38bdf8"/><g class="wf-a"><rect x="226" y="60" width="162" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="244" cy="78" r="10" fill="#38bdf8"/><text x="244" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="307" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700">Declarar</text>
+        <text x="307" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">"fracassou em</text><text x="307" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">12 meses"</text></g>
+        <path class="wf-flow" d="M390 102 L410 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="406,97 406,107 412,102" fill="#38bdf8"/><g class="wf-a"><rect x="412" y="60" width="162" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="430" cy="78" r="10" fill="#10b981"/><text x="430" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="493" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" font-weight="700">Reconstruir</text>
+        <text x="493" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">as causas</text><text x="493" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">prováveis</text></g>
+        <path class="wf-flow" d="M576 102 L596 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="592,97 592,107 598,102" fill="#38bdf8"/><g class="wf-a"><rect x="598" y="60" width="162" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="616" cy="78" r="10" fill="#38bdf8"/><text x="616" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="679" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" font-weight="700">Mitigar</text>
+        <text x="679" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">aposta mínima</text><text x="679" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">por causa</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Etapas do pré-mortem com IA</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> O passo que faz diferença é o segundo: declarar o fracasso como fato. Quando o modelo parte do "já aconteceu", ele para de tentar agradar e passa a explicar.</figcaption>
+      </figure>
+
+      <div class="codebox bg-dark-800 rounded-xl border border-emerald-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+          <div><p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">Copie e rode</p><p class="text-sm text-neutral-300">Rodar um pré-mortem completo da sua ideia no Claude, ChatGPT ou Codex, cruzando razões contra, razões a favor e apostas mínimas.</p></div>
+          <button type="button" data-copy class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors">Copiar</button>
+        </div>
+        <pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Aja como um investidor experiente e cético. Faça um PRÉ-MORTEM do meu produto.
+
+Produto: &lt;o que faz, em uma frase&gt;
+Para quem: &lt;público específico&gt;
+Como ganha dinheiro: &lt;modelo de cobrança e preço&gt;
+Recursos que tenho: &lt;tempo, dinheiro, audiência, contatos&gt;
+
+Parta do fato: estamos daqui a 12 meses e o produto FRACASSOU.
+
+1. Liste as 5 causas mais prováveis do fracasso, da mais para a menos provável.
+   Considere obrigatoriamente: distribuição, facilidade de cópia (alguém grava a
+   tela e pede a uma IA para refazer), tamanho real do mercado, se a dor é só minha,
+   e se um gigante poderia lançar algo parecido.
+2. Liste as 5 razões mais fortes para ter dado CERTO, usando só os recursos que informei.
+3. Para cada causa de fracasso, proponha uma aposta mínima (menos de 7 dias e
+   menos de R$ 200) que testaria se aquele risco é real.
+4. Termine com um veredito de uma frase: seguir, ajustar ou abandonar, e por quê.
+
+Não suavize. Se a ideia for fraca, diga.</code></pre>
+        <div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> A resposta precisa ter as quatro partes numeradas e um veredito claro. Se o modelo elogiar demais, responda "você está sendo gentil; refaça como se fosse seu dinheiro em jogo". Guarde o resultado: ele vira seu plano de testes da Trilha 2.</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Rode duas vezes</h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-p29">Rode o mesmo prompt em dois modelos diferentes, ou duas vezes no mesmo modelo em conversas novas. Causas que aparecem nas duas respostas são as que você deve testar primeiro.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; Bom uso do pré-mortem</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Rodar antes de escrever código.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Transformar cada causa em um teste barato.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Repetir quando a ideia mudar.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Mau uso do pré-mortem</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Pedir até o modelo concordar com você.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Ler, achar interessante e seguir igual.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Usar como desculpa para nunca começar.</span></li></ul>
+        </div>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- QUIZ -->
+    
+      <div class="bg-dark-800 rounded-2xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Teste rápido do módulo</h3>
+        <p class="text-sm text-neutral-400 mb-5">Três perguntas. Clique numa opção para ver a resposta.</p>
+        <div class="space-y-5">
+        
+          <div class="qz" data-q="1">
+            <p class="font-semibold text-neutral-100 mb-3">1. O que diferencia o pessimismo produtivo do derrotista?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">A quantidade de riscos listados</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">O produtivo transforma cada risco numa ação de teste</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">O derrotista ignora os riscos</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Os dois listam riscos. O produtivo pergunta &quot;como reduzo isso?&quot; e faz uma aposta pequena para descobrir."></p>
+          </div>
+          <div class="qz" data-q="2">
+            <p class="font-semibold text-neutral-100 mb-3">2. Qual é o "teste do clone"?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">Ver se alguém recria seu produto gravando a tela e pedindo a uma IA</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Registrar a marca no INPI</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Comparar preços com concorrentes</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Se um vídeo de uso mais um prompt bastam para copiar, o produto não tem proteção."></p>
+          </div>
+          <div class="qz" data-q="3">
+            <p class="font-semibold text-neutral-100 mb-3">3. Por que o pré-mortem declara que o produto "já fracassou"?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Para desmotivar</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">Porque partir do fato gera explicações mais concretas do que perguntar o que pode dar errado</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Porque é obrigatório em investimentos</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Mudar o tempo verbal tira o modelo (e você) do modo de agradar e força a reconstruir causas específicas."></p>
+          </div>
+        </div>
+      </div>
+
+    <!-- RESUMO DO MÓDULO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Pessimismo produtivo</strong><span class="text-neutral-400"> - listar riscos para agir, não para desistir</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Diário de contingência</strong><span class="text-neutral-400"> - treinar saídas criativas com recursos que já existem</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Cinco razões contra</strong><span class="text-neutral-400"> - distribuição, cópia, dor só sua, mercado incerto, escopo local</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Cinco razões a favor</strong><span class="text-neutral-400"> - só fatos e recursos atuais, com o mesmo rigor</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Aposta mínima</strong><span class="text-neutral-400"> - o teste mais barato para a dúvida mais perigosa</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Pré-mortem com IA</strong><span class="text-neutral-400"> - declarar o fracasso e reconstruir as causas com um modelo cético</span></div></div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#8592; Módulo 1.2</a>
+          <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Trilha 2 &#8594;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+      <p>Produtos na era da IA · Trilha 1 — A mentalidade · 2026 ·
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
+      
+    </div>
+  </footer>
+
+  <!-- SCRIPTS núcleo v1 -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Certo. ' : '✗ Não é essa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

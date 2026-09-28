@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="produtos-era-ia">
+  <title>O jogo mudou | Produtos na era da IA</title>
+  <meta name="description" content="Hoje dá para construir quase qualquer coisa em poucas horas. Isso muda a pergunta central de quem cria produtos: não é mais "consigo fazer?", é "vale a pena fazer?". Este módulo mostra o que mudou no terreno antes de falarmos de estratégia.">
+
+  <!-- ANTI-FOUC: bloqueante, antes de tudo -->
+  <script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (obrigatório em toda página) -->
+  <script type="application/json" data-inema-manifest>
+{
+ "course": "produtos-era-ia",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "A mentalidade",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "O jogo mudou",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "O problema da média",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pessimismo produtivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "Vale a pena construir?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necessidade e prazo de validade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, dados e dificuldade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recorrência e hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lançar e crescer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribuição",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamento e jornada",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, design e usuários simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-3">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧭</span>
+            <span class="font-bold text-lg hidden md:inline">Produtos na era da IA</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600 hidden sm:inline">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline">PRO</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../../curso/trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Mentalidade</span>
+          </a>
+          <a href="../../curso/trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Oportunidade</span>
+          </a>
+          <a href="../../curso/trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Lançar</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
+            <span>🧭</span><span>Minha jornada</span>
+            <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
+          </button>
+          <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Aparência e leitura">
+            <span aria-hidden="true">Aa</span>
+          </button>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div data-inema-appearance class="inema-appearance-pop" role="region" aria-label="Aparência e leitura">
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tema</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-theme="inema-dark" class="inema-chip">Escuro</button>
+        <button type="button" data-inema-set-theme="claro" class="inema-chip">Claro</button>
+        <button type="button" data-inema-set-theme="sepia" class="inema-chip">Sépia</button>
+        <button type="button" data-inema-set-theme="foco" class="inema-chip">Foco</button>
+        <button type="button" data-inema-set-theme="contraste" class="inema-chip">Contraste</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tamanho do texto</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-fontscale="90" class="inema-chip">A-</button>
+        <button type="button" data-inema-set-fontscale="100" class="inema-chip">A</button>
+        <button type="button" data-inema-set-fontscale="115" class="inema-chip">A+</button>
+        <button type="button" data-inema-set-fontscale="130" class="inema-chip">A++</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Fonte</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-font="inter" class="inema-chip">Inter</button>
+        <button type="button" data-inema-set-font="system" class="inema-chip">Sistema</button>
+        <button type="button" data-inema-set-font="leitura" class="inema-chip">Leitura</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Entrelinha</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-leading="1.5" class="inema-chip">Compacta</button>
+        <button type="button" data-inema-set-leading="1.7" class="inema-chip">Normal</button>
+        <button type="button" data-inema-set-leading="1.9" class="inema-chip">Ampla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1</a><span>/</span>
+      <span class="text-emerald-400">Módulo 1.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌊 O jogo mudou</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Hoje dá para construir quase qualquer coisa em poucas horas. Isso muda a pergunta central de quem cria produtos: não é mais "consigo fazer?", é "vale a pena fazer?". Este módulo mostra o que mudou no terreno antes de falarmos de estratégia.</p>
+      
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">40</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Fundamento</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:1-1" class="inema-meter max-w-md mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo">
+        <div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="1-1" data-inema-track="1">
+    <nav aria-label="Tópicos deste módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc>
+      <p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">Neste módulo</p>
+      <ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <li><a href="#topico-1" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>A inflação de apps</span></a></li><li><a href="#topico-2" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>O SaaS morreu?</span></a></li><li><a href="#topico-3" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>O ciclo de produto embaralhou</span></a></li><li><a href="#topico-4" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Quando a experiência já é a validação</span></a></li><li><a href="#topico-5" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Uma pessoa, três papéis</span></a></li><li><a href="#topico-6" class="flex items-start gap-2 text-neutral-300 hover:text-emerald-400"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Velocidade ama dinheiro</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-1-1#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎈 A inflação de apps</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p1">Uma estimativa que circula entre quem acompanha o mercado de software diz que <strong class="text-emerald-400">cerca de dois terços dos aplicativos que existem hoje foram criados nos últimos três ou quatro anos</strong>. O número exato importa menos que a direção: a quantidade de software cresceu muito mais rápido do que a quantidade de pessoas dispostas a usá-lo.</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">App / aplicativo</dt><dd class="text-neutral-400" data-inema-block="m1-1-p2">Qualquer software que alguém usa para resolver uma tarefa: site, app de celular, extensão, painel web.</dd></div><div><dt class="font-semibold text-neutral-100">SaaS</dt><dd class="text-neutral-400" data-inema-block="m1-1-p3">Software como Serviço. Você não compra o programa; paga uma assinatura mensal para usá-lo pela internet (ex.: Notion, Canva, RD Station).</dd></div><div><dt class="font-semibold text-neutral-100">Vibe coding</dt><dd class="text-neutral-400" data-inema-block="m1-1-p4">Construir software descrevendo em linguagem natural o que você quer para uma IA (Claude Code, Codex, Cursor) e deixando ela escrever o código.</dd></div><div><dt class="font-semibold text-neutral-100">Custo marginal</dt><dd class="text-neutral-400" data-inema-block="m1-1-p5">Quanto custa produzir mais uma unidade. Em software feito com IA, o custo de "mais um app" caiu para algumas horas e poucos dólares.</dd></div>
+        </dl>
+      </aside>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">💸</span> Inflação, no sentido econômico</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m1-1-p6">Na economia, inflação é quando existe dinheiro demais circulando e cada nota passa a valer menos. Com apps acontece algo parecido: existe software demais disputando a mesma atenção, e cada lançamento isolado passa a valer menos para quem vê.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-1-p7">Isso não quer dizer que software perdeu valor. Quer dizer que <strong>software genérico</strong> perdeu valor. O que continua valendo é o software que resolve uma dor real, de um jeito difícil de copiar, e que chega às pessoas certas.</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 360" class="w-full h-auto" role="img" aria-label="Curva comparando o crescimento da quantidade de apps com o crescimento da atenção disponível: os apps sobem muito mais rápido"><defs>
+    <linearGradient id="s1-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s1-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s1-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="360" fill="url(#s1-grid)"/>
+      <line x1="90" y1="300" x2="760" y2="300" stroke="#9ca3af" stroke-width="1.5"/><line x1="90" y1="300" x2="90" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="90" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Antes</text><text x="313.33333333333337" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">-4 anos</text><text x="536.6666666666667" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">-2 anos</text><text x="760" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Hoje</text>
+      <text x="78" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 78 175)">volume relativo</text>
+      <path d="M90 262.5 L313.33333333333337 225 L536.6666666666667 145 L760 62.5" fill="none" stroke="#34d399" stroke-width="3" filter="url(#s1-glow)"/>
+        <circle cx="90" cy="262.5" r="5" fill="#34d399"/><text x="90" y="250.5" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">15</text><circle cx="313.33333333333337" cy="225" r="5" fill="#34d399"/><text x="313.33333333333337" y="213" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">30</text><circle cx="536.6666666666667" cy="145" r="5" fill="#34d399"/><text x="536.6666666666667" y="133" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">62</text><circle cx="760" cy="62.5" r="5" fill="#34d399"/><text x="760" y="50.5" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">95</text>
+        <text x="766" y="66.5" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600">Apps lançados</text><path d="M90 262.5 L313.33333333333337 255 L536.6666666666667 250 L760 245" fill="none" stroke="#38bdf8" stroke-width="3" filter="url(#s1-glow)"/>
+        <circle cx="90" cy="262.5" r="5" fill="#38bdf8"/><text x="90" y="250.5" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">15</text><circle cx="313.33333333333337" cy="255" r="5" fill="#38bdf8"/><text x="313.33333333333337" y="243" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">18</text><circle cx="536.6666666666667" cy="250" r="5" fill="#38bdf8"/><text x="536.6666666666667" y="238" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">20</text><circle cx="760" cy="245" r="5" fill="#38bdf8"/><text x="760" y="233" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">22</text>
+        <text x="766" y="249" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600">Atenção disponível</text><text x="400" y="350" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Curva comparando o crescimento da quantidade de apps com o crescimento da atenção disponível: os apps sobem muito mais rápido</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> A linha dos apps dispara; a da atenção quase não se mexe. A distância entre as duas é o tamanho do problema de quem lança hoje: mais concorrentes brigando pelo mesmo tempo das pessoas.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; O que ficou mais fácil</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Sair da ideia para um protótipo funcionando em horas.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Testar várias versões sem contratar ninguém.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Construir sozinho o que antes exigia uma equipe.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; O que ficou mais difícil</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Ser notado no meio de milhares de lançamentos parecidos.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Convencer alguém a pagar mais uma assinatura.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Manter vantagem quando qualquer um pode copiar em dias.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consequência prática</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p8">Antes de abrir o editor, faça a pergunta que a inflação impõe: se amanhã surgirem mais dez apps iguais ao meu, por que alguém ainda escolheria o meu? Se não houver resposta, o problema não é técnico.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-1-1#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚰️ O SaaS morreu?</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p9">Muita gente repete que o SaaS acabou. Em boa parte, tem razão: ferramentas simples que só organizavam dados ou geravam texto estão sendo substituídas por um pedido de duas linhas a um assistente de IA. Por que pagar R$ 50 por mês por algo que o chat faz de graça?</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Arbitragem</dt><dd class="text-neutral-400" data-inema-block="m1-1-p10">Ganhar com uma diferença que o mercado ainda não corrigiu. Comprar barato num lugar e vender caro em outro; aqui, resolver um problema antes que o resto do mercado perceba que ele é fácil de resolver.</dd></div><div><dt class="font-semibold text-neutral-100">Nicho</dt><dd class="text-neutral-400" data-inema-block="m1-1-p11">Um grupo específico de clientes com uma necessidade específica: contadores de pequenas cidades, clínicas veterinárias, escritórios de engenharia.</dd></div><div><dt class="font-semibold text-neutral-100">Caso de uso</dt><dd class="text-neutral-400" data-inema-block="m1-1-p12">A tarefa concreta que a pessoa quer fazer com o produto: "emitir a nota fiscal do mês", não "gerenciar finanças".</dd></div>
+        </dl>
+      </aside>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🧭</span> Os três lugares onde ainda há espaço</h3>
+        
+        <ul class="space-y-2 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">&#8226;</span><span><strong>O nicho certo</strong>: grupos pouco disputados, com dinheiro e com pouco tempo para aprender IA.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">&#8226;</span><span><strong>O caso de uso certo</strong>: uma tarefa estreita, dolorosa e frequente, em vez de uma plataforma genérica.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">&#8226;</span><span><strong>Velocidade</strong>: chegar primeiro e aprender mais rápido do que os outros conseguem copiar.</span></li></ul>
+      </div>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="Comparação entre o SaaS que está morrendo e o SaaS que ainda tem espaço"><defs>
+    <linearGradient id="s2-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s2-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s2-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="300" fill="url(#s2-grid)"/>
+      <rect x="40" y="30" width="330" height="240" rx="16" fill="#064e3b" stroke="#10b981" stroke-width="2" opacity="0.95"/>
+      <text x="205" y="62" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800">MORRENDO</text>
+      <g class="wf-a"><circle cx="66" cy="96" r="4" fill="#34d399"/><text x="80" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Genérico, "para todos"</text></g><g class="wf-a"><circle cx="66" cy="130" r="4" fill="#34d399"/><text x="80" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Só organiza ou gera texto</text></g><g class="wf-a"><circle cx="66" cy="164" r="4" fill="#34d399"/><text x="80" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Resolvível num prompt</text></g><g class="wf-a"><circle cx="66" cy="198" r="4" fill="#34d399"/><text x="80" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Sem dados próprios</text></g><g class="wf-a"><circle cx="66" cy="232" r="4" fill="#34d399"/><text x="80" y="236" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Concorre com o chat grátis</text></g><rect x="430" y="30" width="330" height="240" rx="16" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.95"/>
+      <text x="595" y="62" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">COM ESPAÇO</text>
+      <g class="wf-a"><circle cx="456" cy="96" r="4" fill="#38bdf8"/><text x="470" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Nicho definido</text></g><g class="wf-a"><circle cx="456" cy="130" r="4" fill="#38bdf8"/><text x="470" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Dor frequente e cara</text></g><g class="wf-a"><circle cx="456" cy="164" r="4" fill="#38bdf8"/><text x="470" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Pipeline difícil de copiar</text></g><g class="wf-a"><circle cx="456" cy="198" r="4" fill="#38bdf8"/><text x="470" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Acumula dados valiosos</text></g><g class="wf-a"><circle cx="456" cy="232" r="4" fill="#38bdf8"/><text x="470" y="236" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Vive no fluxo do cliente</text></g>
+      <line x1="385" y1="138" x2="415" y2="138" stroke="#9ca3af" stroke-width="1.5"/><line x1="385" y1="146" x2="415" y2="146" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="400" y="166" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">onde está a brecha</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> A coluna da esquerda descreve o que o chat de IA já faz sozinho. A da direita descreve o que ele ainda não faz bem. Todo produto novo deveria se encaixar na direita em pelo menos três itens.</figcaption>
+      </figure>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Armadilha comum</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p13">Ler "o SaaS morreu" e desistir, ou ler "ainda há espaço" e construir qualquer coisa. As duas leituras são preguiçosas. O que existe é um filtro mais severo: menos ideias passam, mas as que passam têm menos concorrência séria.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-1-1#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔀 O ciclo de produto embaralhou</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p14">O roteiro tradicional de produto tem sete etapas: <strong class="text-emerald-400">ter a ideia, validar, prototipar, fazer marketing, desenvolver, lançar e melhorar</strong>. Era uma sequência lógica numa época em que desenvolver custava caro: você só gastava com engenheiros depois de ter certeza de que valia a pena.</p>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Fluxo das sete etapas clássicas do ciclo de produto"><defs>
+    <linearGradient id="s3-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s3-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s3-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s3-grid)"/><g class="wf-a"><rect x="40" y="60" width="82.28571428571429" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#10b981"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="81.14285714285714" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Ideia</text>
+        <text x="81.14285714285714" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">o problema</text></g>
+        <path class="wf-flow" d="M124.28571428571429 102 L144.28571428571428 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="140.28571428571428,97 140.28571428571428,107 146.28571428571428,102" fill="#38bdf8"/><g class="wf-a"><rect x="146.28571428571428" y="60" width="82.28571428571429" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="164.28571428571428" cy="78" r="10" fill="#38bdf8"/><text x="164.28571428571428" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="187.42857142857142" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Validar</text>
+        <text x="187.42857142857142" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">alguém quer?</text></g>
+        <path class="wf-flow" d="M230.57142857142856 102 L250.57142857142856 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="246.57142857142856,97 246.57142857142856,107 252.57142857142856,102" fill="#38bdf8"/><g class="wf-a"><rect x="252.57142857142858" y="60" width="82.28571428571429" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="270.57142857142856" cy="78" r="10" fill="#10b981"/><text x="270.57142857142856" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="293.7142857142857" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Protótipo</text>
+        <text x="293.7142857142857" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">versão tosca</text></g>
+        <path class="wf-flow" d="M336.8571428571429 102 L356.8571428571429 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="352.8571428571429,97 352.8571428571429,107 358.8571428571429,102" fill="#38bdf8"/><g class="wf-a"><rect x="358.8571428571429" y="60" width="82.28571428571429" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="376.8571428571429" cy="78" r="10" fill="#38bdf8"/><text x="376.8571428571429" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="400.00000000000006" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Marketing</text>
+        <text x="400.00000000000006" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">quem fica</text><text x="400.00000000000006" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">sabendo</text></g>
+        <path class="wf-flow" d="M443.14285714285717 102 L463.14285714285717 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="459.14285714285717,97 459.14285714285717,107 465.14285714285717,102" fill="#38bdf8"/><g class="wf-a"><rect x="465.14285714285717" y="60" width="82.28571428571429" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="483.14285714285717" cy="78" r="10" fill="#10b981"/><text x="483.14285714285717" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text>
+        <text x="506.28571428571433" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Desenvolver</text>
+        <text x="506.28571428571433" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">versão real</text></g>
+        <path class="wf-flow" d="M549.4285714285714 102 L569.4285714285714 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="565.4285714285714,97 565.4285714285714,107 571.4285714285714,102" fill="#38bdf8"/><g class="wf-a"><rect x="571.4285714285714" y="60" width="82.28571428571429" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="589.4285714285714" cy="78" r="10" fill="#38bdf8"/><text x="589.4285714285714" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">6</text>
+        <text x="612.5714285714286" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Lançar</text>
+        <text x="612.5714285714286" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">abrir ao</text><text x="612.5714285714286" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">público</text></g>
+        <path class="wf-flow" d="M655.7142857142858 102 L675.7142857142858 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="671.7142857142858,97 671.7142857142858,107 677.7142857142858,102" fill="#38bdf8"/><g class="wf-a"><rect x="677.7142857142858" y="60" width="82.28571428571429" height="84" rx="12" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
+        <circle cx="695.7142857142858" cy="78" r="10" fill="#10b981"/><text x="695.7142857142858" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">7</text>
+        <text x="718.8571428571429" y="104" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Melhorar</text>
+        <text x="718.8571428571429" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">ouvir e</text><text x="718.8571428571429" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">ajustar</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Fluxo das sete etapas clássicas do ciclo de produto</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Na ordem clássica, construir vem tarde porque era a etapa mais cara. Hoje o protótipo custa horas; por isso ele pode vir antes da validação e virar a própria ferramenta de validação.</figcaption>
+      </figure>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p15">Com IA, construir um protótipo leva uma tarde. Isso muda a lógica: às vezes faz mais sentido <strong>prototipar para validar</strong> do que validar para depois prototipar. Um protótipo funcionando responde a perguntas que uma pesquisa de opinião nunca responde, como "a pessoa realmente clica?".</p>
+
+      <div class="space-y-5 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-2">Como a ordem costuma ficar hoje</h3>
+        
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Ideia ancorada numa dor</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-1-p16">A ideação continua no centro. Nada substitui entender o problema.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Protótipo rápido</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-1-p17">Uma versão feia, mas usável, construída em horas com um assistente de código.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Validação com o protótipo na mão</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-1-p18">Você mostra algo real para pessoas reais e mede o que elas fazem, não o que dizem.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Distribuição desde o primeiro dia</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-1-p19">Marketing deixa de ser etapa final. Sem público, não há como validar nada.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">5</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Desenvolver, lançar e melhorar em ciclos curtos</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m1-1-p20">As etapas finais viram um ciclo contínuo em vez de uma linha reta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Regra simples</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p21">A ordem certa depende do produto e do nicho. Pergunte qual etapa hoje é a mais barata de fazer e qual responde à dúvida mais perigosa. Comece pela que junta as duas coisas.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-1-1#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🎓 Quando a experiência já é a validação</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p22">Se você é consultor, freelancer ou trabalha numa área há anos, provavelmente já percebeu uma lacuna que se repete: todo cliente precisa da mesma coisinha, e ninguém oferece isso de forma simples. Quando é assim, você não precisa de tanta validação. <strong class="text-emerald-400">Sua experiência já foi a pesquisa de mercado.</strong></p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Micro SaaS</dt><dd class="text-neutral-400" data-inema-block="m1-1-p23">Um SaaS pequeno, focado em uma única tarefa, muitas vezes feito e mantido por uma ou duas pessoas.</dd></div><div><dt class="font-semibold text-neutral-100">Operacionalizar</dt><dd class="text-neutral-400" data-inema-block="m1-1-p24">Transformar algo que você faz "na mão", caso a caso, num processo repetível que roda sempre igual.</dd></div><div><dt class="font-semibold text-neutral-100">Plug and play</dt><dd class="text-neutral-400" data-inema-block="m1-1-p25">Algo que a pessoa conecta e já funciona, sem configuração complicada.</dd></div>
+        </dl>
+      </aside>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🧮</span> A conta que o cliente faz</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m1-1-p26">O cliente compara seu preço com a alternativa. Se a alternativa é contratar um desenvolvedor por algumas semanas, ou pagar uma assinatura premium de IA que custa centenas de dólares por mês e ainda exige que ele aprenda a usar, um produto de R$ 49 que resolve exatamente aquilo parece barato.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-1-p27">O preço não é comparado com zero. É comparado com o custo e o trabalho de resolver de outro jeito.</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 304" class="w-full h-auto" role="img" aria-label="Comparação do custo mensal de três formas de resolver o mesmo problema"><defs>
+    <linearGradient id="s4-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s4-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s4-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="304" fill="url(#s4-grid)"/>
+      <rect x="220" y="22" width="14" height="10" rx="3" fill="#9ca3af" opacity="0.55"/><text x="240" y="31" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11">custo em dinheiro</text>
+      <rect x="350" y="22" width="14" height="10" rx="3" fill="#10b981"/><text x="370" y="31" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600">custo em esforço</text><g><text x="206" y="86" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Contratar dev</text>
+        <rect x="220" y="60" width="447.84688995215305" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="675.8468899521531" y="75" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">alto</text>
+        <g class="wf-a"><rect x="220" y="86" width="298.56459330143537" height="20" rx="6" fill="url(#s4-g)" filter="url(#s4-glow)"/></g>
+        <text x="526.5645933014354" y="101" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">médio</text></g><g><text x="206" y="164" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Fazer sozinho com IA</text>
+        <rect x="220" y="138" width="149.28229665071768" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="377.2822966507177" y="153" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">baixo</text>
+        <g class="wf-a"><rect x="220" y="164" width="472.72727272727263" height="20" rx="6" fill="url(#s4-g)" filter="url(#s4-glow)"/></g>
+        <text x="700.7272727272726" y="179" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">altíssimo</text></g><g><text x="206" y="242" text-anchor="end" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="13" font-weight="600">Micro SaaS pronto</text>
+        <rect x="220" y="216" width="74.64114832535884" height="20" rx="6" fill="#9ca3af" opacity="0.55"/>
+        <text x="302.6411483253588" y="231" fill="#9ca3af" font-family="Inter,sans-serif" font-size="12">baixo</text>
+        <g class="wf-a"><rect x="220" y="242" width="49.76076555023923" height="20" rx="6" fill="url(#s4-g)" filter="url(#s4-glow)"/></g>
+        <text x="277.7607655502392" y="257" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="700">mínimo</text></g></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Olhe as duas barras juntas. O micro SaaS vence não por ser o mais barato em dinheiro, mas por ser o único baixo nas duas colunas. É essa soma que o cliente sente.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; Sinais de que sua experiência vale como validação</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Você já fez isso para cinco ou mais clientes diferentes.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Os clientes pediram de novo ou indicaram outros.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Você cobra por isso hoje, mesmo que manualmente.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Sinais de que ainda falta validar</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Resolveu só para você mesmo.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Todo cliente pediu uma versão diferente.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Ninguém pagaria se você não estivesse junto.</span></li></ul>
+        </div>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-1-1#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🧑‍🚀 Uma pessoa, três papéis</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p28">Em empresas, produtos costumam ser feitos por papéis separados. O <strong>gerente de produto</strong> decide o que construir e para quem. O <strong>engenheiro</strong> constrói. O <strong>QA</strong> testa e encontra falhas. Cada um freia o outro, e esse atrito evita muitos erros.</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-emerald-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Gerente de produto (PM)</dt><dd class="text-neutral-400" data-inema-block="m1-1-p29">Quem decide o que o produto faz, para quem, e em que ordem as coisas são construídas.</dd></div><div><dt class="font-semibold text-neutral-100">QA</dt><dd class="text-neutral-400" data-inema-block="m1-1-p30">Quality Assurance, garantia de qualidade. Quem testa o produto procurando erros antes do usuário encontrar.</dd></div><div><dt class="font-semibold text-neutral-100">Agente de IA</dt><dd class="text-neutral-400" data-inema-block="m1-1-p31">Um modelo de IA que executa tarefas em várias etapas sozinho: lê arquivos, roda comandos, testa, corrige.</dd></div>
+        </dl>
+      </aside>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 340" class="w-full h-auto" role="img" aria-label="Os três papéis de produto empilhados sobre uma única pessoa apoiada por agentes"><defs>
+    <linearGradient id="s5-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s5-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s5-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="340" fill="url(#s5-grid)"/><g ><rect x="100" y="40" width="600" height="52" rx="12" fill="#0e1b26" stroke="#10b981" stroke-width="1.6" opacity="0.95"/>
+        <text x="400" y="63" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="14" font-weight="700">Produto</text>
+        <text x="400" y="81" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400">o que construir e para quem</text></g><g ><rect x="140" y="110" width="520" height="52" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.6" opacity="0.95"/>
+        <text x="400" y="133" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="14" font-weight="700">Engenharia</text>
+        <text x="400" y="151" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400">construir de fato</text></g><g ><rect x="180" y="180" width="440" height="52" rx="12" fill="#0e1b26" stroke="#10b981" stroke-width="1.6" opacity="0.95"/>
+        <text x="400" y="203" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="14" font-weight="700">Validação e QA</text>
+        <text x="400" y="221" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400">testar, medir, criticar</text></g><g filter="url(#s5-glow)"><rect x="220" y="250" width="360" height="52" rx="12" fill="#064e3b" stroke="url(#s5-g)" stroke-width="2.5" opacity="0.95"/>
+        <text x="400" y="273" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700">Você + agentes</text>
+        <text x="400" y="291" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" font-weight="400">uma pessoa, três chapéus</text></g>
+      <text x="60" y="170" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 60 170)">de fora para dentro</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Os três papéis continuam existindo; o que mudou é que agora cabem numa pessoa. A camada de baixo precisa sustentar as três de cima, e a que costuma ceder primeiro é a de produto.</figcaption>
+      </figure>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🕳️</span> O papel que mais some</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m1-1-p32">Quem sabe programar tende a pular direto para a engenharia, porque é a parte divertida. O agente de IA piora isso: construir fica tão fácil que ninguém para para perguntar se deveria.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m1-1-p33">Por isso o resto deste curso é quase todo sobre o papel de produto: as perguntas que um bom gerente faria antes de liberar uma linha de código.</p>
+        
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Separe os chapéus no tempo</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p34">Reserve momentos distintos para cada papel. Numa sessão você só decide (produto). Noutra, só constrói. Noutra, só tenta quebrar o que construiu. Misturar os três na mesma hora faz o construtor vencer sempre.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-1-1#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚡ Velocidade ama dinheiro</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-p35">Existe um ditado antigo nos negócios: <strong class="text-emerald-400">velocidade ama dinheiro</strong>. Ele sempre foi verdade, mas hoje é mais. Se qualquer produto pode ser clonado em semanas, a vantagem de quem chegou primeiro se mede em semanas também.</p>
+
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 360" class="w-full h-auto" role="img" aria-label="Curva do valor capturado por quem chega cedo contra quem chega tarde numa janela de oportunidade"><defs>
+    <linearGradient id="s6-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s6-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s6-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="360" fill="url(#s6-grid)"/>
+      <line x1="90" y1="300" x2="760" y2="300" stroke="#9ca3af" stroke-width="1.5"/><line x1="90" y1="300" x2="90" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="90" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Mês 1</text><text x="313.33333333333337" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Mês 3</text><text x="536.6666666666667" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Mês 6</text><text x="760" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">Mês 12</text>
+      <text x="78" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 78 175)">valor capturado</text>
+      <path d="M90 225 L313.33333333333337 125 L536.6666666666667 87.5 L760 80" fill="none" stroke="#34d399" stroke-width="3" filter="url(#s6-glow)"/>
+        <circle cx="90" cy="225" r="5" fill="#34d399"/><text x="90" y="213" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">30</text><circle cx="313.33333333333337" cy="125" r="5" fill="#34d399"/><text x="313.33333333333337" y="113" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">70</text><circle cx="536.6666666666667" cy="87.5" r="5" fill="#34d399"/><text x="536.6666666666667" y="75.5" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">85</text><circle cx="760" cy="80" r="5" fill="#34d399"/><text x="760" y="68" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="700">88</text>
+        <text x="766" y="84" fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600">Chegou cedo</text><path d="M90 300 L313.33333333333337 287.5 L536.6666666666667 250 L760 230" fill="none" stroke="#38bdf8" stroke-width="3" filter="url(#s6-glow)"/>
+        <circle cx="90" cy="300" r="5" fill="#38bdf8"/><text x="90" y="288" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">0</text><circle cx="313.33333333333337" cy="287.5" r="5" fill="#38bdf8"/><text x="313.33333333333337" y="275.5" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text><circle cx="536.6666666666667" cy="250" r="5" fill="#38bdf8"/><text x="536.6666666666667" y="238" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">20</text><circle cx="760" cy="230" r="5" fill="#38bdf8"/><text x="760" y="218" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">28</text>
+        <text x="766" y="234" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600">Chegou tarde</text><text x="400" y="350" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Curva do valor capturado por quem chega cedo contra quem chega tarde numa janela de oportunidade</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> Quem chega cedo sobe rápido e depois estabiliza; quem chega tarde disputa as sobras. A diferença não é de competência, é de calendário.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#10003; Velocidade que ajuda</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Lançar a versão mínima e aprender com uso real.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Decidir em dias o que antes levava meses.</span></li><li class="flex items-start space-x-2"><span class="text-emerald-400">&#10003;</span><span>Abandonar rápido o que não funciona.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Velocidade que atrapalha</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Pular a pergunta "isso é necessário?".</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Lançar algo quebrado que queima a primeira impressão.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Trocar de ideia toda semana sem terminar nenhuma.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Velocidade não é pressa</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p36">Ser rápido é encurtar o tempo entre uma decisão e o aprendizado que ela gera. Pressa é pular o pensamento. As perguntas das próximas trilhas levam uma tarde; elas são o que torna a velocidade segura.</p>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Meça em dias</h3>
+        <p class="text-neutral-300" data-inema-block="m1-1-p37">Para cada ideia, defina um prazo curto (sete a catorze dias) para ter uma primeira versão na mão de alguém de fora. Se não couber nesse prazo, provavelmente a ideia está grande demais.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- QUIZ -->
+    
+      <div class="bg-dark-800 rounded-2xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Teste rápido do módulo</h3>
+        <p class="text-sm text-neutral-400 mb-5">Três perguntas. Clique numa opção para ver a resposta.</p>
+        <div class="space-y-5">
+        
+          <div class="qz" data-q="1">
+            <p class="font-semibold text-neutral-100 mb-3">1. Por que a "inflação de apps" dificulta lançar um produto hoje?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Porque construir ficou mais caro</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">Porque há muito mais software disputando a mesma atenção</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Porque as lojas de apps proibiram novos lançamentos</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Construir ficou barato; o que ficou escasso foi a atenção das pessoas, disputada por uma quantidade enorme de apps parecidos."></p>
+          </div>
+          <div class="qz" data-q="2">
+            <p class="font-semibold text-neutral-100 mb-3">2. Em que situação a validação pode ser mais leve?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Quando a ideia parece genial</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">Quando você já resolveu aquele problema muitas vezes para clientes reais</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Quando o protótipo ficou bonito</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Se o problema se repete no seu trabalho e as pessoas já pagam para você resolvê-lo, sua experiência funciona como pesquisa de mercado."></p>
+          </div>
+          <div class="qz" data-q="3">
+            <p class="font-semibold text-neutral-100 mb-3">3. Qual papel tende a sumir quando uma pessoa faz tudo com ajuda de agentes?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Engenharia</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="1">Produto: decidir se vale construir</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-emerald-500/40 transition-colors" data-ok="0">Digitação</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Construir ficou tão fácil que a pergunta de produto (&quot;devo construir isso?&quot;) costuma ser pulada."></p>
+          </div>
+        </div>
+      </div>
+
+    <!-- RESUMO DO MÓDULO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Inflação de apps</strong><span class="text-neutral-400"> - há software demais para a atenção disponível; genérico perdeu valor</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">SaaS morreu?</strong><span class="text-neutral-400"> - o genérico sim; nicho, caso de uso e velocidade ainda abrem brechas</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Ciclo embaralhado</strong><span class="text-neutral-400"> - protótipo barato pode vir antes e servir de validação</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Experiência como validação</strong><span class="text-neutral-400"> - problema resolvido muitas vezes é o atalho mais seguro</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Três papéis</strong><span class="text-neutral-400"> - produto, engenharia e QA cabem numa pessoa; produto é o que some</span></div></div><div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">&#10003;</span><div><strong class="text-white">Velocidade</strong><span class="text-neutral-400"> - a janela dura meses; velocidade não é pressa</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8"><h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3><p class="text-neutral-300">1.2 - O problema da média</p></div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#8592; Voltar para a trilha</a>
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Próximo módulo &#8594;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+      <p>Produtos na era da IA · Trilha 1 — A mentalidade · 2026 ·
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
+      
+    </div>
+  </footer>
+
+  <!-- SCRIPTS núcleo v1 -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Certo. ' : '✗ Não é essa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

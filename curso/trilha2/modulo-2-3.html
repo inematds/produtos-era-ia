@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="produtos-era-ia">
+  <title>Uso, recorrência e hábito | Produtos na era da IA</title>
+  <meta name="description" content="Um produto só vale se as pessoas continuam usando. Este módulo trata de antecipar o mercado, escolher onde a janela fica aberta por mais tempo e entrar na rotina do cliente.">
+
+  <!-- ANTI-FOUC: bloqueante, antes de tudo -->
+  <script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (obrigatório em toda página) -->
+  <script type="application/json" data-inema-manifest>
+{
+ "course": "produtos-era-ia",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "A mentalidade",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "O jogo mudou",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "O problema da média",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pessimismo produtivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "Vale a pena construir?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necessidade e prazo de validade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, dados e dificuldade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recorrência e hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lançar e crescer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribuição",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamento e jornada",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, design e usuários simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-3">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧭</span>
+            <span class="font-bold text-lg hidden md:inline">Produtos na era da IA</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600 hidden sm:inline">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline">PRO</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../../curso/trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Mentalidade</span>
+          </a>
+          <a href="../../curso/trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Oportunidade</span>
+          </a>
+          <a href="../../curso/trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Lançar</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
+            <span>🧭</span><span>Minha jornada</span>
+            <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
+          </button>
+          <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Aparência e leitura">
+            <span aria-hidden="true">Aa</span>
+          </button>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div data-inema-appearance class="inema-appearance-pop" role="region" aria-label="Aparência e leitura">
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tema</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-theme="inema-dark" class="inema-chip">Escuro</button>
+        <button type="button" data-inema-set-theme="claro" class="inema-chip">Claro</button>
+        <button type="button" data-inema-set-theme="sepia" class="inema-chip">Sépia</button>
+        <button type="button" data-inema-set-theme="foco" class="inema-chip">Foco</button>
+        <button type="button" data-inema-set-theme="contraste" class="inema-chip">Contraste</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tamanho do texto</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-fontscale="90" class="inema-chip">A-</button>
+        <button type="button" data-inema-set-fontscale="100" class="inema-chip">A</button>
+        <button type="button" data-inema-set-fontscale="115" class="inema-chip">A+</button>
+        <button type="button" data-inema-set-fontscale="130" class="inema-chip">A++</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Fonte</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-font="inter" class="inema-chip">Inter</button>
+        <button type="button" data-inema-set-font="system" class="inema-chip">Sistema</button>
+        <button type="button" data-inema-set-font="leitura" class="inema-chip">Leitura</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Entrelinha</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-leading="1.5" class="inema-chip">Compacta</button>
+        <button type="button" data-inema-set-leading="1.7" class="inema-chip">Normal</button>
+        <button type="button" data-inema-set-leading="1.9" class="inema-chip">Ampla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a><span>/</span>
+      <span class="text-blue-400">Módulo 2.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🏒 Uso, recorrência e hábito</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Um produto só vale se as pessoas continuam usando. Este módulo trata de antecipar o mercado, escolher onde a janela fica aberta por mais tempo e entrar na rotina do cliente.</p>
+      
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Estratégia</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:2-3" class="inema-meter max-w-md mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo">
+        <div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="2-3" data-inema-track="2">
+    <nav aria-label="Tópicos deste módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc>
+      <p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">Neste módulo</p>
+      <ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <li><a href="#topico-1" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>Patinar para onde o disco vai</span></a></li><li><a href="#topico-2" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>Arbitragem da ingenuidade</span></a></li><li><a href="#topico-3" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>Indústrias atrasadas são janelas longas</span></a></li><li><a href="#topico-4" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Gato e rato versus saturação</span></a></li><li><a href="#topico-5" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Viver no fluxo diário e gerar progresso passivo</span></a></li><li><a href="#topico-6" class="flex items-start gap-2 text-neutral-300 hover:text-blue-400"><span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Sensação boa e virar verbo</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-2-3#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🎯 Patinar para onde o disco vai</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p1">No hóquei, um jogador bom não corre atrás do disco. Ele observa quem está com o disco e antecipa <strong class="text-blue-400">onde ele vai estar</strong>, para chegar lá primeiro e, com sorte, marcar o gol. Produto funciona igual.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Perseguir o mercado atual versus antecipar o próximo: quem antecipa chega quando a demanda aparece"><defs>
+    <linearGradient id="s32-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s32-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s32-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s32-grid)"/><g class="wf-a"><rect x="40" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#3b82f6"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="102.4" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Hoje</text>
+        <text x="102.4" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">o disco está aqui</text></g>
+        <path class="wf-flow" d="M166.8 102 L186.8 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="182.8,97 182.8,107 188.8,102" fill="#38bdf8"/><g class="wf-a"><rect x="188.8" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="206.8" cy="78" r="10" fill="#38bdf8"/><text x="206.8" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="251.20000000000002" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Sinais</text>
+        <text x="251.20000000000002" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">tendências</text><text x="251.20000000000002" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">e dores novas</text></g>
+        <path class="wf-flow" d="M315.6 102 L335.6 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="331.6,97 331.6,107 337.6,102" fill="#38bdf8"/><g class="wf-a"><rect x="337.6" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="355.6" cy="78" r="10" fill="#3b82f6"/><text x="355.6" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="400" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Projeção</text>
+        <text x="400" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">onde estará</text><text x="400" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">em 3-6 meses</text></g>
+        <path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102" fill="#38bdf8"/><g class="wf-a"><rect x="486.40000000000003" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="504.40000000000003" cy="78" r="10" fill="#38bdf8"/><text x="504.40000000000003" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="548.8000000000001" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Construir</text>
+        <text x="548.8000000000001" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">para lá</text></g>
+        <path class="wf-flow" d="M613.2 102 L633.2 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="629.2,97 629.2,107 635.2,102" fill="#38bdf8"/><g class="wf-a"><rect x="635.2" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="653.2" cy="78" r="10" fill="#3b82f6"/><text x="653.2" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text>
+        <text x="697.6" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Chegar junto</text>
+        <text x="697.6" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">com a demanda</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Perseguir o mercado atual versus antecipar o próximo: quem antecipa chega quando a demanda aparece</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> O erro comum é construir na primeira caixa. O movimento certo é ler os sinais, projetar e construir para a penúltima, chegando junto com a demanda.</figcaption>
+      </figure>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p2">A pergunta prática: se o setor caminha para um ponto em que a sua ideia pode ser engolida, <strong class="text-blue-400">o seu cliente vai perceber isso</strong>? E quando?</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+          <h4 class="font-bold text-blue-400 mb-4">&#10003; Quem patina para onde o disco vai</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Lê sinais: dores novas, custos que caem, hábitos que mudam.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Pergunta o que ficará fácil em 3-6 meses e o que continuará difícil.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Constrói a parte que não vira commodity.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Chega quando o cliente começa a procurar.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Quem persegue o disco</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Copia o que já está fazendo sucesso hoje.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Constrói em cima de uma limitação que o próximo modelo resolve.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Chega quando o mercado já está lotado.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Compete só por preço.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Um hábito simples</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p3">Toda semana, anote três coisas que ficaram mais fáceis com IA. Em um mês você terá uma lista do que está prestes a virar commodity, e do que ainda não virou.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-2-3#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🙈 Arbitragem da ingenuidade</h2>
+      </div>
+      
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-blue-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-blue-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Arbitragem</dt><dd class="text-neutral-400" data-inema-block="m2-3-p4">Ganhar com uma diferença temporária entre dois lugares ou momentos. Aqui, a diferença é entre o que já é possível e o que o cliente sabe que é possível.</dd></div><div><dt class="font-semibold text-neutral-100">Ingenuidade do mercado</dt><dd class="text-neutral-400" data-inema-block="m2-3-p5">O desconhecimento do público sobre o que a IA já faz. Não é defeito do cliente: ninguém consegue acompanhar tudo.</dd></div><div><dt class="font-semibold text-neutral-100">Pivotar</dt><dd class="text-neutral-400" data-inema-block="m2-3-p6">Mudar a direção do produto aproveitando o que já foi construído (clientes, dados, marca).</dd></div>
+        </dl>
+      </aside>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p7">Muitos públicos só vão descobrir que dá para "vibe-codar" determinada solução daqui a seis ou doze meses. Enquanto isso não acontece, existe uma <strong class="text-blue-400">arbitragem da ingenuidade</strong>: você vende algo que, tecnicamente, eles conseguiriam fazer, mas não sabem disso.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 360" class="w-full h-auto" role="img" aria-label="A janela da arbitragem: o que já é possível sobe rápido; o que o cliente sabe que é possível sobe devagar; o espaço entre as duas curvas é a oportunidade"><defs>
+    <linearGradient id="s33-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s33-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s33-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="360" fill="url(#s33-grid)"/>
+      <line x1="90" y1="300" x2="760" y2="300" stroke="#9ca3af" stroke-width="1.5"/><line x1="90" y1="300" x2="90" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="90" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">mês 0</text><text x="313.33333333333337" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">mês 3</text><text x="536.6666666666667" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">mês 6</text><text x="760" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">mês 12</text>
+      <text x="78" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 78 175)">percepção de possibilidade</text>
+      <path d="M90 200 L313.33333333333337 125 L536.6666666666667 87.5 L760 62.5" fill="none" stroke="#60a5fa" stroke-width="3" filter="url(#s33-glow)"/>
+        <circle cx="90" cy="200" r="5" fill="#60a5fa"/><text x="90" y="188" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">40</text><circle cx="313.33333333333337" cy="125" r="5" fill="#60a5fa"/><text x="313.33333333333337" y="113" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">70</text><circle cx="536.6666666666667" cy="87.5" r="5" fill="#60a5fa"/><text x="536.6666666666667" y="75.5" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">85</text><circle cx="760" cy="62.5" r="5" fill="#60a5fa"/><text x="760" y="50.5" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">95</text>
+        <text x="766" y="66.5" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600">possível</text><path d="M90 275 L313.33333333333337 255 L536.6666666666667 212.5 L760 100" fill="none" stroke="#38bdf8" stroke-width="3" filter="url(#s33-glow)"/>
+        <circle cx="90" cy="275" r="5" fill="#38bdf8"/><text x="90" y="263" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">10</text><circle cx="313.33333333333337" cy="255" r="5" fill="#38bdf8"/><text x="313.33333333333337" y="243" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">18</text><circle cx="536.6666666666667" cy="212.5" r="5" fill="#38bdf8"/><text x="536.6666666666667" y="200.5" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">35</text><circle cx="760" cy="100" r="5" fill="#38bdf8"/><text x="760" y="88" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">80</text>
+        <text x="766" y="104" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600">cliente sabe</text><text x="400" y="350" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">A janela da arbitragem: o que já é possível sobe rápido; o que o cliente sabe que é possível sobe devagar; o espaço entre as duas curvas é a oportunidade</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> A distância vertical entre as linhas é a sua janela. Ela é grande nos primeiros meses e se fecha perto do mês 12. Até lá, você precisa ter escalado, vendido ou mudado de direção.</figcaption>
+      </figure>
+
+      <div class="space-y-5 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-2">O plano para quando a janela fechar</h3>
+        
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Escalar</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m2-3-p8">Crescer o bastante para que marca, dados e distribuição protejam você quando a ingenuidade acabar.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Vender</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m2-3-p9">Negociar o negócio (ou os dados) enquanto ele ainda vale muito.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Pivotar</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m2-3-p10">Usar clientes e aprendizados para atacar o próximo problema que ainda não virou commodity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Arbitragem não é enganar</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p11">O cliente paga pela conveniência, pela confiança e pelo tempo economizado, e isso é legítimo. Esconder informação ou exagerar a dificuldade para prendê-lo não é.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-2-3#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🛢️ Indústrias atrasadas são janelas longas</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p12">Imagine setores como <strong class="text-blue-400">óleo e gás, metais preciosos, mineração, agronegócio tradicional</strong>. Mesmo que amanhã saísse um modelo dez vezes melhor, muitos deles estariam só descobrindo que dá para conectar o assistente de IA ao e-mail.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p13">Essas empresas faturam muito fazendo uma coisa bem feita no mundo físico. Estão preocupadas com processos metalúrgicos, logística e segurança do trabalho, não com qual modelo foi lançado esta semana. Se nem quem vive de tecnologia consegue acompanhar tudo, imagine quem vive de outra coisa.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="Setores de tecnologia versus setores tradicionais: velocidade de adoção de IA e duração da janela de oportunidade"><defs>
+    <linearGradient id="s34-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s34-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s34-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="300" fill="url(#s34-grid)"/>
+      <rect x="40" y="30" width="330" height="240" rx="16" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2" opacity="0.95"/>
+      <text x="205" y="62" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="800">SETOR DIGITAL</text>
+      <g class="wf-a"><circle cx="66" cy="96" r="4" fill="#60a5fa"/><text x="80" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Testa tudo na semana</text></g><g class="wf-a"><circle cx="66" cy="130" r="4" fill="#60a5fa"/><text x="80" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Constrói sozinho</text></g><g class="wf-a"><circle cx="66" cy="164" r="4" fill="#60a5fa"/><text x="80" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Janela de meses</text></g><g class="wf-a"><circle cx="66" cy="198" r="4" fill="#60a5fa"/><text x="80" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Muita concorrência</text></g><g class="wf-a"><circle cx="66" cy="232" r="4" fill="#60a5fa"/><text x="80" y="236" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Preço cai rápido</text></g><rect x="430" y="30" width="330" height="240" rx="16" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.95"/>
+      <text x="595" y="62" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">SETOR TRADICIONAL</text>
+      <g class="wf-a"><circle cx="456" cy="96" r="4" fill="#38bdf8"/><text x="470" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Adota devagar</text></g><g class="wf-a"><circle cx="456" cy="130" r="4" fill="#38bdf8"/><text x="470" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Prefere comprar pronto</text></g><g class="wf-a"><circle cx="456" cy="164" r="4" fill="#38bdf8"/><text x="470" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Janela de anos</text></g><g class="wf-a"><circle cx="456" cy="198" r="4" fill="#38bdf8"/><text x="470" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Pouca concorrência</text></g><g class="wf-a"><circle cx="456" cy="232" r="4" fill="#38bdf8"/><text x="470" y="236" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Paga por confiança</text></g>
+      <line x1="385" y1="138" x2="415" y2="138" stroke="#9ca3af" stroke-width="1.5"/><line x1="385" y1="146" x2="415" y2="146" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="400" y="166" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">janela</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> Leia a linha "Janela": meses de um lado, anos do outro. O mesmo produto pode ter vida curta vendendo para desenvolvedores e vida longa vendendo para uma siderúrgica.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+          <h4 class="font-bold text-blue-400 mb-4">&#10003; Por que vale mirar setores lentos</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Têm dinheiro e processos caros de sobra.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Não vão construir sozinhos.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Valorizam relacionamento e suporte.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400">&#10003;</span><span>Concorrência de startups é menor.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; O que eles vão exigir</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Ciclos de venda mais longos.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Linguagem do setor, não de tecnologia.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Segurança, conformidade e contratos.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Paciência para implantação.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Traduza, não impressione</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p14">Nesses setores ninguém quer ouvir "agente com modelo de fronteira". Quer ouvir "o relatório que levava dois dias agora sai em vinte minutos, com o mesmo formato de sempre".</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-2-3#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐭 Gato e rato versus saturação</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p15">Pense nas bibliotecas de componentes de interface para desenvolvedores. A maior parte do conteúdo é grátis: você copia um prompt ou um trecho de código e pronto. Existem centenas de alternativas, muitas de código aberto. <strong class="text-blue-400">Por que alguém pagaria?</strong> É difícil ganhar dinheiro num problema que foi resolvido bem o bastante e se multiplicou.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 360" class="w-full h-auto" role="img" aria-label="Disposição do cliente a pagar ao longo do tempo: em problemas de gato e rato ela se mantém; em problemas saturados ela cai para zero"><defs>
+    <linearGradient id="s35-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s35-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s35-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="360" fill="url(#s35-grid)"/>
+      <line x1="90" y1="300" x2="760" y2="300" stroke="#9ca3af" stroke-width="1.5"/><line x1="90" y1="300" x2="90" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="90" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">lançamento</text><text x="313.33333333333337" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">6 meses</text><text x="536.6666666666667" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">1 ano</text><text x="760" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">2 anos</text>
+      <text x="78" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 78 175)">disposição a pagar</text>
+      <path d="M90 125 L313.33333333333337 120 L536.6666666666667 112.5 L760 105" fill="none" stroke="#60a5fa" stroke-width="3" filter="url(#s35-glow)"/>
+        <circle cx="90" cy="125" r="5" fill="#60a5fa"/><text x="90" y="113" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">alta</text><circle cx="313.33333333333337" cy="120" r="5" fill="#60a5fa"/><text x="313.33333333333337" y="108" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">alta</text><circle cx="536.6666666666667" cy="112.5" r="5" fill="#60a5fa"/><text x="536.6666666666667" y="100.5" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">alta</text><circle cx="760" cy="105" r="5" fill="#60a5fa"/><text x="760" y="93" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">alta</text>
+        <text x="766" y="109" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600">gato e rato</text><path d="M90 125 L313.33333333333337 200 L536.6666666666667 262.5 L760 292.5" fill="none" stroke="#38bdf8" stroke-width="3" filter="url(#s35-glow)"/>
+        <circle cx="90" cy="125" r="5" fill="#38bdf8"/><text x="90" y="113" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">alta</text><circle cx="313.33333333333337" cy="200" r="5" fill="#38bdf8"/><text x="313.33333333333337" y="188" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">média</text><circle cx="536.6666666666667" cy="262.5" r="5" fill="#38bdf8"/><text x="536.6666666666667" y="250.5" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">baixa</text><circle cx="760" cy="292.5" r="5" fill="#38bdf8"/><text x="760" y="280.5" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="700">grátis</text>
+        <text x="766" y="296.5" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600">saturado</text><text x="400" y="350" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Disposição do cliente a pagar ao longo do tempo: em problemas de gato e rato ela se mantém; em problemas saturados ela cai para zero</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> As duas linhas começam iguais. A diferença aparece depois: o problema que se renova mantém o cliente pagando; o que se esgota vira commodity e cai a zero.</figcaption>
+      </figure>
+
+      <div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+        <table class="w-full text-sm text-left">
+          <caption class="text-left text-xs text-neutral-500 px-4 pt-3">Quatro perguntas para testar se o problema sustenta uma assinatura.</caption>
+          <thead class="bg-dark-800 text-blue-400"><tr><th class="px-4 py-3 font-semibold">Pergunta</th><th class="px-4 py-3 font-semibold">Resposta que sustenta recorrência</th></tr></thead>
+          <tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">O problema volta a aparecer?</td><td class="px-4 py-3 text-neutral-300">Sim, toda semana ou a cada mudança do ambiente</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">A solução precisa de atualização contínua?</td><td class="px-4 py-3 text-neutral-300">Sim, o mundo muda e a solução acompanha</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Existem alternativas gratuitas equivalentes?</td><td class="px-4 py-3 text-neutral-300">Não, ou são muito inferiores</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">O cliente perde algo se cancelar?</td><td class="px-4 py-3 text-neutral-300">Sim: histórico, proteção, dados, rotina</td></tr></tbody>
+        </table>
+      </div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p16">Por isso a pergunta mais útil é: <strong class="text-blue-400">qual incômodo vale a pena resolver que a maioria das pessoas não vai resolver sozinha?</strong> Não o sexy, e sim o chato que continua voltando.</p>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-2-3#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔄 Viver no fluxo diário e gerar progresso passivo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p17">É muito difícil fazer um produto que fica em segundo plano e que o usuário <strong class="text-blue-400">quer</strong> que esteja lá. Dois exemplos do mundo de desenvolvimento mostram o caminho.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
+        
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🚨</div>
+          <h4 class="font-semibold text-blue-400 mb-2">Monitor de erros (ex.: Sentry)</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m2-3-p18">Fica vigiando a aplicação e avisa quando um erro aparece para os usuários. O desenvolvedor não precisa lembrar de abrir nada: o alerta chega até ele.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🐇</div>
+          <h4 class="font-semibold text-blue-400 mb-2">Revisor de código (ex.: CodeRabbit)</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m2-3-p19">Analisou uma quantidade enorme de alterações de código e aprendeu padrões de erro. Depois que o agente escreve o código, ele avisa: "isso vai quebrar em produção, mande corrigir".</p>
+        </div>
+      </div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p20">Repare no segundo exemplo: ele vive em <strong class="text-blue-400">simbiose</strong> com as ferramentas que estão automatizando o próprio desenvolvimento. Muita gente já nem olha o código que o agente escreve, "fecha os olhos e reza". O produto torna essa reza mais segura. Ele não compete com a automação, ele se apoia nela.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Progresso passivo: o produto usa dados que o usuário já tem, trabalha sozinho e entrega uma recomendação justificada"><defs>
+    <linearGradient id="s36-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s36-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s36-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s36-grid)"/><g class="wf-a"><rect x="40" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#3b82f6"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="102.4" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Conectar</text>
+        <text x="102.4" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">um clique,</text><text x="102.4" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">provedor seguro</text></g>
+        <path class="wf-flow" d="M166.8 102 L186.8 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="182.8,97 182.8,107 188.8,102" fill="#38bdf8"/><g class="wf-a"><rect x="188.8" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="206.8" cy="78" r="10" fill="#38bdf8"/><text x="206.8" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="251.20000000000002" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Observar</text>
+        <text x="251.20000000000002" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">dados que</text><text x="251.20000000000002" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">já existem</text></g>
+        <path class="wf-flow" d="M315.6 102 L335.6 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="331.6,97 331.6,107 337.6,102" fill="#38bdf8"/><g class="wf-a"><rect x="337.6" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="355.6" cy="78" r="10" fill="#3b82f6"/><text x="355.6" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="400" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Analisar</text>
+        <text x="400" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">todo dia,</text><text x="400" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">sozinho</text></g>
+        <path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102" fill="#38bdf8"/><g class="wf-a"><rect x="486.40000000000003" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="504.40000000000003" cy="78" r="10" fill="#38bdf8"/><text x="504.40000000000003" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="548.8000000000001" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Recomendar</text>
+        <text x="548.8000000000001" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">com</text><text x="548.8000000000001" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">justificativa</text></g>
+        <path class="wf-flow" d="M613.2 102 L633.2 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="629.2,97 629.2,107 635.2,102" fill="#38bdf8"/><g class="wf-a"><rect x="635.2" y="60" width="124.8" height="84" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="653.2" cy="78" r="10" fill="#3b82f6"/><text x="653.2" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text>
+        <text x="697.6" y="104" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Decidir</text>
+        <text x="697.6" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">o usuário</text><text x="697.6" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">escolhe</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Progresso passivo: o produto usa dados que o usuário já tem, trabalha sozinho e entrega uma recomendação justificada</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> Nenhuma etapa exige esforço do usuário além do primeiro clique e da decisão final. É isso que torna o progresso "passivo": ele acontece mesmo quando a pessoa não está pensando no produto.</figcaption>
+      </figure>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💳</span> Exemplo: extrato vira tese de investimento</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m2-3-p21">Imagine um app em que você conecta a conta bancária por um provedor com certificações de segurança. Todo dia ele olha os gastos e sugere investimentos coerentes com o que você consome, com a justificativa.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m2-3-p22">Se você paga quase tudo no cartão de crédito, e percebe que todo mundo faz o mesmo, faz sentido considerar empresas de pagamento. O app não investe por você: entrega uma lista e o porquê, usando dados que você já tinha e não aproveitava. O que compramos reflete o que valorizamos, e isso costuma se parecer com o que pessoas parecidas valorizam.</p>
+        
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Recomendação financeira exige cuidado</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p23">O exemplo é ilustrativo. Um produto real nessa área precisa respeitar a regulação local (no Brasil, CVM e Banco Central) e deixar claro que não é aconselhamento individual.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-2-3#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧸 Sensação boa e virar verbo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p24">Lembra da época em que rodar o antivírus era um ritual? A barrinha andava, aparecia "nenhuma ameaça encontrada" e você sentia alívio. Esse <strong class="text-blue-400">calorzinho de segurança</strong> é parte do produto. Um tema chato como segurança pode entregar uma sensação muito boa.</p>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> O lado sombrio: demanda fabricada</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p25">Há relatos antigos de fornecedores que ajudavam a criar o problema para vender a solução. Isso não é estratégia, é fraude. A lição legítima é outra: identificar um medo real e entregar tranquilidade real.</p>
+      </div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-p26">O último sinal é o mais raro: <strong class="text-blue-400">o produto pode virar um verbo?</strong> "Dá um Google", "pede um Uber", "manda no Slack". Nove em cada dez produtos nunca chegam lá, e tudo bem. Mas vale perguntar se o nome e a ação principal são simples o bastante para entrar na fala.</p>
+
+      <figure class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 158" class="w-full h-auto" role="img" aria-label="Checklist visual dos sinais de uso recorrente estudados neste módulo"><defs>
+    <linearGradient id="s37-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="s37-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s37-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="158" fill="url(#s37-grid)"/>
+      <text x="30" y="34" fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="800">Sinais de recorrência: quantos o seu produto tem?</text><g class="wf-a"><rect x="30" y="54" width="176" height="32" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.4"/><text x="118" y="75" text-anchor="middle" fill="#bfdbfe" font-family="ui-monospace,monospace" font-size="11.5">Gato e rato</text></g><g class="wf-a"><rect x="218" y="54" width="176" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.4"/><text x="306" y="75" text-anchor="middle" fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5">Janela longa</text></g><g class="wf-a"><rect x="406" y="54" width="176" height="32" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.4"/><text x="494" y="75" text-anchor="middle" fill="#bfdbfe" font-family="ui-monospace,monospace" font-size="11.5">Setor lento</text></g><g class="wf-a"><rect x="594" y="54" width="176" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.4"/><text x="682" y="75" text-anchor="middle" fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5">Fluxo diário</text></g><g class="wf-a"><rect x="30" y="98" width="176" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.4"/><text x="118" y="119" text-anchor="middle" fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5">Segundo plano</text></g><g class="wf-a"><rect x="218" y="98" width="176" height="32" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.4"/><text x="306" y="119" text-anchor="middle" fill="#bfdbfe" font-family="ui-monospace,monospace" font-size="11.5">Progresso passivo</text></g><g class="wf-a"><rect x="406" y="98" width="176" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.4"/><text x="494" y="119" text-anchor="middle" fill="#9ad6ff" font-family="ui-monospace,monospace" font-size="11.5">Sensação boa</text></g><g class="wf-a"><rect x="594" y="98" width="176" height="32" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.4"/><text x="682" y="119" text-anchor="middle" fill="#bfdbfe" font-family="ui-monospace,monospace" font-size="11.5">Vira verbo</text></g></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">O que olhar:</strong> Conte quantas caixas se aplicam à sua ideia. Menos de três é sinal de uso esporádico; cinco ou mais indica um produto com chance real de entrar na rotina.</figcaption>
+      </figure>
+
+      <div class="codebox bg-dark-800 rounded-xl border border-blue-500/30 overflow-hidden mb-6">
+        <div class="px-5 py-3 border-b border-dark-600 flex items-start justify-between gap-3 flex-wrap">
+          <div><p class="text-xs font-semibold uppercase tracking-wider text-blue-400 mb-1">Copie e rode</p><p class="text-sm text-neutral-300">Avaliar a recorrência da sua ideia com os sinais deste módulo e receber sugestões concretas para aumentá-la.</p></div>
+          <button type="button" data-copy class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors">Copiar</button>
+        </div>
+        <pre class="p-5 text-sm text-neutral-100 bg-dark-900/60 font-mono leading-relaxed"><code class="language-text">Avalie a recorrência do meu produto.
+
+Produto: &lt;o que faz, em 2 frases&gt;
+Público: &lt;quem usa, setor, nível técnico&gt;
+Frequência atual de uso esperada: &lt;diária / semanal / mensal / esporádica&gt;
+
+Para cada sinal abaixo, diga "sim", "parcial" ou "não" e justifique em 1 frase:
+1. Problema de gato e rato (se renova sozinho)
+2. Arbitragem da ingenuidade (quantos meses até o cliente saber fazer sozinho?)
+3. Setor atrasado (janela longa)
+4. Vive no fluxo diário / em segundo plano
+5. Gera progresso passivo com dados que o usuário já tem
+6. Entrega uma sensação boa (alívio, segurança)
+7. Potencial de virar verbo
+
+Depois proponha 3 mudanças concretas que aumentariam a frequência de uso sem aumentar o atrito.</code></pre>
+        <div class="px-5 py-3 border-t border-dark-600 text-sm text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> Você deve receber 7 avaliações e 3 mudanças. Se as mudanças forem genéricas ("melhore o marketing"), peça: "dê mudanças de produto, com a tela ou o gatilho exato".</div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Combine os sinais</h3>
+        <p class="text-neutral-300" data-inema-block="m2-3-p27">Os produtos mais fortes somam vários sinais: um monitor de segurança para apps feitos com IA é gato e rato, vive em segundo plano, gera alívio e ainda acumula dados. Cada sinal reforça o outro.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- QUIZ -->
+    
+      <div class="bg-dark-800 rounded-2xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Teste rápido do módulo</h3>
+        <p class="text-sm text-neutral-400 mb-5">Três perguntas. Clique numa opção para ver a resposta.</p>
+        <div class="space-y-5">
+        
+          <div class="qz" data-q="1">
+            <p class="font-semibold text-neutral-100 mb-3">1. O que é a "arbitragem da ingenuidade"?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Cobrar mais de clientes leigos</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="1">A janela em que o cliente ainda não sabe que poderia construir a solução sozinho</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Copiar produtos de outros mercados</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Vender para quem não entende de preço</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="É a diferença temporária entre o que já é possível e o que o cliente sabe que é possível. Exige plano para quando a janela fechar."></p>
+          </div>
+          <div class="qz" data-q="2">
+            <p class="font-semibold text-neutral-100 mb-3">2. Por que setores como óleo e gás oferecem janelas longas?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Porque têm pouco dinheiro</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="1">Porque adotam tecnologia devagar e preferem comprar pronto</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Porque não usam computadores</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Porque não têm concorrência</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Focados no mundo físico, eles não acompanham a IA e não vão construir sozinhos tão cedo."></p>
+          </div>
+          <div class="qz" data-q="3">
+            <p class="font-semibold text-neutral-100 mb-3">3. O que torna um revisor de código automático um bom exemplo de produto recorrente?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">É barato</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="1">Vive em simbiose com os agentes que automatizam o desenvolvimento e atua em segundo plano</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Tem interface bonita</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-blue-500/40 transition-colors" data-ok="0">Substitui os agentes de código</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Ele se apoia na automação em vez de competir com ela e entra no fluxo diário sem esforço do usuário."></p>
+          </div>
+        </div>
+      </div>
+
+    <!-- RESUMO DO MÓDULO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Antecipar</strong><span class="text-neutral-400"> - Construa para onde o mercado vai estar, não para onde está.</span></div></div><div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Arbitragem da ingenuidade</strong><span class="text-neutral-400"> - Aproveite a janela, com plano de escalar, vender ou pivotar.</span></div></div><div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Setores lentos</strong><span class="text-neutral-400"> - Janelas de anos para quem fala a língua deles.</span></div></div><div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Gato e rato</strong><span class="text-neutral-400"> - Problemas que se renovam sustentam assinatura; os saturados viram grátis.</span></div></div><div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Fluxo diário</strong><span class="text-neutral-400"> - Segundo plano, simbiose com a automação e progresso passivo.</span></div></div><div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">&#10003;</span><div><strong class="text-white">Sensação e verbo</strong><span class="text-neutral-400"> - Alívio real faz voltar; virar verbo é raro, mas vale perseguir.</span></div></div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#8592; Módulo 2.2</a>
+          <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Trilha 3 &#8594;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+      <p>Produtos na era da IA · Trilha 2 — Vale a pena construir? · 2026 ·
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
+      
+    </div>
+  </footer>
+
+  <!-- SCRIPTS núcleo v1 -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Certo. ' : '✗ Não é essa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

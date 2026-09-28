@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="produtos-era-ia">
+  <title>Início | Produtos na era da IA</title>
+  <meta name="description" content="Produtos na era da IA: Saber o que vale a pena construir quando dá para construir qualquer coisa. Curso em 3 trilhas sobre mentalidade, oportunidade, distribuição e design de produtos quando a IA constrói quase tudo.">
+
+  <!-- ANTI-FOUC: bloqueante, antes de tudo -->
+  <script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/learn.css">
+
+  <!-- Manifesto do curso (obrigatório em toda página) -->
+  <script type="application/json" data-inema-manifest>
+{
+ "course": "produtos-era-ia",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "A mentalidade",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "O jogo mudou",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "O problema da média",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pessimismo produtivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "Vale a pena construir?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necessidade e prazo de validade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, dados e dificuldade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recorrência e hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lançar e crescer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribuição",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamento e jornada",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, design e usuários simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-3">
+          <a href="./index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧭</span>
+            <span class="font-bold text-lg hidden md:inline">Produtos na era da IA</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600 hidden sm:inline">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline">PRO</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="./curso/trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Mentalidade</span>
+          </a>
+          <a href="./curso/trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Oportunidade</span>
+          </a>
+          <a href="./curso/trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Lançar</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
+            <span>🧭</span><span>Minha jornada</span>
+            <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
+          </button>
+          <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Aparência e leitura">
+            <span aria-hidden="true">Aa</span>
+          </button>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div data-inema-appearance class="inema-appearance-pop" role="region" aria-label="Aparência e leitura">
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tema</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-theme="inema-dark" class="inema-chip">Escuro</button>
+        <button type="button" data-inema-set-theme="claro" class="inema-chip">Claro</button>
+        <button type="button" data-inema-set-theme="sepia" class="inema-chip">Sépia</button>
+        <button type="button" data-inema-set-theme="foco" class="inema-chip">Foco</button>
+        <button type="button" data-inema-set-theme="contraste" class="inema-chip">Contraste</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tamanho do texto</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-fontscale="90" class="inema-chip">A-</button>
+        <button type="button" data-inema-set-fontscale="100" class="inema-chip">A</button>
+        <button type="button" data-inema-set-fontscale="115" class="inema-chip">A+</button>
+        <button type="button" data-inema-set-fontscale="130" class="inema-chip">A++</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Fonte</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-font="inter" class="inema-chip">Inter</button>
+        <button type="button" data-inema-set-font="system" class="inema-chip">Sistema</button>
+        <button type="button" data-inema-set-font="leitura" class="inema-chip">Leitura</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Entrelinha</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-leading="1.5" class="inema-chip">Compacta</button>
+        <button type="button" data-inema-set-leading="1.7" class="inema-chip">Normal</button>
+        <button type="button" data-inema-set-leading="1.9" class="inema-chip">Ampla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="relative overflow-hidden bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="inline-block px-4 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-6 tracking-wider">CURSO · ACESSO LIVRE · ~6.5h</span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-5 leading-tight">🧭 Produtos na era da IA</h1>
+        <p class="text-2xl text-emerald-400 font-semibold mb-4">Saber o que vale a pena construir quando dá para construir qualquer coisa</p>
+        <p class="text-lg text-neutral-300 max-w-xl mb-8 leading-relaxed">
+          Hoje um prompt vira protótipo e agentes fazem o papel de produto, engenharia e QA. O gargalo deixou de ser <strong class="text-neutral-100">como construir</strong> e passou a ser <strong class="text-neutral-100">se vale construir</strong>.
+          Três trilhas para treinar a <strong class="text-emerald-400">mentalidade</strong>, avaliar a <strong class="text-blue-400">oportunidade</strong> com perguntas duras e <strong class="text-purple-400">lançar</strong> sem depender da sorte.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mb-8">
+          <a href="curso/trilha1/index.html" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-900/30">Começar agora &#8594;</a>
+          <button type="button" data-inema-journey-open class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-dark-800 border border-emerald-500/30 text-emerald-400 rounded-xl font-semibold hover:bg-emerald-500/10 transition-colors">🧭 Continuar de onde parei</button>
+        </div>
+        <div data-inema-meter="curso" class="inema-meter max-w-md" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do curso">
+          <div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 54 tópicos</span><span data-inema-meter-pct>0%</span></div>
+          <div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+        </div>
+      </div>
+      <figure class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4"><svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="Diagrama: construir ficou barato e rápido, enquanto o julgamento sobre o que vale construir ficou raro e caro; o curso treina o lado direito"><defs>
+    <linearGradient id="s58-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+    <filter id="s58-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s58-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="300" fill="url(#s58-grid)"/>
+      <rect x="40" y="30" width="330" height="240" rx="16" fill="#064e3b" stroke="#10b981" stroke-width="2" opacity="0.95"/>
+      <text x="205" y="62" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="800">CONSTRUIR</text>
+      <g class="wf-a"><circle cx="66" cy="96" r="4" fill="#34d399"/><text x="80" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Um prompt vira protótipo</text></g><g class="wf-a"><circle cx="66" cy="130" r="4" fill="#34d399"/><text x="80" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Agentes fazem produto e QA</text></g><g class="wf-a"><circle cx="66" cy="164" r="4" fill="#34d399"/><text x="80" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">2/3 dos apps: últimos 3-4 anos</text></g><g class="wf-a"><circle cx="66" cy="198" r="4" fill="#34d399"/><text x="80" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">O médio está em todo lugar</text></g><rect x="430" y="30" width="330" height="240" rx="16" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.95"/>
+      <text x="595" y="62" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">JULGAR</text>
+      <g class="wf-a"><circle cx="456" cy="96" r="4" fill="#38bdf8"/><text x="470" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Isso é necessário?</text></g><g class="wf-a"><circle cx="456" cy="130" r="4" fill="#38bdf8"/><text x="470" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Existe daqui a 12 meses?</text></g><g class="wf-a"><circle cx="456" cy="164" r="4" fill="#38bdf8"/><text x="470" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Um gigante copia amanhã?</text></g><g class="wf-a"><circle cx="456" cy="198" r="4" fill="#38bdf8"/><text x="470" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Quem vai ficar sabendo?</text></g><g class="wf-a"><circle cx="456" cy="232" r="4" fill="#38bdf8"/><text x="470" y="236" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Prova valor em 2 minutos?</text></g>
+      <line x1="385" y1="138" x2="415" y2="138" stroke="#9ca3af" stroke-width="1.5"/><line x1="385" y1="146" x2="415" y2="146" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="400" y="166" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">o jogo virou</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">O que olhar:</strong> à esquerda, o que ficou barato; à direita, as perguntas que agora decidem quem ganha. O curso inteiro treina o lado direito.</figcaption>
+      </figure>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-dark-800/50 rounded-xl p-5 border border-dark-600 text-center"><div class="text-3xl font-extrabold text-emerald-400">3</div><div class="text-xs text-neutral-400 mt-1">Trilhas</div></div><div class="bg-dark-800/50 rounded-xl p-5 border border-dark-600 text-center"><div class="text-3xl font-extrabold text-emerald-400">9</div><div class="text-xs text-neutral-400 mt-1">Módulos</div></div><div class="bg-dark-800/50 rounded-xl p-5 border border-dark-600 text-center"><div class="text-3xl font-extrabold text-emerald-400">54</div><div class="text-xs text-neutral-400 mt-1">Tópicos</div></div><div class="bg-dark-800/50 rounded-xl p-5 border border-dark-600 text-center"><div class="text-3xl font-extrabold text-emerald-400">~6.5h</div><div class="text-xs text-neutral-400 mt-1">Duração</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- A VIRADA -->
+    <section class="py-16 border-b border-dark-600">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-emerald-400 text-sm font-semibold tracking-wider uppercase">A virada</span>
+        <h2 class="text-3xl sm:text-4xl font-bold mt-3 mb-4">Quando dá para construir qualquer coisa, o que vale é saber o que não construir</h2>
+        <p class="text-lg text-neutral-400">Este curso não ensina a programar nem a escolher modelo. Ensina o critério: as perguntas que separam um produto que merece existir de mais um app médio numa pilha de apps médios.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="bg-dark-800 rounded-2xl border border-dark-600 p-7 text-center"><div class="text-4xl font-extrabold text-emerald-400 mb-2">2/3</div><p class="text-neutral-300 text-sm">Dos apps do mundo surgiram nos últimos três a quatro anos. É inflação de produto.</p></div>
+        <div class="bg-dark-800 rounded-2xl border border-dark-600 p-7 text-center"><div class="text-4xl font-extrabold text-blue-400 mb-2">3·6·12</div><p class="text-neutral-300 text-sm">Meses: o horizonte em que sua ideia precisa continuar merecendo existir.</p></div>
+        <div class="bg-dark-800 rounded-2xl border border-dark-600 p-7 text-center"><div class="text-4xl font-extrabold text-purple-400 mb-2">&lt; 2 min</div><p class="text-neutral-300 text-sm">Tempo para uma pessoa leiga provar a si mesma que seu produto vale a pena.</p></div>
+      </div>
+    </section>
+
+    <!-- A PROMESSA -->
+    <section class="py-16 border-b border-dark-600">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-emerald-400 text-sm font-semibold tracking-wider uppercase">A promessa</span>
+        <h2 class="text-3xl sm:text-4xl font-bold mt-3 mb-4">O que você sai sabendo fazer</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">🧱</span><div><h3 class="font-semibold text-neutral-100 mb-1">Fazer um pré-mortem honesto</h3><p class="text-neutral-400 text-sm">Listar as cinco razões pelas quais a ideia falha antes de gastar uma semana nela, com um prompt pronto.</p></div></div><div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">🔍</span><div><h3 class="font-semibold text-neutral-100 mb-1">Filtrar ideias com perguntas duras</h3><p class="text-neutral-400 text-sm">Necessidade real, prazo de validade, risco de clone, valor dos dados, dificuldade como fosso.</p></div></div><div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">🏒</span><div><h3 class="font-semibold text-neutral-100 mb-1">Enxergar onde o mercado vai estar</h3><p class="text-neutral-400 text-sm">Arbitragem da ingenuidade, indústrias atrasadas e produtos que moram no fluxo diário.</p></div></div><div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">📣</span><div><h3 class="font-semibold text-neutral-100 mb-1">Planejar distribuição desde o dia 1</h3><p class="text-neutral-400 text-sm">Comunidades, guerrilha barata, afiliado de dois lados e os momentos em que o mercado presta atenção.</p></div></div><div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">🗣️</span><div><h3 class="font-semibold text-neutral-100 mb-1">Posicionar em uma frase</h3><p class="text-neutral-400 text-sm">Um pitch que cabe num vídeo curto e uma jornada que prova valor em menos de dois minutos.</p></div></div><div class="flex items-start gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6"><span class="text-2xl mt-0.5">🎨</span><div><h3 class="font-semibold text-neutral-100 mb-1">Fugir da média no design e no feedback</h3><p class="text-neutral-400 text-sm">Replays analisados por IA, onboarding de quem já fatura e usuários simulados por subagentes.</p></div></div>
+      </div>
+    </section>
+
+    <!-- TRILHAS -->
+    <section id="trilhas" class="py-16 border-b border-dark-600">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-emerald-400 text-sm font-semibold tracking-wider uppercase">A jornada</span>
+        <h2 class="text-3xl sm:text-4xl font-bold mt-3 mb-4">Três trilhas: pensar, filtrar, lançar</h2>
+        <p class="text-lg text-neutral-400">Cada módulo tem diagramas, exemplos e prompts que você roda de verdade, e fecha com um teste rápido de três perguntas.</p>
+      </div>
+      
+      <a href="curso/trilha1/index.html" class="group block bg-dark-800 rounded-2xl border border-dark-600 hover:border-emerald-500/30 transition-all overflow-hidden mb-8">
+        <div class="bg-gradient-to-r from-emerald-900/30 to-dark-800 p-8">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full">TRILHA 1 · COMECE AQUI</span>
+            <span class="text-sm text-neutral-500">3 módulos · 18 tópicos · ~2.1h</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 group-hover:text-emerald-400 transition-colors">🧠 A mentalidade</h3>
+          <p class="text-neutral-400 mb-6 max-w-3xl">O jogo mudou: construir ficou barato, o julgamento ficou caro. Por que o "app médio" não chama mais atenção e como pensar com pessimismo produtivo.</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">1.1 O jogo mudou</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">1.2 O problema da média</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">1.3 Pessimismo produtivo</span>
+          </div>
+          <div data-inema-meter="trilha:1" class="inema-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 1">
+            <div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 18</span><span data-inema-meter-pct>0%</span></div>
+            <div class="inema-bar h-1.5 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+          </div>
+          <span class="inline-flex items-center gap-1 text-emerald-400 font-semibold mt-5 group-hover:gap-2 transition-all">Entrar na trilha &#8594;</span>
+        </div>
+      </a>
+      <a href="curso/trilha2/index.html" class="group block bg-dark-800 rounded-2xl border border-dark-600 hover:border-blue-500/30 transition-all overflow-hidden mb-8">
+        <div class="bg-gradient-to-r from-blue-900/30 to-dark-800 p-8">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">TRILHA 2</span>
+            <span class="text-sm text-neutral-500">3 módulos · 18 tópicos · ~2.1h</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors">🔍 Vale a pena construir?</h3>
+          <p class="text-neutral-400 mb-6 max-w-3xl">As perguntas de oportunidade: necessidade real, validade no tempo, risco de clone, valor dos dados, dificuldade como fosso e uso recorrente.</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">2.1 Necessidade e prazo de validade</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">2.2 Gigantes, dados e dificuldade</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">2.3 Uso, recorrência e hábito</span>
+          </div>
+          <div data-inema-meter="trilha:2" class="inema-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 2">
+            <div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 18</span><span data-inema-meter-pct>0%</span></div>
+            <div class="inema-bar h-1.5 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+          </div>
+          <span class="inline-flex items-center gap-1 text-blue-400 font-semibold mt-5 group-hover:gap-2 transition-all">Entrar na trilha &#8594;</span>
+        </div>
+      </a>
+      <a href="curso/trilha3/index.html" class="group block bg-dark-800 rounded-2xl border border-dark-600 hover:border-purple-500/30 transition-all overflow-hidden mb-8">
+        <div class="bg-gradient-to-r from-purple-900/30 to-dark-800 p-8">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">TRILHA 3</span>
+            <span class="text-sm text-neutral-500">3 módulos · 18 tópicos · ~2.3h</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-3 group-hover:text-purple-400 transition-colors">🚀 Lançar e crescer</h3>
+          <p class="text-neutral-400 mb-6 max-w-3xl">Distribuição, posicionamento em uma frase, jornada do usuário, volante de conteúdo, design que foge da média e usuários simulados antes do lançamento.</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">3.1 Distribuição</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">3.2 Posicionamento e jornada</span><span class="text-xs px-2.5 py-1 rounded-md bg-dark-900/60 border border-dark-600 text-neutral-300">3.3 Feedback, design e usuários simulados</span>
+          </div>
+          <div data-inema-meter="trilha:3" class="inema-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 3">
+            <div class="flex justify-between text-xs text-neutral-500 mb-1"><span data-inema-meter-frac>0 de 18</span><span data-inema-meter-pct>0%</span></div>
+            <div class="inema-bar h-1.5 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+          </div>
+          <span class="inline-flex items-center gap-1 text-purple-400 font-semibold mt-5 group-hover:gap-2 transition-all">Entrar na trilha &#8594;</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section class="py-16 border-b border-dark-600">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-emerald-400 text-sm font-semibold tracking-wider uppercase">Para quem é</span>
+        <h2 class="text-3xl sm:text-4xl font-bold mt-3 mb-4">Quem constrói com IA e quer construir a coisa certa</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 text-center"><div class="text-3xl mb-3">🛠️</div><h3 class="font-semibold text-neutral-100 mb-1">Quem faz apps com IA</h3><p class="text-neutral-400 text-sm">e já percebeu que construir rápido não garante que alguém vá usar.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6 text-center"><div class="text-3xl mb-3">💼</div><h3 class="font-semibold text-neutral-100 mb-1">Quem atende clientes</h3><p class="text-neutral-400 text-sm">e precisa dizer com segurança se um projeto vale o investimento.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6 text-center"><div class="text-3xl mb-3">🚀</div><h3 class="font-semibold text-neutral-100 mb-1">Quem sonha com um SaaS</h3><p class="text-neutral-400 text-sm">e quer testar a ideia gastando o mínimo antes de apostar alto.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6 text-center"><div class="text-3xl mb-3">🧑‍🏫</div><h3 class="font-semibold text-neutral-100 mb-1">Quem ensina ou lidera</h3><p class="text-neutral-400 text-sm">e precisa de um roteiro de perguntas para avaliar ideias da equipe.</p></div>
+      </div>
+    </section>
+
+    <!-- EXPERIÊNCIA -->
+    <section class="py-16 border-b border-dark-600">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-emerald-400 text-sm font-semibold tracking-wider uppercase">Sua experiência</span>
+        <h2 class="text-3xl sm:text-4xl font-bold mt-3 mb-4">Mais que ler: uma plataforma de aprendizado</h2>
+        <p class="text-lg text-neutral-400">Tudo roda no seu navegador, sem login. O curso lembra onde você parou.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">✅</div><h3 class="font-semibold text-emerald-400 mb-1">Progresso automático</h3><p class="text-neutral-400 text-sm">Marque tópicos como lidos e veja a evolução por módulo, trilha e curso.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">✍️</div><h3 class="font-semibold text-emerald-400 mb-1">Anotações e grifos</h3><p class="text-neutral-400 text-sm">Selecione qualquer trecho para grifar ou anotar. Fica salvo no seu navegador.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">🧭</div><h3 class="font-semibold text-emerald-400 mb-1">Minha jornada</h3><p class="text-neutral-400 text-sm">Continue de onde parou e veja tudo que já estudou num painel.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">🌓</div><h3 class="font-semibold text-emerald-400 mb-1">Temas e leitura</h3><p class="text-neutral-400 text-sm">Escuro, claro, sépia, foco, alto contraste. Tamanho de fonte e entrelinha.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">🧪</div><h3 class="font-semibold text-emerald-400 mb-1">Teste por módulo</h3><p class="text-neutral-400 text-sm">Três perguntas com resposta e explicação, para checar se entendeu.</p></div><div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-2xl mb-2">📋</div><h3 class="font-semibold text-emerald-400 mb-1">Prompts prontos</h3><p class="text-neutral-400 text-sm">Pré-mortem, avaliação de ideia, pitch, feedback e usuários simulados: é copiar e rodar.</p></div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-20">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-3xl border border-emerald-500/30 p-10 sm:p-14 text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">Antes de construir a próxima ideia, passe ela por este filtro</h2>
+        <p class="text-lg text-neutral-300 max-w-2xl mx-auto mb-8">Comece pela Trilha 1. Em cerca de 6.5 horas você sai com um roteiro de perguntas, um pré-mortem feito e um plano de lançamento.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="curso/trilha1/index.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-900/30">Começar pela Trilha 1 &#8594;</a>
+          <button type="button" data-inema-journey-open class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-dark-800 border border-emerald-500/30 text-emerald-400 rounded-xl font-semibold hover:bg-emerald-500/10 transition-colors">🧭 Minha jornada</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+      <p>Produtos na era da IA · 2026 ·
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
+      <p class="text-xs"><a href="https://www.inema.club/aprender-inteligencia-artificial/" class="text-sky-400 hover:text-sky-300">Guia: como aprender inteligência artificial</a> · <a href="https://www.inema.club/cursos/" class="text-sky-400 hover:text-sky-300">Todos os cursos</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS núcleo v1 -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Certo. ' : '✗ Não é essa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+
+  <script src="./assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="produtos-era-ia">
+  <title>Distribuição | Produtos na era da IA</title>
+  <meta name="description" content="Construir ficou fácil. Fazer alguém saber que o seu produto existe continua difícil. Este módulo trata do problema que derruba a maioria dos projetos: como gerar os primeiros sinais de vida sem orçamento de mídia.">
+
+  <!-- ANTI-FOUC: bloqueante, antes de tudo -->
+  <script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+      else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+    } catch (e) { p = clone(DEF); }
+    var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+    if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+    if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+    html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+    var s = html.style; var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+    var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + ''); s.setProperty('--accent-s', a[1] + '%'); s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+})();
+</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (obrigatório em toda página) -->
+  <script type="application/json" data-inema-manifest>
+{
+ "course": "produtos-era-ia",
+ "tracks": [
+  {
+   "n": "1",
+   "title": "A mentalidade",
+   "modules": [
+    {
+     "id": "1-1",
+     "title": "O jogo mudou",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-1.html"
+    },
+    {
+     "id": "1-2",
+     "title": "O problema da média",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-2.html"
+    },
+    {
+     "id": "1-3",
+     "title": "Pessimismo produtivo",
+     "topics": 6,
+     "href": "curso/trilha1/modulo-1-3.html"
+    }
+   ]
+  },
+  {
+   "n": "2",
+   "title": "Vale a pena construir?",
+   "modules": [
+    {
+     "id": "2-1",
+     "title": "Necessidade e prazo de validade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-1.html"
+    },
+    {
+     "id": "2-2",
+     "title": "Gigantes, dados e dificuldade",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-2.html"
+    },
+    {
+     "id": "2-3",
+     "title": "Uso, recorrência e hábito",
+     "topics": 6,
+     "href": "curso/trilha2/modulo-2-3.html"
+    }
+   ]
+  },
+  {
+   "n": "3",
+   "title": "Lançar e crescer",
+   "modules": [
+    {
+     "id": "3-1",
+     "title": "Distribuição",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-1.html"
+    },
+    {
+     "id": "3-2",
+     "title": "Posicionamento e jornada",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-2.html"
+    },
+    {
+     "id": "3-3",
+     "title": "Feedback, design e usuários simulados",
+     "topics": 6,
+     "href": "curso/trilha3/modulo-3-3.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-800\/50, html:not(.dark) .bg-dark-800\/60, html:not(.dark) .bg-dark-900\/40, html:not(.dark) .bg-dark-900\/60 { background-color: #f3f4f6; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-white { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.07); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.07); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.07); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(146, 64, 14, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(146, 64, 14, 0.07); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(146, 64, 14, 0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(146, 64, 14, 0.18); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(146, 64, 14, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-500\/20 { background-color: rgba(185, 28, 28, 0.12); }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185, 28, 28, 0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185, 28, 28, 0.25); }
+    html:not(.dark) .hover\:bg-red-500\/30:hover { background-color: rgba(185, 28, 28, 0.18); }
+    html:not(.dark) .hover\:text-red-400:hover { color: #b91c1c; }
+    html:not(.dark) .hover\:bg-red-500\/10:hover { background-color: rgba(185, 28, 28, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    html:not(.dark) .text-amber-700 { color: #92400e; }
+
+    /* Dark mode - bordas suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @keyframes wf-flow { to { stroke-dashoffset: -28; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s} .wf-a:nth-child(6){animation-delay:1.25s}
+      .wf-flow { stroke-dasharray: 6 8; animation: wf-flow 1.4s linear infinite; }
+    }
+
+    /* Quiz */
+    .qz-opt[data-state="ok"] { border-color: #10b981; background: rgba(16,185,129,.15); }
+    .qz-opt[data-state="no"] { border-color: #ef4444; background: rgba(239,68,68,.12); }
+    .qz-fb { display:none; } .qz[data-answered] .qz-fb { display:block; }
+
+    /* TOC do módulo é um bloco inline, não uma barra lateral sticky */
+    [data-inema-toc] { position: static !important; top: auto !important; max-height: none !important; }
+    /* Painel de aparência (classes internas) */
+    .inema-appearance-sec { margin-bottom: .75rem; }
+    .inema-appearance-label { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin-bottom: .35rem; }
+    .inema-appearance-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .inema-chip { font-size: .8rem; padding: .3rem .65rem; border-radius: .5rem; border: 1px solid #374151; background: rgba(31,41,55,.6); color: #e5e7eb; cursor: pointer; }
+    .inema-chip:hover { border-color: #FACC15; }
+    .inema-chip[aria-pressed="true"], .inema-chip.is-active { background: rgba(250,204,21,.15); border-color: #FACC15; color: #FACC15; }
+    html:not(.dark) .inema-chip { background: #f3f4f6; color: #111827; border-color: #d1d5db; }
+    html:not(.dark) .inema-chip[aria-pressed="true"], html:not(.dark) .inema-chip.is-active { background: rgba(161,98,7,.1); border-color: #a16207; color: #a16207; }
+    /* Code box */
+    .codebox pre { white-space: pre-wrap; word-break: break-word; }
+    
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-3">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧭</span>
+            <span class="font-bold text-lg hidden md:inline">Produtos na era da IA</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          <span class="text-neutral-600 hidden sm:inline">-</span>
+          <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300 hover:opacity-80 text-sm font-medium hidden sm:inline">PRO</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../../curso/trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Mentalidade</span>
+          </a>
+          <a href="../../curso/trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Oportunidade</span>
+          </a>
+          <a href="../../curso/trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Lançar</span>
+          </a>
+          <button type="button" data-inema-journey-open class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">
+            <span>🧭</span><span>Minha jornada</span>
+            <span data-inema-journey-badge class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20"></span>
+          </button>
+          <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Aparência e leitura">
+            <span aria-hidden="true">Aa</span>
+          </button>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" title="Tema claro/escuro">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div data-inema-appearance class="inema-appearance-pop" role="region" aria-label="Aparência e leitura">
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tema</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-theme="inema-dark" class="inema-chip">Escuro</button>
+        <button type="button" data-inema-set-theme="claro" class="inema-chip">Claro</button>
+        <button type="button" data-inema-set-theme="sepia" class="inema-chip">Sépia</button>
+        <button type="button" data-inema-set-theme="foco" class="inema-chip">Foco</button>
+        <button type="button" data-inema-set-theme="contraste" class="inema-chip">Contraste</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Tamanho do texto</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-fontscale="90" class="inema-chip">A-</button>
+        <button type="button" data-inema-set-fontscale="100" class="inema-chip">A</button>
+        <button type="button" data-inema-set-fontscale="115" class="inema-chip">A+</button>
+        <button type="button" data-inema-set-fontscale="130" class="inema-chip">A++</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Fonte</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-font="inter" class="inema-chip">Inter</button>
+        <button type="button" data-inema-set-font="system" class="inema-chip">Sistema</button>
+        <button type="button" data-inema-set-font="leitura" class="inema-chip">Leitura</button>
+      </div>
+    </div>
+    <div class="inema-appearance-sec">
+      <p class="inema-appearance-label">Entrelinha</p>
+      <div class="inema-appearance-row">
+        <button type="button" data-inema-set-leading="1.5" class="inema-chip">Compacta</button>
+        <button type="button" data-inema-set-leading="1.7" class="inema-chip">Normal</button>
+        <button type="button" data-inema-set-leading="1.9" class="inema-chip">Ampla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Início</a><span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+      <span class="text-purple-400">Módulo 3.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">📣 Distribuição</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Construir ficou fácil. Fazer alguém saber que o seu produto existe continua difícil. Este módulo trata do problema que derruba a maioria dos projetos: como gerar os primeiros sinais de vida sem orçamento de mídia.</p>
+      
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">45</div><div class="text-xs text-neutral-400">Minutos</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div><div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Estratégia</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+      <div data-inema-meter="modulo:3-1" class="inema-meter max-w-md mt-6" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do módulo">
+        <div class="flex justify-between text-sm text-neutral-400 mb-1"><span data-inema-meter-frac>0 de 6</span><span data-inema-meter-pct>0%</span></div>
+        <div class="inema-bar h-2 bg-dark-700 rounded-full overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500 rounded-full transition-all" data-inema-meter-fill style="width:0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 inema-prose" data-inema-module="3-1" data-inema-track="3">
+    <nav aria-label="Tópicos deste módulo" class="mb-12 bg-dark-800 rounded-xl border border-dark-600 p-5" data-inema-toc>
+      <p class="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-3">Neste módulo</p>
+      <ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <li><a href="#topico-1" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span><span>A distribuição morde todo mundo</span></a></li><li><a href="#topico-2" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span><span>Reddit e comunidades</span></a></li><li><a href="#topico-3" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span><span>Guerrilha e apostas pequenas</span></a></li><li><a href="#topico-4" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span><span>Afiliado de dois lados</span></a></li><li><a href="#topico-5" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span><span>Momentos de "sangue nas ruas"</span></a></li><li><a href="#topico-6" class="flex items-start gap-2 text-neutral-300 hover:text-purple-400"><span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span><span>Aceleradoras e criadores de conteúdo</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- TÓPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-3-1#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">💓 A distribuição morde todo mundo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p1">Existe um padrão que se repete em quase todo projeto novo: a pessoa passa semanas no produto, publica, e o silêncio é total. Nenhum cadastro, nenhum comentário, nenhuma reclamação. Não porque o produto seja ruim, mas porque <strong class="text-purple-400">ninguém sabe que ele existe</strong>. O primeiro trabalho depois de construir é gerar um batimento cardíaco: qualquer sinal de que alguém, fora do seu círculo, se importa.</p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📈</span> Por que isso piorou, e não melhorou</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-1-p2">Quando construir exigia uma equipe e meses de trabalho, havia poucos concorrentes chegando ao mesmo tempo. Hoje, com agentes de código, dezenas de produtos parecidos aparecem na mesma semana. O resultado é uma inflação de lançamentos: o público vê "novidade" o dia inteiro e passa a ignorar quase tudo.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p3">Nesse cenário, distribuição não é a etapa final do plano. Ela precisa ser pensada junto com a ideia. A pergunta "como as primeiras cem pessoas vão descobrir isso?" deve ter resposta antes da primeira linha de código.</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 266" class="w-full h-auto" role="img" aria-label="Comparação entre o que era escasso antes e o que é escasso agora na criação de produtos"><defs>
+    <linearGradient id="s39-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s39-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s39-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="266" fill="url(#s39-grid)"/>
+      <rect x="40" y="30" width="330" height="206" rx="16" fill="#3b0764" stroke="#a855f7" stroke-width="2" opacity="0.95"/>
+      <text x="205" y="62" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800">ANTES</text>
+      <g class="wf-a"><circle cx="66" cy="96" r="4" fill="#c084fc"/><text x="80" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Construir era caro</text></g><g class="wf-a"><circle cx="66" cy="130" r="4" fill="#c084fc"/><text x="80" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Poucos concorrentes</text></g><g class="wf-a"><circle cx="66" cy="164" r="4" fill="#c084fc"/><text x="80" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Lançamento chamava atenção</text></g><g class="wf-a"><circle cx="66" cy="198" r="4" fill="#c084fc"/><text x="80" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Distribuição vinha depois</text></g><rect x="430" y="30" width="330" height="206" rx="16" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.95"/>
+      <text x="595" y="62" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">AGORA</text>
+      <g class="wf-a"><circle cx="456" cy="96" r="4" fill="#38bdf8"/><text x="470" y="100" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Construir é barato</text></g><g class="wf-a"><circle cx="456" cy="130" r="4" fill="#38bdf8"/><text x="470" y="134" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Dezenas de clones por semana</text></g><g class="wf-a"><circle cx="456" cy="164" r="4" fill="#38bdf8"/><text x="470" y="168" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">"Novidade" virou ruído</text></g><g class="wf-a"><circle cx="456" cy="198" r="4" fill="#38bdf8"/><text x="470" y="202" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12">Distribuição vem junto da ideia</text></g>
+      <line x1="385" y1="121" x2="415" y2="121" stroke="#9ca3af" stroke-width="1.5"/><line x1="385" y1="129" x2="415" y2="129" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="400" y="149" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">o gargalo mudou</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> O custo de construir caiu; o custo de ser notado subiu. Quem planeja só o produto está investindo na parte que ficou barata.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">&#10003; Sinais de que existe pulso</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Estranhos se cadastram sem você pedir.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Alguém volta no dia seguinte.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Chegam dúvidas e reclamações (é bom sinal).</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Uma pessoa indica para outra.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Sinais de que ainda não existe</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Só amigos e família testaram.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Os acessos vêm todos do seu próprio post.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Ninguém reclama de nada.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Os números sobem só no dia do lançamento.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Pergunta de bolso</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p4">Antes de começar qualquer produto, escreva numa frase: "As primeiras 100 pessoas vão me encontrar por meio de ____". Se o espaço ficar em branco, você ainda não tem um plano, tem só uma ideia.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-3-1#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🧵 Reddit e comunidades</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p5">Comunidades como o Reddit têm uma métrica chamada <strong class="text-purple-400">karma</strong>: pontos que você acumula quando outras pessoas aprovam suas respostas. Contas com karma alto aparecem com mais destaque e são menos filtradas como spam. Ou seja, a reputação é literalmente o que abre o canal.</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Karma</dt><dd class="text-neutral-400" data-inema-block="m3-1-p6">Pontuação acumulada pelos votos positivos nas suas contribuições. Funciona como crédito de confiança.</dd></div><div><dt class="font-semibold text-neutral-100">Autopromoção</dt><dd class="text-neutral-400" data-inema-block="m3-1-p7">Postar só para divulgar o próprio produto. Quase toda comunidade pune ou remove.</dd></div><div><dt class="font-semibold text-neutral-100">Menção natural</dt><dd class="text-neutral-400" data-inema-block="m3-1-p8">Citar a ferramenta que você usa, de passagem, dentro de uma resposta que já resolve o problema da pessoa.</dd></div><div><dt class="font-semibold text-neutral-100">Subcomunidade</dt><dd class="text-neutral-400" data-inema-block="m3-1-p9">Fórum temático (no Reddit, um "subreddit") onde se concentra um público específico.</dd></div>
+        </dl>
+      </aside>
+
+      <div class="space-y-5 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-2">O caminho em quatro passos</h3>
+        
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Mapeie onde o seu público pergunta</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p10">Liste 5 a 10 fóruns, grupos ou subcomunidades onde aparecem as dores que o seu produto resolve. Leia antes de escrever.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Responda sem vender</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p11">Durante semanas, resolva problemas de verdade. Respostas completas, com passo a passo. É isso que gera karma e memória.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Mencione de passagem</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p12">Quando a pergunta for exatamente o que o produto resolve, termine a resposta com algo como "eu uso X para isso". Uma frase, não um anúncio.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Meça e repita</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p13">Use um link com parâmetro de origem para saber quais respostas trouxeram gente. Dobre a aposta nos fóruns que funcionam.</p>
+          </div>
+        </div>
+      </div>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Ciclo de reputação em comunidades: ajudar gera karma, karma gera visibilidade, visibilidade gera tráfego"><defs>
+    <linearGradient id="s40-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s40-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s40-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s40-grid)"/><g class="wf-a"><rect x="40" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#a855f7"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="102.4" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Ajudar</text>
+        <text x="102.4" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">respostas</text><text x="102.4" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">completas</text></g>
+        <path class="wf-flow" d="M166.8 102 L186.8 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="182.8,97 182.8,107 188.8,102" fill="#38bdf8"/><g class="wf-a"><rect x="188.8" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="206.8" cy="78" r="10" fill="#38bdf8"/><text x="206.8" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="251.20000000000002" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Karma</text>
+        <text x="251.20000000000002" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">votos e</text><text x="251.20000000000002" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">reputação</text></g>
+        <path class="wf-flow" d="M315.6 102 L335.6 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="331.6,97 331.6,107 337.6,102" fill="#38bdf8"/><g class="wf-a"><rect x="337.6" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="355.6" cy="78" r="10" fill="#a855f7"/><text x="355.6" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="400" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Visibilidade</text>
+        <text x="400" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">mais gente</text><text x="400" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">lê você</text></g>
+        <path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102" fill="#38bdf8"/><g class="wf-a"><rect x="486.40000000000003" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="504.40000000000003" cy="78" r="10" fill="#38bdf8"/><text x="504.40000000000003" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="548.8000000000001" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Menção</text>
+        <text x="548.8000000000001" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">de passagem</text><text x="548.8000000000001" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">no contexto</text></g>
+        <path class="wf-flow" d="M613.2 102 L633.2 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="629.2,97 629.2,107 635.2,102" fill="#38bdf8"/><g class="wf-a"><rect x="635.2" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="653.2" cy="78" r="10" fill="#a855f7"/><text x="653.2" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text>
+        <text x="697.6" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Tráfego</text>
+        <text x="697.6" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">visitas</text><text x="697.6" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">qualificadas</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Ciclo de reputação em comunidades: ajudar gera karma, karma gera visibilidade, visibilidade gera tráfego</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> A menção ao produto é o quarto passo, não o primeiro. Quem pula direto para ela é tratado como spam e perde o canal.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">&#10003; Funciona</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Responder a dúvida inteira, mesmo sem citar o produto.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Mostrar um resultado concreto ("fiz assim, deu isso").</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Voltar para responder perguntas nos comentários.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Queima o canal</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Colar o mesmo link em dez tópicos.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Criar conta nova só para divulgar.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Responder com "dá uma olhada no meu app".</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Horizonte de tempo</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p14">Esse canal é de médio a longo prazo. Semanas para ganhar reputação, meses para virar fonte constante. Não espere resultado na primeira semana, e não desista na segunda.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-3-1#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎯 Guerrilha e apostas pequenas</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p15">Marketing de guerrilha é o nome para ações fora do roteiro tradicional: em vez de pagar por atenção, você se posiciona onde a atenção já está. O princípio é a <strong class="text-purple-400">aposta assimétrica</strong>: custa pouco se der errado e pode render muito se der certo.</p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🐴</span> Exemplo: o domínio de 22 dólares</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-1-p16">Um empreendedor previu o nome de um produto que seria lançado no dia seguinte por uma empresa grande. Comprou um domínio com esse nome por cerca de US$ 22, construiu em três horas, com um agente de código, um pequeno catálogo de assistentes para aquela plataforma, e passou mais doze horas polindo.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p17">Se a previsão estivesse certa, o site receberia parte do tráfego de curiosos procurando pelo produto novo. E dentro dele, discretamente, havia um destaque para o SaaS principal do empreendedor. É um "cavalo de Troia" de tráfego: aproveitar a onda de outro para levar gente até você.</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 320" class="w-full h-auto" role="img" aria-label="Aposta assimétrica: pouco custo de um lado, grande potencial do outro"><defs>
+    <linearGradient id="s41-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s41-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s41-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="320" fill="url(#s41-grid)"/>
+      <line x1="400" y1="70" x2="400" y2="270" stroke="#9ca3af" stroke-width="4"/><rect x="320" y="266" width="160" height="12" rx="6" fill="#9ca3af"/>
+      <line x1="180" y1="88" x2="620" y2="52" stroke="#a855f7" stroke-width="4" filter="url(#s41-glow)"/>
+      <g class="wf-a"><rect x="80" y="128" width="200" height="110" rx="14" fill="#3b0764" stroke="#a855f7" stroke-width="2"/>
+      <line x1="180" y1="88" x2="180" y2="128" stroke="#a855f7" stroke-width="2"/>
+      <text x="180" y="160" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800">CUSTO</text><text x="180" y="184" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">US$ 22 de domínio</text><text x="180" y="198" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">3 h de construção</text><text x="180" y="212" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">12 h de polimento</text></g>
+      <g class="wf-a"><rect x="520" y="92" width="200" height="110" rx="14" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="620" y1="52" x2="620" y2="92" stroke="#38bdf8" stroke-width="2"/>
+      <text x="620" y="124" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="800">POTENCIAL</text><text x="620" y="148" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">Tráfego de um lançamento</text><text x="620" y="162" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">Visibilidade grátis</text><text x="620" y="176" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11" font-weight="400">Usuários para o SaaS</text></g>
+      <text x="400" y="306" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Aposta assimétrica: pouco custo de um lado, grande potencial do outro</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> Uma boa aposta de guerrilha tem o prato do custo leve e o do potencial pesado. Se o custo fica pesado, deixou de ser guerrilha.</figcaption>
+      </figure>
+
+      <div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+        <table class="w-full text-sm text-left">
+          <caption class="text-left text-xs text-neutral-500 px-4 pt-3">Táticas de guerrilha mais comuns, do mais barato ao mais trabalhoso</caption>
+          <thead class="bg-dark-800 text-purple-400"><tr><th class="px-4 py-3 font-semibold">Tática</th><th class="px-4 py-3 font-semibold">Custo</th><th class="px-4 py-3 font-semibold">Quando usar</th></tr></thead>
+          <tbody class="divide-y divide-dark-600"><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Surfar um lançamento previsto</td><td class="px-4 py-3 text-neutral-300">Baixo</td><td class="px-4 py-3 text-neutral-300">Você conhece bem o mercado e antecipa o que vai acontecer.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Responder a uma thread em alta</td><td class="px-4 py-3 text-neutral-300">Zero</td><td class="px-4 py-3 text-neutral-300">Uma discussão viral toca exatamente no problema que você resolve.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Ferramenta grátis de isca</td><td class="px-4 py-3 text-neutral-300">Baixo</td><td class="px-4 py-3 text-neutral-300">Uma utilidade pequena, ligada ao produto, que as pessoas compartilham.</td></tr><tr class="bg-dark-900/40"><td class="px-4 py-3 font-semibold text-neutral-100">Ligação e e-mail frio</td><td class="px-4 py-3 text-neutral-300">Tempo</td><td class="px-4 py-3 text-neutral-300">Venda de ticket alto; funciona, mas pede muita repetição.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">&#10003; Boas apostas</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Custo que você aceita perder sem dor.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Ligadas ao seu público real.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Rápidas de montar e de medir.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Apostas ruins</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Enganar o usuário sobre o que ele está acessando.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Usar marca alheia de forma que gere confusão jurídica.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Gastar semanas numa ação que depende só de sorte.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Pense fora da caixa, mas meça</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p18">Ligação fria e e-mail frio funcionam; existem agências inteiras que vivem disso. Mas num mundo em que tudo é sobre ser o primeiro diante dos olhos, as janelas curtas de atenção costumam render mais por real investido. Faça várias apostas pequenas e registre qual trouxe gente.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-3-1#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🤝 Afiliado de dois lados</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p19">Um programa de afiliados comum paga uma comissão a quem traz um cliente. O modelo de <strong class="text-purple-400">dois lados</strong> vai além: quem indica ganha comissão e também créditos, desconto ou meses grátis no próprio produto. O incentivo deixa de ser só dinheiro e passa a ser "usar de graça".</p>
+
+      <aside class="bg-dark-800/60 rounded-xl border border-dashed border-purple-500/30 p-5 mb-6">
+        <p class="text-xs font-semibold uppercase tracking-wider text-purple-400 mb-3">Novo aqui? Termos deste tópico</p>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <div><dt class="font-semibold text-neutral-100">Afiliado</dt><dd class="text-neutral-400" data-inema-block="m3-1-p20">Pessoa que divulga o produto com um link próprio e recebe por cada cliente que trouxer.</dd></div><div><dt class="font-semibold text-neutral-100">Comissão recorrente</dt><dd class="text-neutral-400" data-inema-block="m3-1-p21">Porcentagem paga todo mês enquanto o cliente indicado continuar pagando, não só na primeira venda.</dd></div><div><dt class="font-semibold text-neutral-100">MRR</dt><dd class="text-neutral-400" data-inema-block="m3-1-p22">Sigla em inglês para receita recorrente mensal: quanto o produto fatura por mês em assinaturas.</dd></div><div><dt class="font-semibold text-neutral-100">Crédito de uso</dt><dd class="text-neutral-400" data-inema-block="m3-1-p23">Saldo dentro do produto (minutos, gerações, consultas) que o usuário gasta em vez de pagar.</dd></div>
+        </dl>
+      </aside>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 300" class="w-full h-auto" role="img" aria-label="Um usuário que indica gera dois tipos de retorno para si e um novo cliente para o produto"><defs>
+    <linearGradient id="s42-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s42-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s42-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="300" fill="url(#s42-grid)"/>
+      <g filter="url(#s42-glow)"><circle cx="130" cy="150" r="88" fill="#3b0764" stroke="url(#s42-g)" stroke-width="2.5"/></g>
+      <text x="130" y="142" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800">Quem</text><text x="130" y="160" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="15" font-weight="800">indica</text><path d="M220 150 C 255 150, 255 63.333333333333336, 380 63.333333333333336" fill="none" stroke="#a855f7" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.6"/>
+        <g class="wf-a"><rect x="380" y="39.333333333333336" width="400" height="48" rx="10" fill="#3b0764" stroke="#a855f7" stroke-width="1.6"/>
+        <text x="420" y="69.33333333333334" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800">+30</text>
+        <text x="454" y="60.333333333333336" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600">Comissão recorrente (%)</text>
+        <text x="454" y="76.33333333333334" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">20% a 50% da mensalidade enquanto o indicado pagar</text></g><path d="M220 150 C 255 150, 255 150, 380 150" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.6"/>
+        <g class="wf-a"><rect x="380" y="126" width="400" height="48" rx="10" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.6"/>
+        <text x="420" y="156" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="18" font-weight="800">+1</text>
+        <text x="454" y="147" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600">Créditos de uso</text>
+        <text x="454" y="163" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">minutos, gerações ou meses grátis no próprio produto</text></g><path d="M220 150 C 255 150, 255 236.66666666666669, 380 236.66666666666669" fill="none" stroke="#a855f7" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.6"/>
+        <g class="wf-a"><rect x="380" y="212.66666666666669" width="400" height="48" rx="10" fill="#3b0764" stroke="#a855f7" stroke-width="1.6"/>
+        <text x="420" y="242.66666666666669" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="18" font-weight="800">+1</text>
+        <text x="454" y="233.66666666666669" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="11.5" font-weight="600">Novo cliente para o produto</text>
+        <text x="454" y="249.66666666666669" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5">que também recebe um bônus ao entrar</text></g></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> Os três ramos saem da mesma ação: compartilhar um link. Quanto mais ramos um incentivo alimenta, mais gente continua compartilhando.</figcaption>
+      </figure>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🎧</span> Exemplo de como isso se sustenta</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-1-p24">Um usuário de uma ferramenta de ditado por voz indicou o produto para o seu público. Com as indicações acumuladas, ganhou créditos suficientes para não pagar a assinatura até 2027. Ele já nem usa tanto a ferramenta, mas continua indicando, porque cada nova indicação mantém a conta grátis.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p25">Do lado da empresa, o custo desses créditos é pequeno perto do valor dos clientes que chegam. Do lado de quem indica, existe um motivo concreto para seguir falando do produto.</p>
+        
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> Faça a conta antes de definir a porcentagem</h3>
+        <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>Se a mensalidade é R$ 50 e você paga 40% recorrente, cada indicado custa R$ 20 por mês enquanto ficar.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>Se o custo de servir esse cliente é R$ 10, sobram R$ 20 de margem. Ainda é lucrativo.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>Créditos de uso custam o que custa entregar o serviço, não o preço de tabela. Por isso são um incentivo barato.</span></li></ul>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">&#10003; Programa que funciona</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Link fácil de achar dentro do produto.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Painel mostrando quanto a pessoa já ganhou.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Bônus também para quem chega pelo link.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Programa que ninguém usa</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Cadastro separado e burocrático.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Pagamento só acima de um valor alto.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Comissão só na primeira venda.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p26">Coloque o convite no momento em que o usuário acabou de ter um resultado bom ("seu relatório está pronto"). É quando ele está mais disposto a mostrar para alguém.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-3-1#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🩸 Momentos de "sangue nas ruas"</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p27">Existe uma frase clássica do mercado financeiro: <em>"compre quando houver sangue nas ruas"</em>. Quer dizer que as melhores oportunidades aparecem no pânico. Em produto, a versão é: <strong class="text-purple-400">apareça com força quando o problema que você resolve vira notícia</strong>.</p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🛡️</span> Exemplo: onda de ataques a apps</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-1-p28">Imagine um produto de segurança para aplicativos criados com IA. Um dia, vários apps são invadidos, um serviço de IA famoso sai do ar e o caso vira manchete. Por algumas semanas, todo mundo está preocupado com segurança.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p29">Nesse momento, o produto anuncia: "ampliamos o plano gratuito em 10 vezes; qualquer pessoa pode verificar o seu app agora, sem pagar nada". Resultado: boa vontade, novos usuários, mais dados (se dados forem valiosos para o produto) e uma lembrança positiva da marca.</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 360" class="w-full h-auto" role="img" aria-label="Crescimento típico de um SaaS pequeno: meses devagar e um salto num pico de atenção"><defs>
+    <linearGradient id="s43-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s43-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s43-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="360" fill="url(#s43-grid)"/>
+      <line x1="90" y1="300" x2="760" y2="300" stroke="#9ca3af" stroke-width="1.5"/><line x1="90" y1="300" x2="90" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="90" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">nov</text><text x="224" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">dez</text><text x="358" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">jan</text><text x="492" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">fev</text><text x="626" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">mar</text><text x="760" y="322" text-anchor="middle" fill="#e5e7eb" font-family="Inter,sans-serif" font-size="12" font-weight="600">abr</text>
+      <text x="78" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90 78 175)">receita mensal (relativa)</text>
+      <path d="M90 290 L224 285 L358 282.5 L492 277.5 L626 162.5 L760 62.5" fill="none" stroke="#c084fc" stroke-width="3" filter="url(#s43-glow)"/>
+        <circle cx="90" cy="290" r="5" fill="#c084fc"/><text x="90" y="278" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">600</text><circle cx="224" cy="285" r="5" fill="#c084fc"/><text x="224" y="273" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">900</text><circle cx="358" cy="282.5" r="5" fill="#c084fc"/><text x="358" y="270.5" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">1 mil</text><circle cx="492" cy="277.5" r="5" fill="#c084fc"/><text x="492" y="265.5" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">1,3 mil</text><circle cx="626" cy="162.5" r="5" fill="#c084fc"/><text x="626" y="150.5" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">8 mil</text><circle cx="760" cy="62.5" r="5" fill="#c084fc"/><text x="760" y="50.5" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="700">15 mil</text>
+        <text x="766" y="66.5" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600">MRR</text><text x="400" y="350" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Crescimento típico de um SaaS pequeno: meses devagar e um salto num pico de atenção</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> A curva fica quase plana por meses e dispara num momento curto. Esse momento quase sempre coincide com o público, por um instante, se importando com o problema.</figcaption>
+      </figure>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> O que acontece nesses picos</h3>
+        <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>Pequenos SaaS que faturavam cerca de 600 por mês chegaram a 7, 15 ou 20 mil de receita mensal em poucos meses.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>O salto raramente vem de uma campanha paga. Vem de estar pronto quando a atenção chegou.</span></li><li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">&#8226;</span><span>Uma porta de entrada gratuita é o que transforma a curiosidade em uso.</span></li></ul>
+      </div>
+
+      <div class="space-y-5 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-2">Como se preparar antes do pico</h3>
+        
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Liste os eventos que tornam o seu problema urgente</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p30">Vazamentos, mudança de lei, queda de um serviço grande, lançamento de um concorrente. Escreva isso antes de acontecer.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Deixe a oferta pronta</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p31">Tenha um texto, uma página e uma configuração de plano ampliado que você liga em minutos.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Seja barulhento no dia</h4>
+            
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p32">Publique, responda threads, mande para a sua lista. O pico dura dias, não meses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Oportunismo tem limite</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p33">Ajudar num momento de medo é diferente de explorar o medo. Ofereça algo que realmente resolve, com generosidade. Anúncio alarmista em cima de uma tragédia destrói a confiança que você queria ganhar.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- TÓPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-3-1#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎬 Aceleradoras e criadores de conteúdo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-p34">Se a tração orgânica não vem, existe uma pergunta de controle: <strong class="text-purple-400">o produto é bom o bastante para entrar numa aceleradora?</strong> Programas como o Y Combinator, ou aceleradoras da sua região, aceitam ideias com mérito e alguma tração inicial, mesmo que seja um punhado de usuários.</p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📱</span> Criadores de conteúdo são um canal</h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-1-p35">Em redes de vídeo curto, os posts que mais funcionam mostram uma ferramenta, um repositório ou um recurso que pouca gente conhece. Os criadores vivem procurando essas novidades para levar ao público deles.</p>
+<p class="text-neutral-300 mb-4" data-inema-block="m3-1-p36">O produto que eles escolhem tem uma característica: dá para demonstrar em segundos. "Cola o seu link aqui, clica aqui, olha o que acontece. Fiz isso de graça em 15 segundos. Comenta BANANA que eu te mando o acesso."</p>
+        
+      </div>
+
+      <figure class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+        <svg viewBox="0 0 800 200" class="w-full h-auto" role="img" aria-label="Roteiro de um vídeo curto que demonstra um produto"><defs>
+    <linearGradient id="s44-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+    <filter id="s44-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="s44-grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.14"/></pattern>
+  </defs><rect width="800" height="200" fill="url(#s44-grid)"/><g class="wf-a"><rect x="40" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="58" cy="78" r="10" fill="#a855f7"/><text x="58" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">1</text>
+        <text x="102.4" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Gancho</text>
+        <text x="102.4" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">"olha isso"</text><text x="102.4" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">0–3 s</text></g>
+        <path class="wf-flow" d="M166.8 102 L186.8 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="182.8,97 182.8,107 188.8,102" fill="#38bdf8"/><g class="wf-a"><rect x="188.8" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="206.8" cy="78" r="10" fill="#38bdf8"/><text x="206.8" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">2</text>
+        <text x="251.20000000000002" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Entrada</text>
+        <text x="251.20000000000002" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">cola o link</text><text x="251.20000000000002" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">3–7 s</text></g>
+        <path class="wf-flow" d="M315.6 102 L335.6 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="331.6,97 331.6,107 337.6,102" fill="#38bdf8"/><g class="wf-a"><rect x="337.6" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="355.6" cy="78" r="10" fill="#a855f7"/><text x="355.6" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">3</text>
+        <text x="400" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Clique</text>
+        <text x="400" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">um botão</text><text x="400" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">7–10 s</text></g>
+        <path class="wf-flow" d="M464.40000000000003 102 L484.40000000000003 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="480.40000000000003,97 480.40000000000003,107 486.40000000000003,102" fill="#38bdf8"/><g class="wf-a"><rect x="486.40000000000003" y="60" width="124.8" height="84" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
+        <circle cx="504.40000000000003" cy="78" r="10" fill="#38bdf8"/><text x="504.40000000000003" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">4</text>
+        <text x="548.8000000000001" y="104" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Resultado</text>
+        <text x="548.8000000000001" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">o "uau"</text><text x="548.8000000000001" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">10–15 s</text></g>
+        <path class="wf-flow" d="M613.2 102 L633.2 102" stroke="#38bdf8" stroke-width="2" fill="none"/><polygon points="629.2,97 629.2,107 635.2,102" fill="#38bdf8"/><g class="wf-a"><rect x="635.2" y="60" width="124.8" height="84" rx="12" fill="#3b0764" stroke="#a855f7" stroke-width="1.8"/>
+        <circle cx="653.2" cy="78" r="10" fill="#a855f7"/><text x="653.2" y="82" text-anchor="middle" fill="#0b1220" font-family="Inter,sans-serif" font-size="11" font-weight="700">5</text>
+        <text x="697.6" y="104" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10.5" font-weight="700">Chamada</text>
+        <text x="697.6" y="122" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">comenta X</text><text x="697.6" y="134.5" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" font-weight="400">15–20 s</text></g>
+        
+      <text x="400" y="178" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" font-style="italic">Roteiro de um vídeo curto que demonstra um produto</text></svg>
+        <figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">O que olhar:</strong> Se o seu produto cabe nesses cinco quadros, um criador consegue mostrá-lo sem você pagar nada. Se não cabe, ele é complexo demais para esse canal.</figcaption>
+      </figure>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">&#10003; Produto fácil de mostrar</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Um único campo de entrada.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Resultado visual em segundos.</span></li><li class="flex items-start space-x-2"><span class="text-purple-400">&#10003;</span><span>Qualquer pessoa entende sem explicação.</span></li></ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">&#10007; Produto difícil de mostrar</h4>
+          <ul class="space-y-3 text-neutral-300"><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Exige cadastro, configuração e integração antes do primeiro resultado.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>O valor só aparece depois de semanas.</span></li><li class="flex items-start space-x-2"><span class="text-red-400">&#10007;</span><span>Precisa de um parágrafo para explicar o que faz.</span></li></ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🚀</div>
+          <h4 class="font-semibold text-purple-400 mb-2">Aceleradora</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p37">Leve a ideia, a tração que tiver e a clareza do problema. Mérito da ideia conta mesmo com poucos usuários.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🎥</div>
+          <h4 class="font-semibold text-purple-400 mb-2">Criador de conteúdo</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p38">Mande acesso grátis e um roteiro de 15 segundos pronto. Facilite o trabalho dele.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+          <div class="text-2xl mb-2">🔁</div>
+          <h4 class="font-semibold text-purple-400 mb-2">Seus próprios vídeos</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-1-p39">Redes de vídeo curto não exigem seguidores. Mesmo uma conta nova pode ter um vídeo com dezenas de milhares de visualizações.</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Teste rápido</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-p40">Grave você mesmo, com o celular, um vídeo de 20 segundos usando o produto. Mostre para alguém que não conhece o projeto. Se a pessoa entendeu o que ele faz, o produto está pronto para esse canal.</p>
+      </div>
+      
+      <button type="button" data-inema-read-toggle class="mt-4 px-4 py-2 rounded-lg text-sm font-medium bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center space-x-2 justify-start">
+        <span class="inema-ico-todo" aria-hidden="true">&#9744;</span>
+        <span class="inema-ico-done" aria-hidden="true">&#9745;</span>
+        <span class="inema-label-todo">Marcar como lido</span>
+        <span class="inema-label-done">Lido</span>
+      </button>
+    </section>
+
+    <!-- QUIZ -->
+    
+      <div class="bg-dark-800 rounded-2xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-1 flex items-center"><span class="mr-2">🧪</span> Teste rápido do módulo</h3>
+        <p class="text-sm text-neutral-400 mb-5">Três perguntas. Clique numa opção para ver a resposta.</p>
+        <div class="space-y-5">
+        
+          <div class="qz" data-q="1">
+            <p class="font-semibold text-neutral-100 mb-3">1. Qual é o primeiro objetivo de distribuição logo depois de construir?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">Rodar anúncios pagos em grande escala</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1">Gerar um batimento cardíaco: sinais de que estranhos se importam</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">Esperar o produto ficar perfeito</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Antes de escalar, você precisa de evidência de que alguém fora do seu círculo se importa. Sem esse pulso, anúncio só acelera o desperdício."></p>
+          </div>
+          <div class="qz" data-q="2">
+            <p class="font-semibold text-neutral-100 mb-3">2. Num fórum como o Reddit, quando mencionar o produto?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">No primeiro post, com o link em destaque</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1">Depois de construir reputação, de passagem, numa resposta que já resolve o problema</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">Nunca</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="Karma e confiança vêm primeiro. A menção natural, dentro de uma resposta útil, é o que não soa como spam."></p>
+          </div>
+          <div class="qz" data-q="3">
+            <p class="font-semibold text-neutral-100 mb-3">3. O que caracteriza um afiliado de dois lados?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">Dois afiliados dividem a mesma comissão</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="1">Quem indica ganha comissão recorrente e créditos de uso</button><button type="button" class="qz-opt text-left px-4 py-3 rounded-lg border border-dark-600 bg-dark-900/40 text-sm text-neutral-300 hover:border-purple-500/40 transition-colors" data-ok="0">O cliente paga duas vezes</button>
+            </div>
+            <p class="qz-fb mt-3 text-sm text-neutral-300" data-text="O incentivo duplo (dinheiro + uso grátis) mantém a pessoa indicando, e os créditos custam pouco para a empresa."></p>
+          </div>
+        </div>
+      </div>
+
+    <!-- RESUMO DO MÓDULO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do módulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Distribuição vem junto da ideia</strong><span class="text-neutral-400"> - Construir ficou barato; ser notado ficou caro.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Comunidades</strong><span class="text-neutral-400"> - Ajudar primeiro, ganhar reputação, mencionar de passagem.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Guerrilha</strong><span class="text-neutral-400"> - Apostas pequenas e assimétricas que aproveitam atenção existente.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Afiliado de dois lados</strong><span class="text-neutral-400"> - Comissão recorrente + créditos transformam usuários em canal.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Sangue nas ruas</strong><span class="text-neutral-400"> - Ofertas generosas prontas para os picos de atenção.</span></div></div><div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">&#10003;</span><div><strong class="text-white">Mostrável em 15 segundos</strong><span class="text-neutral-400"> - O que cabe num vídeo curto vira canal de criadores e aceleradoras.</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8"><h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3><p class="text-neutral-300">3.2 - Posicionamento e jornada</p></div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#8592; Voltar para a trilha</a>
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Próximo módulo &#8594;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+      <p>Produtos na era da IA · Trilha 3 — Lançar e crescer · 2026 ·
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
+      
+    </div>
+  </footer>
+
+  <!-- SCRIPTS núcleo v1 -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) { exp.classList.remove('active'); const b = exp.parentElement.querySelector('[aria-controls="' + exp.id + '"]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+        });
+      }
+      const isOpen = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (!html.classList.contains('dark')) { themeToggleDarkIcon.classList.remove('hidden'); } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+      if (window.INEMA && INEMA.setPref) { try { INEMA.setPref('theme', dark ? 'inema-dark' : 'claro'); } catch (e) {} }
+    });
+    function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Quiz inline (3 perguntas por módulo)
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.qz-opt'); if (!opt) return;
+      const qz = opt.closest('.qz'); if (!qz || qz.hasAttribute('data-answered')) return;
+      const ok = opt.getAttribute('data-ok') === '1';
+      qz.querySelectorAll('.qz-opt').forEach(o => { o.setAttribute('data-state', o.getAttribute('data-ok') === '1' ? 'ok' : (o === opt ? 'no' : '')); o.disabled = true; });
+      qz.setAttribute('data-answered', ok ? 'ok' : 'no');
+      const fb = qz.querySelector('.qz-fb'); if (fb) fb.textContent = (ok ? '✓ Certo. ' : '✗ Não é essa. ') + (fb.getAttribute('data-text') || '');
+    });
+    // Copiar código
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      const pre = b.closest('.codebox').querySelector('pre');
+      navigator.clipboard && navigator.clipboard.writeText(pre.innerText).then(() => { const t = b.textContent; b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = t, 1600); });
+    });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>
