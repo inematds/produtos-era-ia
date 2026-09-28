@@ -16,5 +16,6 @@ Curso INEMA.CLUB (formato v2, 3 trilhas, 9 módulos, 54 tópicos, ~6,5 h) sobre 
 
 ## Mais no INEMA.CLUB
 
+- [Ficha deste curso](https://www.inema.club/cursos/304-produtos-na-era-da-ia-saber-o-que-vale-a-pena-construir/)
 - [Guia: como aprender inteligência artificial](https://www.inema.club/aprender-inteligencia-artificial/)
 - [Todos os cursos](https://www.inema.club/cursos/)

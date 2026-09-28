@@ -270,7 +270,9 @@ export function footer({ trackLabel = '', landing = false }) {
       <p>${COURSE_TITLE}${trackLabel ? ' · ' + trackLabel : ''} · 2026 ·
         <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> -
         <a href="https://inema.pro" target="_blank" class="text-amber-700 dark:text-slate-300">PRO</a></p>
-      ${landing ? `<p class="text-xs"><a href="https://www.inema.club/aprender-inteligencia-artificial/" class="text-sky-400 hover:text-sky-300">Guia: como aprender inteligência artificial</a> · <a href="https://www.inema.club/cursos/" class="text-sky-400 hover:text-sky-300">Todos os cursos</a></p>` : ''}
+      ${landing ? `<!-- inema-backlink:v1 -->
+<p style="display:block;width:100%;text-align:center;font-size:.85rem;margin:.75rem 0 0;opacity:.85"><a href="https://www.inema.club/cursos/304-produtos-na-era-da-ia-saber-o-que-vale-a-pena-construir/" style="color:inherit;text-decoration:underline">Ficha completa deste curso no INEMA.CLUB</a> · <a href="https://www.inema.club/aprender-inteligencia-artificial/" style="color:inherit;text-decoration:underline">Guia: como aprender inteligência artificial</a> · <a href="https://www.inema.club/cursos/" style="color:inherit;text-decoration:underline">Todos os cursos</a></p>
+<!-- /inema-backlink:v1 -->` : ''}
     </div>
   </footer>
 `;
