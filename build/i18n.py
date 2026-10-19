@@ -6,7 +6,8 @@ Uso:  node build/build.mjs && python3 build/i18n.py [en es] [--so-montar]
 Padrão INEMA trilíngue (wifi/RELATORIO-CURSOS-TRILINGUES.md): PT na raiz, <lang>/ ao lado.
 Só TEXTO vai para o modelo (blocos com as tags inline preservadas, atributos de acessibilidade, rótulos
 de SVG, manifesto e as mensagens do learn.js). Layout, CSS e JS são reaproveitados.
-Motor: Codex pela ASSINATURA (`codex exec -m gpt-6-luna`), sem chave de API.
+Motor: tradutor central do INEMA (`inema-traduz`, INEMA_TRADUCAO_* em ~/.config/inema/modelos.env, hoje Sonnet 5.5)
+pela ASSINATURA, sem chave de API.
 Cache em i18n/<lang>.json (chave = hash do texto PT): unidade traduzida nunca é reenviada.
 Unidade inválida (tags diferentes, vazia) volta até 3 vezes; depois o script para e diz qual.
 Estado do aluno separado por idioma (courseId + "-<lang>").
@@ -17,7 +18,6 @@ from bs4 import BeautifulSoup, NavigableString, Comment, Tag, Doctype, Declarati
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 I18N = os.path.join(ROOT, 'i18n')
-MODELO = 'gpt-6-luna'
 PARALELO = 4
 LOTE_CHARS = 9000
 NOMES = {'en': 'English (United States)', 'es': 'Spanish (Latin America)'}
@@ -148,15 +148,25 @@ def valido(pt, tr):
     return True
 
 
-def via_codex(sistema, lote):
-    pedido = sistema + '\n\nReturn ONLY the JSON object (no code fences, no comments). INPUT JSON:\n' + json.dumps(lote, ensure_ascii=False)
+_TRADUTOR = os.path.expanduser("~/projetos/wifi/scripts/inema-traduz")
+def chamar_tradutor(pedido: str, timeout: int = 900) -> str:
+    """Tradução pelo tradutor central do INEMA (INEMA_TRADUCAO_* em ~/.config/inema/modelos.env). Assinatura, nunca API."""
+    if os.path.exists(_TRADUTOR):
+        cmd = [_TRADUTOR]
+    else:  # fora da máquina do Nei: Claude Code da assinatura com o modelo da variável (padrão Sonnet 5.5)
+        cmd = ["claude", "-p", "--model", os.environ.get("INEMA_TRADUCAO_MODELO", "claude-sonnet-5-5"),
+               "--output-format", "text", "--tools", ""]
+    env = {k: v for k, v in os.environ.items() if k not in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "CLAUDECODE")}
     with tempfile.TemporaryDirectory() as d:
-        out = os.path.join(d, 'out.txt')
-        r = subprocess.run(['codex', 'exec', '-m', MODELO, '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only',
-                            '-C', d, '-o', out, '-'], input=pedido, capture_output=True, text=True, timeout=1200)
-        if r.returncode or not os.path.exists(out):
-            raise RuntimeError(f'codex exec rc={r.returncode}: {r.stderr[-300:]}')
-        txt = open(out, encoding='utf-8').read().strip()
+        r = subprocess.run(cmd, input=pedido, capture_output=True, text=True, timeout=timeout, env=env, cwd=d)
+    if r.returncode != 0 or not r.stdout.strip():
+        raise RuntimeError(f"tradutor falhou rc={r.returncode}: {(r.stderr or r.stdout)[-300:]}")
+    return r.stdout
+
+
+def via_tradutor(sistema, lote):
+    pedido = sistema + '\n\nReturn ONLY the JSON object (no code fences, no comments). INPUT JSON:\n' + json.dumps(lote, ensure_ascii=False)
+    txt = chamar_tradutor(pedido, timeout=1200).strip()
     txt = re.sub(r'^```(?:json)?\s*|\s*```$', '', txt)
     return json.loads(txt[txt.index('{'):txt.rindex('}') + 1])
 
@@ -182,7 +192,7 @@ def traduzir(lang, fontes):
 
         def um(lote):
             try:
-                return lote, via_codex(sistema, lote)
+                return lote, via_tradutor(sistema, lote)
             except Exception as e:
                 print(f'[{lang}] lote falhou: {str(e)[:160]}', flush=True)
                 return lote, {}
